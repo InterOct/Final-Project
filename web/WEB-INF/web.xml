@@ -27,4 +27,8 @@
         <servlet-name>Controller</servlet-name>
         <url-pattern>/Controller</url-pattern>
     </servlet-mapping>
+
+    <listener>
+        <listener-class>by.epam.task8.simple.controller.ApplicationListener</listener-class>
+    </listener>
 </web-app>

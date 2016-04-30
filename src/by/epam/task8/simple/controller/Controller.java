@@ -22,13 +22,6 @@ public class Controller extends HttpServlet {
     private static final Logger LOGGER = LogManager.getRootLogger();
     @Override
     public void init() throws ServletException {
-        try {
-            ConnectionPool.getInstance().initPoolData();
-        } catch (Exception e) {
-            LOGGER.error("Error initializing connection pool",e);
-            throw new RuntimeException(e);
-        }
-        
         super.init();
     }
 
