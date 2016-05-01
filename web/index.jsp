@@ -16,10 +16,14 @@
                  var="ru_button"/>
     <fmt:message bundle="${loc}" key="local.locbutton.name.en"
                  var="en_button"/>
-    <fmt:message bundle="${loc}" key="local.label.login" var="login_label"/>
-    <fmt:message bundle="${loc}" key="local.label.password" var="password_label"/>
-    <fmt:message bundle="${loc}" key="local.locbutton.login" var="b_login"/>
-    <fmt:message bundle="${loc}" key="local.singup.text" var="singup"/>
+    <fmt:message bundle="${loc}" key="local.label.login"
+                 var="login_label"/>
+    <fmt:message bundle="${loc}" key="local.label.password"
+                 var="password_label"/>
+    <fmt:message bundle="${loc}" key="local.locbutton.login"
+                 var="b_login"/>
+    <fmt:message bundle="${loc}" key="local.singup.text"
+                 var="singup"/>
 
 </head>
 <body>

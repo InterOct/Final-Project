@@ -20,7 +20,7 @@
     <servlet>
         <display-name>Controller</display-name>
         <servlet-name>Controller</servlet-name>
-        <servlet-class>by.epam.task8.simple.controller.Controller</servlet-class>
+        <servlet-class>by.epam.eshop.controller.Controller</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -39,7 +39,7 @@
     </servlet-mapping>
 
     <listener>
-        <listener-class>by.epam.task8.simple.controller.ApplicationListener</listener-class>
+        <listener-class>by.epam.eshop.controller.ApplicationListener</listener-class>
     </listener>
     
     
