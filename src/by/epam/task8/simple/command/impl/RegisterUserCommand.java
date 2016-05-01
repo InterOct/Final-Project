@@ -28,9 +28,9 @@ public class RegisterUserCommand implements Command {
         user.setEmail(request.getParameter(EMAIL));
         try {
             if(UserService.registerUser(user)) {
-                request.getSession().setAttribute(IS_REGISTERED, Boolean.TRUE);
+                request.setAttribute(IS_REGISTERED, Boolean.TRUE);
             } else {
-                request.getSession().setAttribute(IS_REGISTERED, Boolean.FALSE);
+                request.setAttribute(IS_REGISTERED, Boolean.FALSE);
             }
         } catch (ServiceException e) {
             throw new CommandException("Error register user",e);
