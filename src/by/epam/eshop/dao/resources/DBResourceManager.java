@@ -7,10 +7,10 @@ import java.util.ResourceBundle;
  */
 public class DBResourceManager {
 
-    private static final String BY_EPAM_TASK8_SIMPLE_DAO_RESOURCES_DB = "by.epam.task8.simple.dao.resources.db";
+    private static final String PATH = "by.epam.eshop.dao.resources.db";
     private static DBResourceManager instance = new DBResourceManager();
 
-    private ResourceBundle bundle = ResourceBundle.getBundle(BY_EPAM_TASK8_SIMPLE_DAO_RESOURCES_DB);
+    private ResourceBundle bundle = ResourceBundle.getBundle(PATH);
 
     private DBResourceManager() {
     }

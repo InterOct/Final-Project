@@ -11,25 +11,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class CommandHelper {
-    private Map<CommandName, Command> commands = new HashMap<>();
+    private final static Map<String, Command> commands = InitCommandHelper.init();
 
-    public CommandHelper() {
-
-        commands.put(CommandName.LOGIN, new LoginCommand());
-        commands.put(CommandName.REGISTER_USER, new RegisterUserCommand());
-        commands.put(CommandName.CHANGE_LOCAL, new ChangeLocal());
-
-    }
-
-
-    public Command getCommand(String commandName) {
+      public Command getCommand(String commandName) {
         Command command = null;
-        CommandName key = null;
 
-        commandName = commandName.replace('-', '_').toUpperCase();
-        key = CommandName.valueOf(commandName);
-
-        command = commands.get(key);
+        command = commands.get(commandName);
 
         if (command == null) {
             command = new UnknownCommand();

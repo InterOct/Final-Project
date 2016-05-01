@@ -18,7 +18,7 @@
 </head>
 <body>
 <form action="Controller" method="post">
-    <input type="hidden" name="command" value="register_user"/>
+    <input type="hidden" name="command" value="register-user"/>
 
     ${login_label}: <br/>
     <input type="text" name="login" value=""/> <br/>

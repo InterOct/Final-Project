@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <command>
+        <command-name>register-user</command-name>
+        <command-class>by.epam.eshop.command.impl.RegisterUserCommand</command-class>
+    </command>
+    <command>
+        <command-name>change-local</command-name>
+        <command-class>by.epam.eshop.command.impl.ChangeLocal</command-class>
+    </command>
+    <command>
+        <command-name>login</command-name>
+        <command-class>by.epam.eshop.command.impl.LoginCommand</command-class>
+    </command>
+</configuration>
