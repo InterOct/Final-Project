@@ -5,12 +5,10 @@ import by.epam.task8.simple.dao.exception.DAOException;
 import by.epam.task8.simple.entity.User;
 import by.epam.task8.simple.service.exception.ServiceException;
 
-import java.util.List;
-
 public final class UserService {
 
-    public final static User checkLogin(String login, String password) throws ServiceException {
-        if (!Validator.loginValidator(login, password)) {
+    public static User checkLogin(String login, String password) throws ServiceException {
+        if (!Validator.loginValidate(login, password)) {
             return null;
         }
 
@@ -22,21 +20,36 @@ public final class UserService {
             }
 
         } catch (DAOException e) {
-            throw new ServiceException("Error access database",e);
+            throw new ServiceException("Error access database,while getting user",e);
         }
 
         return null;
     }
 
+    public static boolean registerUser(User user) throws ServiceException {
+        if (Validator.userValidate(user)) {
+            UserDAO userDAO = new UserDAO();
+            try {
+                return userDAO.addUser(user);
+            } catch (DAOException e) {
+                throw new ServiceException("Error access database, while adding user");
+            }
+        }
+        return false;
+    }
 
-    static class Validator {
-        public static boolean loginValidator(String login, String password) {
-            if (login.isEmpty()) {
-                return false;
-            }
-            if (password.isEmpty()) {
-                return false;
-            }
+
+    private static class Validator {
+        public static boolean loginValidate(String login, String password) {
+            return !login.isEmpty() && !password.isEmpty();
+        }
+
+        public static boolean userValidate(User user) {
+            if (user.getLogin().isEmpty()) return false;
+            if (user.getPassword().isEmpty()) return false;
+            if (user.getFistName().isEmpty()) return false;
+            if (user.getLastName().isEmpty()) return false;
+            if (user.getEmail().isEmpty()) return false;
             return true;
         }
     }

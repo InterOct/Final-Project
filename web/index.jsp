@@ -19,11 +19,12 @@
     <fmt:message bundle="${loc}" key="local.label.login" var="login_label"/>
     <fmt:message bundle="${loc}" key="local.label.password" var="password_label"/>
     <fmt:message bundle="${loc}" key="local.locbutton.login" var="b_login"/>
+    <fmt:message bundle="${loc}" key="local.singup.text" var="singup"/>
 
 </head>
 <body>
-
-<form action="Controller" method="post" style="float: right">
+<div style="float: right">
+<form action="Controller" method="post">
 <input type="hidden" name="command" value="login"/>
 
 <c:out value="${login_label}"/>: <br/>
@@ -34,8 +35,11 @@
 
 <input type="submit" value="${b_login}"/>
 </form>
+    <a href="/register">${singup}</a>
+</div>
 
-<form action="Controller" method="post" style="float: left">
+<div style="float: left">
+<form action="Controller" method="post" >
     <input type="hidden" name="command" value="change-local"/>
     <input type="hidden" name="local" value="ru"/>
     <input type="submit" value="${ru_button}"/><br/>
@@ -46,5 +50,6 @@
     <input type="hidden" name="local" value="en"/>
     <input type="submit" value="${en_button}"/><br/>
 </form>
+</div>
 </body>
 </html>

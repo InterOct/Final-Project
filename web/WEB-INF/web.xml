@@ -27,8 +27,21 @@
         <servlet-name>Controller</servlet-name>
         <url-pattern>/Controller</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>RegisterPage</servlet-name>
+        <jsp-file>/WEB-INF/jsp/user_registration.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>RegisterPage</servlet-name>
+        <url-pattern>/register</url-pattern>
+    </servlet-mapping>
 
     <listener>
         <listener-class>by.epam.task8.simple.controller.ApplicationListener</listener-class>
     </listener>
+    
+    
+    
 </web-app>

@@ -65,6 +65,26 @@ public class UserDAO {
         return user;
     }
 
+    public boolean addUser(User user) throws DAOException {
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+        Connection connection = null;
+        try {
+            connection = connectionPool.takeConnection();
+            String sql = "INSERT INTO  Users(login,password,first_name,last_name,email) VALUES (?,?,?,?,?)";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1,user.getLogin());
+            ps.setString(2,user.getPassword());
+            ps.setString(3,user.getFistName());
+            ps.setString(4,user.getLastName());
+            ps.setString(5,user.getEmail());
+            return ps.executeUpdate() == 1;
+        } catch (ConnectionPoolException | SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            closeConnection(connection);
+        }
+    }
+
     private void closeConnection(Connection connection) {
         try {
             if (connection!=null) {
