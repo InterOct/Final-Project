@@ -1,8 +1,8 @@
-package by.epam.eshop.controller; /**
+package by.epam.eshop.controller.listener; /**
  * Created by Aspire on 30.04.2016.
  */
 
-import by.epam.eshop.dao.ConnectionPool;
+import by.epam.eshop.dao.helper.ConnectionPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

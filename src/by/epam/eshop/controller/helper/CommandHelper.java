@@ -1,13 +1,9 @@
 package by.epam.eshop.controller.helper;
 
 import by.epam.eshop.command.Command;
-import by.epam.eshop.command.CommandName;
-import by.epam.eshop.command.impl.ChangeLocal;
-import by.epam.eshop.command.impl.LoginCommand;
 import by.epam.eshop.command.impl.UnknownCommand;
-import by.epam.eshop.command.impl.RegisterUserCommand;
+import by.epam.eshop.controller.initializer.InitCommandHelper;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public final class CommandHelper {

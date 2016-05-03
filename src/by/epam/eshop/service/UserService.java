@@ -1,20 +1,20 @@
 package by.epam.eshop.service;
 
 import by.epam.eshop.entity.User;
-import by.epam.eshop.dao.UserDAO;
+import by.epam.eshop.dao.impl.UserDAOImpl;
 import by.epam.eshop.dao.exception.DAOException;
 import by.epam.eshop.service.exception.ServiceException;
 
 public final class UserService {
+    private static final UserDAOImpl userDAO = new UserDAOImpl();
 
     public static User checkLogin(String login, String password) throws ServiceException {
         if (!Validator.loginValidate(login, password)) {
             return null;
         }
 
-        UserDAO userDAO = new UserDAO();
         try {
-            User user =  userDAO.getUser(login,password);
+            User user =  userDAO.findByLoginPassword(login,password);
             if (user != null) {
                 return user;
             }
@@ -28,9 +28,9 @@ public final class UserService {
 
     public static boolean registerUser(User user) throws ServiceException {
         if (Validator.userValidate(user)) {
-            UserDAO userDAO = new UserDAO();
+
             try {
-                return userDAO.addUser(user);
+                return userDAO.add(user);
             } catch (DAOException e) {
                 throw new ServiceException("Error access database, while adding user");
             }

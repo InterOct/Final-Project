@@ -1,4 +1,4 @@
-package by.epam.eshop.controller.helper;
+package by.epam.eshop.controller.initializer;
 
 import by.epam.eshop.command.Command;
 import org.apache.logging.log4j.LogManager;
@@ -8,7 +8,9 @@ import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 

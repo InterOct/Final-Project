@@ -7,7 +7,7 @@ import java.util.ResourceBundle;
  */
 public class DBResourceManager {
 
-    private static final String PATH = "by.epam.eshop.dao.resources.db";
+    private static final String PATH = "by.epam.eshop.db";
     private static DBResourceManager instance = new DBResourceManager();
 
     private ResourceBundle bundle = ResourceBundle.getBundle(PATH);

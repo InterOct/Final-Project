@@ -1,4 +1,4 @@
-package by.epam.eshop.dao;
+package by.epam.eshop.dao.helper;
 
 
 import by.epam.eshop.dao.resources.DBParameter;

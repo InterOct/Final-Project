@@ -39,7 +39,7 @@
     </servlet-mapping>
 
     <listener>
-        <listener-class>by.epam.eshop.controller.ApplicationListener</listener-class>
+        <listener-class>by.epam.eshop.controller.listener.ApplicationListener</listener-class>
     </listener>
 
 </web-app>
