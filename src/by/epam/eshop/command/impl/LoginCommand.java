@@ -4,7 +4,7 @@ import by.epam.eshop.command.Command;
 import by.epam.eshop.command.exception.CommandException;
 import by.epam.eshop.controller.PageName;
 import by.epam.eshop.entity.User;
-import by.epam.eshop.service.UserService;
+import by.epam.eshop.service.impl.UserServiceImpl;
 import by.epam.eshop.service.exception.ServiceException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +20,7 @@ public class LoginCommand implements Command {
         String page;
 
         try {
-            User user = UserService.checkLogin(request.getParameter(LOGIN), request.getParameter(PASSWORD));
+            User user = UserServiceImpl.getInstance().singIn(request.getParameter(LOGIN), request.getParameter(PASSWORD));
             if (user != null) {
                 request.getSession(true).setAttribute(USER, user);
                 page = PageName.USER_PAGE;

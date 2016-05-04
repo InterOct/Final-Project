@@ -1,4 +1,4 @@
-package by.epam.eshop.dao.resources;
+package by.epam.eshop.dao.helper;
 
 import java.util.ResourceBundle;
 

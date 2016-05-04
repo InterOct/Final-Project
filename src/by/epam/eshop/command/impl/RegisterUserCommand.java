@@ -3,7 +3,7 @@ package by.epam.eshop.command.impl;
 import by.epam.eshop.command.Command;
 import by.epam.eshop.controller.PageName;
 import by.epam.eshop.entity.User;
-import by.epam.eshop.service.UserService;
+import by.epam.eshop.service.impl.UserServiceImpl;
 import by.epam.eshop.service.exception.ServiceException;
 import by.epam.eshop.command.exception.CommandException;
 
@@ -27,7 +27,7 @@ public class RegisterUserCommand implements Command {
         user.setLastName(request.getParameter(LAST_NAME));
         user.setEmail(request.getParameter(EMAIL));
         try {
-            if(UserService.registerUser(user)) {
+            if(UserServiceImpl.getInstance().registerUser(user)) {
                 request.setAttribute(IS_REGISTERED, Boolean.TRUE);
             } else {
                 request.setAttribute(IS_REGISTERED, Boolean.FALSE);

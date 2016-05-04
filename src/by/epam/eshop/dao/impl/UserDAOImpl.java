@@ -18,6 +18,17 @@ import java.util.List;
 public class UserDAOImpl implements UserDAO {
     private static final Logger LOGGER = LogManager.getRootLogger();
 
+    private static class Holder {
+        private static final UserDAOImpl HOLDER_INSTANCE = new UserDAOImpl();
+    }
+
+    public static UserDAO getInstance() {
+        return Holder.HOLDER_INSTANCE;
+    }
+
+    private UserDAOImpl(){}
+
+    @Override
     public User findByLoginPassword(String login, String password) throws DAOException {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
         Connection connection = null;
@@ -67,6 +78,7 @@ public class UserDAOImpl implements UserDAO {
         return users;
     }
 
+    @Override
     public boolean add(User user) throws DAOException {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
         Connection connection = null;

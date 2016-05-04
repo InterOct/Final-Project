@@ -1,4 +1,4 @@
-package by.epam.eshop.dao.resources;
+package by.epam.eshop.dao.helper;
 
 /**
  * Created by Aspire on 08.04.2016.

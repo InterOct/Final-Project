@@ -1,9 +1,7 @@
 package by.epam.eshop.dao.helper;
 
 
-import by.epam.eshop.dao.resources.DBParameter;
 import by.epam.eshop.dao.exception.ConnectionPoolException;
-import by.epam.eshop.dao.resources.DBResourceManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

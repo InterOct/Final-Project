@@ -53,7 +53,6 @@ public class Controller extends HttpServlet {
         } catch (Throwable e) {
             LOGGER.error(e);
             page = PageName.ERROR_PAGE;
-            throw new RuntimeException(e);
         }
 
         RequestDispatcher dispatcher = request.getRequestDispatcher(page);
