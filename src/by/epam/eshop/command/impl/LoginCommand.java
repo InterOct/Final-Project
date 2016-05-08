@@ -4,8 +4,8 @@ import by.epam.eshop.command.Command;
 import by.epam.eshop.command.exception.CommandException;
 import by.epam.eshop.controller.PageName;
 import by.epam.eshop.entity.User;
-import by.epam.eshop.service.impl.UserServiceImpl;
 import by.epam.eshop.service.exception.ServiceException;
+import by.epam.eshop.service.impl.UserServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -22,6 +22,8 @@ public class LoginCommand implements Command {
         try {
             User user = UserServiceImpl.getInstance().singIn(request.getParameter(LOGIN), request.getParameter(PASSWORD));
             if (user != null) {
+
+
                 request.getSession(true).setAttribute(USER, user);
                 page = PageName.USER_PAGE;
             } else {

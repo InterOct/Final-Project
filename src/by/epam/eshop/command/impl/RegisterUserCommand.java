@@ -1,11 +1,11 @@
 package by.epam.eshop.command.impl;
 
 import by.epam.eshop.command.Command;
+import by.epam.eshop.command.exception.CommandException;
 import by.epam.eshop.controller.PageName;
 import by.epam.eshop.entity.User;
-import by.epam.eshop.service.impl.UserServiceImpl;
 import by.epam.eshop.service.exception.ServiceException;
-import by.epam.eshop.command.exception.CommandException;
+import by.epam.eshop.service.impl.UserServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -23,7 +23,7 @@ public class RegisterUserCommand implements Command {
         User user = new User();
         user.setLogin(request.getParameter(LOGIN));
         user.setPassword(request.getParameter(PASSWORD));
-        user.setFistName(request.getParameter(FIRST_NAME));
+        user.setFirstName(request.getParameter(FIRST_NAME));
         user.setLastName(request.getParameter(LAST_NAME));
         user.setEmail(request.getParameter(EMAIL));
         try {

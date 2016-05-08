@@ -9,15 +9,12 @@ import by.epam.eshop.service.exception.ServiceException;
 
 public class UserServiceImpl implements UserService {
 
-    private static class Holder {
-        private static final UserServiceImpl HOLDER_INSTANCE = new UserServiceImpl();
+    private UserServiceImpl() {
     }
 
     public static UserServiceImpl getInstance() {
         return UserServiceImpl.Holder.HOLDER_INSTANCE;
     }
-
-    private UserServiceImpl(){}
 
     @Override
     public User singIn(String login, String password) throws ServiceException {
@@ -51,6 +48,9 @@ public class UserServiceImpl implements UserService {
         return false;
     }
 
+    private static class Holder {
+        private static final UserServiceImpl HOLDER_INSTANCE = new UserServiceImpl();
+    }
 
     private static class Validator {
         public static boolean loginValidate(String login, String password) {
@@ -60,10 +60,9 @@ public class UserServiceImpl implements UserService {
         public static boolean userValidate(User user) {
             if (user.getLogin().isEmpty()) return false;
             if (user.getPassword().isEmpty()) return false;
-            if (user.getFistName().isEmpty()) return false;
+            if (user.getFirstName().isEmpty()) return false;
             if (user.getLastName().isEmpty()) return false;
-            if (user.getEmail().isEmpty()) return false;
-            return true;
+            return !user.getEmail().isEmpty();
         }
     }
 }

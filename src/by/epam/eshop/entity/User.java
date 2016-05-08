@@ -7,13 +7,20 @@ public class User implements Entity {
     private int id;
     private String login;
     private String password;
-    private String fistName;
+    private String firstName;
     private String lastName;
     private String email;
     private Role role;
 
     public User () {}
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getLogin() {
         return login;
@@ -31,12 +38,12 @@ public class User implements Entity {
         this.password = password;
     }
 
-    public String getFistName() {
-        return fistName;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFistName(String fistName) {
-        this.fistName = fistName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getLastName() {
@@ -79,7 +86,7 @@ public class User implements Entity {
         if (password==null || !password.equals(user.getPassword())) {
             return false;
         }
-        if (fistName == null || !fistName.equals(user.getFistName())){
+        if (firstName == null || !firstName.equals(user.getFirstName())) {
             return false;
         }
         if (lastName == null || !lastName.equals(user.getLastName())) {
@@ -88,10 +95,7 @@ public class User implements Entity {
         if (email == null || !email.equals(user.getEmail())) {
             return false;
         }
-        if (role != getRole()) {
-            return false;
-        }
-        return true;
+        return role == getRole();
 
     }
 
@@ -100,7 +104,7 @@ public class User implements Entity {
         int result = id;
         result = 31 * result + (login != null ? login.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
-        result = 31 * result + (fistName != null ? fistName.hashCode() : 0);
+        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (role != null ? role.hashCode() : 0);
@@ -109,6 +113,8 @@ public class User implements Entity {
 
     private enum Role {
         ADMIN,CUSTOMER
+
     }
+
 
 }

@@ -12,4 +12,8 @@
         <command-name>login</command-name>
         <command-class>by.epam.eshop.command.impl.LoginCommand</command-class>
     </command>
+    <command>
+        <command-name>logout</command-name>
+        <command-class>by.epam.eshop.command.impl.LogoutCommand</command-class>
+    </command>
 </configuration>

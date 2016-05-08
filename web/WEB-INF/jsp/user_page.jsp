@@ -12,9 +12,16 @@
     <fmt:setLocale value="${sessionScope.local}"/>
     <fmt:setBundle basename="localization.local" var="loc"/>
     <fmt:message bundle="${loc}" key="local.message" var="message"/>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
 </head>
 <body>
-<jsp:useBean id="user" class="by.epam.eshop.entity.User" scope="session"/>
-<h1><c:out value="${message}"/>, <jsp:getProperty name="user" property="fistName"/>!</h1>
+<%@include file="nav.jsp" %>
+<h1><c:out value="${message}"/>, ${user.firstName}!</h1>
 </body>
 </html>

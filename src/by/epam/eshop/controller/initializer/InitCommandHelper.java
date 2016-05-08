@@ -50,7 +50,7 @@ public class InitCommandHelper {
                     if (text.isEmpty()) {
                         break;
                     }
-                    SetChildInfo(command, tagName, text);
+                    setChildInfo(command, tagName, text);
                     break;
                 case XMLStreamConstants.END_ELEMENT:
                     tagName = CommandTag.getElementTagName(reader.getLocalName());
@@ -67,6 +67,25 @@ public class InitCommandHelper {
         }
 
         return commandMap;
+    }
+
+    private static void setChildInfo(CommandHolder command, CommandTag tagName, String text) {
+        switch (tagName) {
+            case COMMAND_NAME:
+                command.setName(text);
+                break;
+            case COMMAND_CLASS:
+                command.setClassName(text);
+                break;
+        }
+    }
+
+    private enum CommandTag {
+        COMMAND, COMMAND_NAME, COMMAND_CLASS, CONFIGURATION;
+
+        public static CommandTag getElementTagName(String localName) {
+            return valueOf(localName.toUpperCase().replace('-', '_'));
+        }
     }
 
     private static class CommandHolder {
@@ -87,26 +106,6 @@ public class InitCommandHelper {
 
         public void setClassName(String className) {
             this.className = className;
-        }
-    }
-
-    private static void SetChildInfo(CommandHolder command, CommandTag tagName, String text) {
-        switch (tagName) {
-            case COMMAND_NAME:
-                command.setName(text);
-                break;
-            case COMMAND_CLASS:
-                command.setClassName(text);
-                break;
-        }
-    }
-
-
-    private enum  CommandTag {
-        COMMAND, COMMAND_NAME, COMMAND_CLASS, CONFIGURATION;
-
-        public static CommandTag getElementTagName(String localName) {
-            return valueOf(localName.toUpperCase().replace('-','_'));
         }
     }
 }

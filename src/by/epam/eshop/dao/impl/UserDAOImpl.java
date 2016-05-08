@@ -17,16 +17,16 @@ import java.util.List;
 
 public class UserDAOImpl implements UserDAO {
     private static final Logger LOGGER = LogManager.getRootLogger();
+    private static final String SELECT_USERS = "SELECT login, password, first_name, last_name, role FROM Users";
+    private static final String INSERT_USER = "INSERT INTO  Users(login,password,first_name,last_name,email) VALUES (?,?,?,?,?)";
+    private static final String SELECT_USER_BY_LOGIN_AND_PASSWORD = "SELECT login, password, first_name, last_name, email, role FROM Users WHERE ? = login AND ? = password";
 
-    private static class Holder {
-        private static final UserDAOImpl HOLDER_INSTANCE = new UserDAOImpl();
+    private UserDAOImpl() {
     }
 
     public static UserDAO getInstance() {
         return Holder.HOLDER_INSTANCE;
     }
-
-    private UserDAOImpl(){}
 
     @Override
     public User findByLoginPassword(String login, String password) throws DAOException {
@@ -35,8 +35,10 @@ public class UserDAOImpl implements UserDAO {
         User user = null;
         try {
             connection = connectionPool.takeConnection();
-            String sql = "SELECT login, password, first_name, last_name, email, role FROM Users WHERE \'" + login + "\' = login AND \'" + password + "\' = password";
+            String sql = SELECT_USER_BY_LOGIN_AND_PASSWORD;
             PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, login);
+            ps.setString(2, password);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 user = new User();
@@ -59,7 +61,7 @@ public class UserDAOImpl implements UserDAO {
         List<User> users = new LinkedList<>();
         try {
             connection = connectionPool.takeConnection();
-            String sql = "SELECT login, password, first_name, last_name, role FROM Users";
+            String sql = SELECT_USERS;
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             User user;
@@ -84,11 +86,11 @@ public class UserDAOImpl implements UserDAO {
         Connection connection = null;
         try {
             connection = connectionPool.takeConnection();
-            String sql = "INSERT INTO  Users(login,password,first_name,last_name,email) VALUES (?,?,?,?,?)";
+            String sql = INSERT_USER;
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, user.getLogin());
             ps.setString(2, user.getPassword());
-            ps.setString(3, user.getFistName());
+            ps.setString(3, user.getFirstName());
             ps.setString(4, user.getLastName());
             ps.setString(5, user.getEmail());
             return ps.executeUpdate() == 1;
@@ -122,10 +124,14 @@ public class UserDAOImpl implements UserDAO {
     private void initUser(ResultSet rs, User user) throws SQLException {
         user.setLogin(rs.getString(1));
         user.setPassword(rs.getString(2));
-        user.setFistName(rs.getString(3));
+        user.setFirstName(rs.getString(3));
         user.setLastName(rs.getString(4));
         user.setEmail(rs.getString(5));
         user.setRole(rs.getString(6));
+    }
+
+    private static class Holder {
+        private static final UserDAOImpl HOLDER_INSTANCE = new UserDAOImpl();
     }
 
 }
