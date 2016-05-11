@@ -7,6 +7,8 @@ import by.epam.eshop.entity.User;
 import by.epam.eshop.service.UserService;
 import by.epam.eshop.service.exception.ServiceException;
 
+import java.util.List;
+
 public class UserServiceImpl implements UserService {
 
     private UserServiceImpl() {
@@ -42,10 +44,30 @@ public class UserServiceImpl implements UserService {
             try {
                 return userDAO.add(user);
             } catch (DAOException e) {
-                throw new ServiceException("Error access database, while adding user");
+                throw new ServiceException("Error access database, while adding user", e);
             }
         }
         return false;
+    }
+
+    @Override
+    public List<User> getAll() throws ServiceException {
+        UserDAO userDAO = UserDAOImpl.getInstance();
+        try {
+            return userDAO.getAll();
+        } catch (DAOException e) {
+            throw new ServiceException("Error access database,while getting user", e);
+        }
+    }
+
+    @Override
+    public boolean updateUser(User user) throws ServiceException {
+        UserDAO userDAO = UserDAOImpl.getInstance();
+        try {
+            return userDAO.update(user);
+        } catch (DAOException e) {
+            throw new ServiceException("Error updating user", e);
+        }
     }
 
     private static class Holder {

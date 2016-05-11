@@ -1,39 +1,38 @@
 package by.epam.eshop.command.impl;
 
 import by.epam.eshop.command.Command;
-import by.epam.eshop.command.exception.CommandException;
-import by.epam.eshop.controller.PageName;
 import by.epam.eshop.entity.User;
 import by.epam.eshop.service.exception.ServiceException;
 import by.epam.eshop.service.impl.UserServiceImpl;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 public class LoginCommand implements Command {
+
+    private static final Logger LOGGER = LogManager.getRootLogger();
 
     private static final String LOGIN = "login";
     private static final String PASSWORD = "password";
     private static final String USER = "user";
+    private static final String URL = "url";
 
     @Override
-    public String execute(HttpServletRequest request) throws CommandException {
+    public void execute(HttpServletRequest request, HttpServletResponse response) {
         String page;
-
         try {
             User user = UserServiceImpl.getInstance().singIn(request.getParameter(LOGIN), request.getParameter(PASSWORD));
             if (user != null) {
-
-
                 request.getSession(true).setAttribute(USER, user);
-                page = PageName.USER_PAGE;
-            } else {
-                page = PageName.USER_NOT_FOUND;
             }
+            response.sendRedirect(request.getSession().getAttribute(URL).toString());
         } catch (ServiceException e) {
-            throw new CommandException(e);
+            LOGGER.error("Error login user", e);
+        } catch (IOException e) {
+            LOGGER.error("Can't reach page", e);
         }
-
-        return page;
     }
-
 }

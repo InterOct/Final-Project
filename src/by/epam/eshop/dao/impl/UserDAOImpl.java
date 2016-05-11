@@ -17,9 +17,10 @@ import java.util.List;
 
 public class UserDAOImpl implements UserDAO {
     private static final Logger LOGGER = LogManager.getRootLogger();
-    private static final String SELECT_USERS = "SELECT login, password, first_name, last_name, role FROM Users";
+    private static final String SELECT_USERS = "SELECT login, password, first_name, last_name, email, role FROM Users";
     private static final String INSERT_USER = "INSERT INTO  Users(login,password,first_name,last_name,email) VALUES (?,?,?,?,?)";
     private static final String SELECT_USER_BY_LOGIN_AND_PASSWORD = "SELECT login, password, first_name, last_name, email, role FROM Users WHERE ? = login AND ? = password";
+    private static final String UPDATE_USER = "UPDATE eshop.users SET login=?, password=?, first_name=?, last_name=?, email=?, role=? WHERE ? = login";
 
     private UserDAOImpl() {
     }
@@ -50,7 +51,6 @@ public class UserDAOImpl implements UserDAO {
         } finally {
             closeConnection(connection);
         }
-
         return user;
     }
 
@@ -84,15 +84,33 @@ public class UserDAOImpl implements UserDAO {
     public boolean add(User user) throws DAOException {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
         Connection connection = null;
+        PreparedStatement ps = null;
         try {
             connection = connectionPool.takeConnection();
             String sql = INSERT_USER;
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setString(1, user.getLogin());
-            ps.setString(2, user.getPassword());
-            ps.setString(3, user.getFirstName());
-            ps.setString(4, user.getLastName());
-            ps.setString(5, user.getEmail());
+            ps = connection.prepareStatement(sql);
+            setUserQuery(user, ps);
+            return ps.executeUpdate() == 1;
+        } catch (ConnectionPoolException | SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            closeConnection(connection);
+        }
+    }
+
+
+    @Override
+    public boolean update(User user) throws DAOException {
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+        Connection connection = null;
+        PreparedStatement ps = null;
+        try {
+            connection = connectionPool.takeConnection();
+            String sql = UPDATE_USER;
+            ps = connection.prepareStatement(sql);
+            setUserQuery(user, ps);
+            ps.setString(6, String.valueOf(user.getRole()));
+            ps.setString(7, user.getLogin());
             return ps.executeUpdate() == 1;
         } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);
@@ -102,13 +120,16 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public boolean update(User entity) {
+    public boolean remove(User entity) {
         return false;
     }
 
-    @Override
-    public boolean remove(User entity) {
-        return false;
+    private void setUserQuery(User user, PreparedStatement ps) throws SQLException {
+        ps.setString(1, user.getLogin());
+        ps.setString(2, user.getPassword());
+        ps.setString(3, user.getFirstName());
+        ps.setString(4, user.getLastName());
+        ps.setString(5, user.getEmail());
     }
 
     private void closeConnection(Connection connection) {

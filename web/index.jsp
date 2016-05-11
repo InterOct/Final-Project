@@ -17,6 +17,7 @@
 
     <fmt:setLocale value="${sessionScope.local}"/>
     <fmt:setBundle basename="localization.local" var="loc"/>
+    <c:set scope="session" var="url" value="index.jsp"/>
 </head>
 <body>
 <%@include file="/WEB-INF/jsp/nav.jsp" %>

@@ -1,9 +1,8 @@
 package by.epam.eshop.command;
 
-import by.epam.eshop.command.exception.CommandException;
-
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 public interface Command {
-    String execute(HttpServletRequest request) throws CommandException;
+    void execute(HttpServletRequest request, HttpServletResponse response);
 }

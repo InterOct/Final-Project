@@ -11,8 +11,10 @@
     <fmt:message bundle="${loc}" key="local.errorpage.title" var="title"/>
     <fmt:message bundle="${loc}" key="local.errorpage.text" var="text"/>
     <title><c:out value="${title}"/></title>
+    <c:set scope="session" var="url" value="error.jsp"/>
 </head>
 <body>
+<%@include file="/WEB-INF/jsp/nav.jsp" %>
 <c:out value="${text}"/>
 </body>
 </html>

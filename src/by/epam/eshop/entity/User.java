@@ -67,7 +67,11 @@ public class User implements Entity {
     }
 
     public void setRole(String role) {
-        this.role = Role.valueOf(role.toUpperCase());
+        if (role == null) {
+            this.role = Role.CUSTOMER;
+        } else {
+            this.role = Role.valueOf(role.toUpperCase());
+        }
     }
 
     @Override

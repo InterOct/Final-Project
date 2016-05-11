@@ -27,19 +27,30 @@
         <servlet-name>Controller</servlet-name>
         <url-pattern>/Controller</url-pattern>
     </servlet-mapping>
-    
+
     <servlet>
-        <servlet-name>RegisterPage</servlet-name>
-        <jsp-file>/WEB-INF/jsp/user_registration.jsp</jsp-file>
+        <servlet-name>EditUsers</servlet-name>
+        <jsp-file>/WEB-INF/jsp/edit_users_page.jsp</jsp-file>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>RegisterPage</servlet-name>
-        <url-pattern>/register</url-pattern>
+        <servlet-name>EditUsers</servlet-name>
+        <url-pattern>/admin/edit_users</url-pattern>
     </servlet-mapping>
+
+    <filter-mapping>
+        <filter-name>EditUsers</filter-name>
+        <url-pattern>/admin/edit_users</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>EditUsers</filter-name>
+        <filter-class>by.epam.eshop.controller.filter.EditUserFilter</filter-class>
+    </filter>
 
     <listener>
         <listener-class>by.epam.eshop.controller.listener.ApplicationListener</listener-class>
     </listener>
+
 
 </web-app>

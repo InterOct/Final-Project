@@ -16,4 +16,12 @@
         <command-name>logout</command-name>
         <command-class>by.epam.eshop.command.impl.LogoutCommand</command-class>
     </command>
+    <command>
+        <command-name>to-edit-users</command-name>
+        <command-class>by.epam.eshop.command.impl.navigation.ToEditUsers</command-class>
+    </command>
+    <command>
+        <command-name>edit-user</command-name>
+        <command-class>by.epam.eshop.command.impl.EditUserCommand</command-class>
+    </command>
 </configuration>

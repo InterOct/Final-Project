@@ -19,6 +19,7 @@
     <fmt:setLocale value="${sessionScope.local}"/>
     <fmt:setBundle basename="localization.local" var="loc"/>
     <fmt:message bundle="${loc}" key="local.usernotfound.message" var="message"/>
+    <c:set scope="session" var="url" value="WEB-INF/jsp/user_not_found.jsp"/>
 </head>
 <body>
 <%@include file="nav.jsp" %>

@@ -21,24 +21,26 @@
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <c:set scope="session" var="url" value="registration.jsp"/>
 
 </head>
 <body>
-<form action="Controller" method="post">
-    <%@include file="nav.jsp" %>
+<%@include file="WEB-INF/jsp/nav.jsp" %>
+<form action="${pageContext.request.contextPath}/Controller" method="post">
+
     <input type="hidden" name="command" value="register-user"/>
 
-    ${login_label}: <br/>
-    <input type="text" name="login" value=""/> <br/>
-    ${password_label}: <br/>
-    <input type="password" name="password" value=""/><br/>
-    ${name_label}: <br/>
-    <input type="text" name="firstName" value=""/><br/>
-    ${surname_label}: <br/>
-    <input type="text" name="lastName" value=""/><br/>
-    ${email_label}: <br/>
-    <input type="text" name="email" value=""/><br/>
-    <input type="submit" value="${title}"/>
+    <p><input type="text" name="login" value="" placeholder="${login_label}" pattern="^[a-z0-9_-]{3,16}$"
+              title="Input correct login."></p>
+    <p><input type="password" name="password" value="" placeholder="${password_label}" pattern="^[a-zA-Z\d]{8,}$"
+              title="Input correct password."></p>
+    <p><input type="text" name="firstName" value="" placeholder="${name_label}" pattern="[А-ЯA-Zа-яa-z\s-]{2,45}"
+              title="Input correct first name."></p>
+    <p><input type="text" name="lastName" value="" placeholder="${surname_label}" pattern="[А-ЯA-Zа-яa-z\s-]{2,45}"
+              title="Input correct last name."></p>
+    <p><input type="text" name="email" value="" placeholder="${email_label}" pattern="[А-ЯA-Zа-яa-z\s-]{2,45}"></p>
+
+    <input type="submit" value="${singup}">
 </form>
 
 </body>
