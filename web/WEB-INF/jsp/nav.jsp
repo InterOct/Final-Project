@@ -54,7 +54,9 @@
                             <li>
                                 <a href="${pageContext.request.contextPath}/admin/edit_users">${edit_users}</a>
                             </li>
-                            <li><a href="#">${edit_categories}</a></li>
+                            <li>
+                                <a href="${pageContext.request.contextPath}/admin/edit_categories">${edit_categories}</a>
+                            </li>
                             <li><a href="#">${edit_goods}</a></li>
                         </ul>
                     </li>

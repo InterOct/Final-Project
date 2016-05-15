@@ -38,7 +38,8 @@
               title="Input correct first name."></p>
     <p><input type="text" name="lastName" value="" placeholder="${surname_label}" pattern="[А-ЯA-Zа-яa-z\s-]{2,45}"
               title="Input correct last name."></p>
-    <p><input type="text" name="email" value="" placeholder="${email_label}" pattern="[А-ЯA-Zа-яa-z\s-]{2,45}"></p>
+    <p><input type="text" name="email" value="" placeholder="${email_label}"
+              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"></p>
 
     <input type="submit" value="${singup}">
 </form>

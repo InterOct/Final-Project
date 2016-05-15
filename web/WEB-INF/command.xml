@@ -24,4 +24,20 @@
         <command-name>edit-user</command-name>
         <command-class>by.epam.eshop.command.impl.EditUserCommand</command-class>
     </command>
+    <command>
+        <command-name>to-edit-categories</command-name>
+        <command-class>by.epam.eshop.command.impl.navigation.ToEditCategories</command-class>
+    </command>
+    <command>
+        <command-name>add-category</command-name>
+        <command-class>by.epam.eshop.command.impl.AddCategoryCommand</command-class>
+    </command>
+    <command>
+        <command-name>remove-category</command-name>
+        <command-class>by.epam.eshop.command.impl.RemoveCategoryCommand</command-class>
+    </command>
+    <command>
+        <command-name>edit-category</command-name>
+        <command-class>by.epam.eshop.command.impl.EditCategoryCommand</command-class>
+    </command>
 </configuration>

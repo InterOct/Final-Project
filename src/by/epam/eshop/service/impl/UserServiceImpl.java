@@ -14,7 +14,7 @@ public class UserServiceImpl implements UserService {
     private UserServiceImpl() {
     }
 
-    public static UserServiceImpl getInstance() {
+    public static UserService getInstance() {
         return UserServiceImpl.Holder.HOLDER_INSTANCE;
     }
 
@@ -71,7 +71,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private static class Holder {
-        private static final UserServiceImpl HOLDER_INSTANCE = new UserServiceImpl();
+        private static final UserService HOLDER_INSTANCE = new UserServiceImpl();
     }
 
     private static class Validator {

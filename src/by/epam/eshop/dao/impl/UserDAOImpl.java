@@ -5,8 +5,6 @@ import by.epam.eshop.dao.exception.ConnectionPoolException;
 import by.epam.eshop.dao.exception.DAOException;
 import by.epam.eshop.dao.helper.ConnectionPool;
 import by.epam.eshop.entity.User;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,7 +14,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class UserDAOImpl implements UserDAO {
-    private static final Logger LOGGER = LogManager.getRootLogger();
     private static final String SELECT_USERS = "SELECT login, password, first_name, last_name, email, role FROM Users";
     private static final String INSERT_USER = "INSERT INTO  Users(login,password,first_name,last_name,email) VALUES (?,?,?,?,?)";
     private static final String SELECT_USER_BY_LOGIN_AND_PASSWORD = "SELECT login, password, first_name, last_name, email, role FROM Users WHERE ? = login AND ? = password";
@@ -34,10 +31,11 @@ public class UserDAOImpl implements UserDAO {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
         Connection connection = null;
         User user = null;
+        PreparedStatement ps = null;
         try {
             connection = connectionPool.takeConnection();
             String sql = SELECT_USER_BY_LOGIN_AND_PASSWORD;
-            PreparedStatement ps = connection.prepareStatement(sql);
+            ps = connection.prepareStatement(sql);
             ps.setString(1, login);
             ps.setString(2, password);
             ResultSet rs = ps.executeQuery();
@@ -49,7 +47,7 @@ public class UserDAOImpl implements UserDAO {
         } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);
         } finally {
-            closeConnection(connection);
+            connectionPool.closeConnection(connection, ps);
         }
         return user;
     }
@@ -58,12 +56,14 @@ public class UserDAOImpl implements UserDAO {
     public List<User> getAll() throws DAOException {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
         Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         List<User> users = new LinkedList<>();
         try {
             connection = connectionPool.takeConnection();
             String sql = SELECT_USERS;
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
+            ps = connection.prepareStatement(sql);
+            rs = ps.executeQuery();
             User user;
             while (rs.next()) {
                 user = new User();
@@ -74,7 +74,7 @@ public class UserDAOImpl implements UserDAO {
         } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);
         } finally {
-            closeConnection(connection);
+            connectionPool.closeConnection(connection, ps, rs);
         }
 
         return users;
@@ -94,10 +94,9 @@ public class UserDAOImpl implements UserDAO {
         } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);
         } finally {
-            closeConnection(connection);
+            connectionPool.closeConnection(connection, ps);
         }
     }
-
 
     @Override
     public boolean update(User user) throws DAOException {
@@ -115,7 +114,7 @@ public class UserDAOImpl implements UserDAO {
         } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);
         } finally {
-            closeConnection(connection);
+            connectionPool.closeConnection(connection, ps);
         }
     }
 
@@ -132,16 +131,6 @@ public class UserDAOImpl implements UserDAO {
         ps.setString(5, user.getEmail());
     }
 
-    private void closeConnection(Connection connection) {
-        try {
-            if (connection != null) {
-                connection.close();
-            }
-        } catch (SQLException e) {
-            LOGGER.error("Error closing connection", e);
-        }
-    }
-
     private void initUser(ResultSet rs, User user) throws SQLException {
         user.setLogin(rs.getString(1));
         user.setPassword(rs.getString(2));
@@ -154,5 +143,6 @@ public class UserDAOImpl implements UserDAO {
     private static class Holder {
         private static final UserDAOImpl HOLDER_INSTANCE = new UserDAOImpl();
     }
+
 
 }

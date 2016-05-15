@@ -48,6 +48,26 @@
         <filter-class>by.epam.eshop.controller.filter.EditUserFilter</filter-class>
     </filter>
 
+    <servlet>
+        <servlet-name>EditCategories</servlet-name>
+        <jsp-file>/WEB-INF/jsp/edit_categories_page.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>EditCategories</servlet-name>
+        <url-pattern>/admin/edit_categories</url-pattern>
+    </servlet-mapping>
+
+    <filter-mapping>
+        <filter-name>EditCategories</filter-name>
+        <url-pattern>/admin/edit_categories</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>EditCategories</filter-name>
+        <filter-class>by.epam.eshop.controller.filter.EditCategoriesFilter</filter-class>
+    </filter>
+
     <listener>
         <listener-class>by.epam.eshop.controller.listener.ApplicationListener</listener-class>
     </listener>

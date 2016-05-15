@@ -73,7 +73,6 @@
                 </c:forEach>
                 </tbody>
             </table>
-            >
         </c:if>
     </div>
 </div>
