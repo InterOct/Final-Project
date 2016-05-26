@@ -21,5 +21,27 @@
 </head>
 <body>
 <%@include file="/WEB-INF/jsp/nav.jsp" %>
+<div style="float: left">
+    <ul>
+        <c:forEach var="category" items="${applicationScope.categories}">
+            <li><a href="#">${category.name}</a></li>
+        </c:forEach>
+    </ul>
+</div>
+<div style="float: left">
+    <c:forEach var="product" items="${requestScope.products}">
+        <div style="float: right; width: 100px; height: 150px">
+            <img src="${product.imgPath}" alt="${product.name}" height="100px"><br>
+            <div style="height: 60px">
+                <span>${product.name}</span><br>
+                <span>${product.price}</span><br>
+            </div>
+            <form action="${pageContext.request.contextPath}/Controller">
+                <input type="hidden" name="command" value="add-to-cart">
+                <input type="submit" value="Cart" style="float: left">
+            </form>
+        </div>
+    </c:forEach>
+</div>
 </body>
 </html>

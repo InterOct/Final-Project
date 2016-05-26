@@ -1,0 +1,85 @@
+package by.epam.eshop.service.impl;
+
+import by.epam.eshop.dao.ProductDAO;
+import by.epam.eshop.dao.exception.DAOException;
+import by.epam.eshop.dao.impl.ProductDAOImpl;
+import by.epam.eshop.entity.Product;
+import by.epam.eshop.service.ProductService;
+import by.epam.eshop.service.exception.ServiceException;
+
+import java.util.List;
+
+public class ProductServiceImpl implements ProductService {
+
+    private ProductServiceImpl() {
+    }
+
+    public static ProductService getInstance() {
+        return ProductServiceImpl.Holder.HOLDER_INSTANCE;
+    }
+
+    @Override
+    public boolean addProduct(Product product) throws ServiceException {
+        if (Validator.productValidate(product)) {
+            ProductDAO productDAO = ProductDAOImpl.getInstance();
+            try {
+                return productDAO.add(product);
+            } catch (DAOException e) {
+                throw new ServiceException("Error access database, while adding product", e);
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public List<Product> getAll() throws ServiceException {
+        ProductDAO productDAO = ProductDAOImpl.getInstance();
+        try {
+            return productDAO.getAll();
+        } catch (DAOException e) {
+            throw new ServiceException("Error access database,while getting product", e);
+        }
+    }
+
+    @Override
+    public boolean updateProduct(Product product) throws ServiceException {
+        ProductDAO productDAO = ProductDAOImpl.getInstance();
+        try {
+            return productDAO.update(product);
+        } catch (DAOException e) {
+            throw new ServiceException("Error updating product", e);
+        }
+    }
+
+    @Override
+    public boolean removeProduct(Product product) throws ServiceException {
+        ProductDAO productDAO = ProductDAOImpl.getInstance();
+        try {
+            return productDAO.remove(product);
+        } catch (DAOException e) {
+            throw new ServiceException("Error removing product", e);
+        }
+    }
+
+    private static class Holder {
+        private static final ProductService HOLDER_INSTANCE = new ProductServiceImpl();
+    }
+
+    private static class Validator {
+        public static boolean productValidate(Product product) {
+            if (product.getCatName().isEmpty()) {
+                return false;
+            }
+            if (product.getName().isEmpty()) {
+                return false;
+            }
+            if (product.getProducer().isEmpty()) {
+                return false;
+            }
+            if (product.getImgPath().isEmpty()) {
+                return false;
+            }
+            return !product.getDescription().isEmpty();
+        }
+    }
+}

@@ -40,4 +40,20 @@
         <command-name>edit-category</command-name>
         <command-class>by.epam.eshop.command.impl.EditCategoryCommand</command-class>
     </command>
+    <command>
+        <command-name>to-edit-products</command-name>
+        <command-class>by.epam.eshop.command.impl.navigation.ToEditProducts</command-class>
+    </command>
+    <command>
+        <command-name>add-product</command-name>
+        <command-class>by.epam.eshop.command.impl.AddProductCommand</command-class>
+    </command>
+    <command>
+        <command-name>remove-product</command-name>
+        <command-class>by.epam.eshop.command.impl.RemoveProductCommand</command-class>
+    </command>
+    <command>
+        <command-name>edit-product</command-name>
+        <command-class>by.epam.eshop.command.impl.EditProductCommand</command-class>
+    </command>
 </configuration>

@@ -1,10 +1,10 @@
 package by.epam.eshop.dao.impl;
 
-import by.epam.eshop.dao.CategoryDAO;
+import by.epam.eshop.dao.ProductDAO;
 import by.epam.eshop.dao.exception.ConnectionPoolException;
 import by.epam.eshop.dao.exception.DAOException;
 import by.epam.eshop.dao.helper.ConnectionPool;
-import by.epam.eshop.entity.Category;
+import by.epam.eshop.entity.Product;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,36 +13,36 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-public class CategoryDAOImpl implements CategoryDAO {
-    private static final String SELECT_CATEGORIES = "SELECT cat_name, description FROM Category";
-    private static final String INSERT_CATEGORY = "INSERT INTO  Category(cat_name, description) VALUES (?,?)";
-    private static final String UPDATE_CATEGORY = "UPDATE eshop.category SET cat_name=?, description=? WHERE ? = cat_name";
-    private static final String DELETE_CATEGORY = "DELETE FROM eshop.category WHERE cat_name = ?";
+public class ProductDAOImpl implements ProductDAO {
+    private static final String SELECT_PRODUCTS = "SELECT g_id, cat_name, name, price, producer, imgPath, description FROM Product";
+    private static final String INSERT_PRODUCT = "INSERT INTO  eshop.product(cat_name, name, price, producer, imgPath, description) VALUES (?,?,?,?,?,?)";
+    private static final String UPDATE_PRODUCT = "UPDATE eshop.product SET cat_name=?, name=?,price=?,producer=?,imgPath=?,description=? WHERE ? = g_id";
+    private static final String DELETE_PRODUCT = "DELETE FROM eshop.product WHERE g_id = ?";
 
-    private CategoryDAOImpl() {
+    private ProductDAOImpl() {
     }
 
-    public static CategoryDAO getInstance() {
+    public static ProductDAO getInstance() {
         return Holder.HOLDER_INSTANCE;
     }
 
     @Override
-    public List<Category> getAll() throws DAOException {
+    public List<Product> getAll() throws DAOException {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
         Connection connection = null;
-        List<Category> users = new LinkedList<>();
+        List<Product> products = new LinkedList<>();
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
             connection = connectionPool.takeConnection();
-            String sql = SELECT_CATEGORIES;
+            String sql = SELECT_PRODUCTS;
             ps = connection.prepareStatement(sql);
             rs = ps.executeQuery();
-            Category category;
+            Product product;
             while (rs.next()) {
-                category = new Category();
-                initCategory(rs, category);
-                users.add(category);
+                product = new Product();
+                initProduct(rs, product);
+                products.add(product);
             }
 
         } catch (ConnectionPoolException | SQLException e) {
@@ -50,20 +50,19 @@ public class CategoryDAOImpl implements CategoryDAO {
         } finally {
             connectionPool.closeConnection(connection, ps, rs);
         }
-
-        return users;
+        return products;
     }
 
     @Override
-    public boolean add(Category category) throws DAOException {
+    public boolean add(Product product) throws DAOException {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
         Connection connection = null;
         PreparedStatement ps = null;
         try {
             connection = connectionPool.takeConnection();
-            String sql = INSERT_CATEGORY;
+            String sql = INSERT_PRODUCT;
             ps = connection.prepareStatement(sql);
-            setCategoryQuery(category, ps);
+            setProductQuery(product, ps);
             return ps.executeUpdate() == 1;
         } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);
@@ -73,16 +72,16 @@ public class CategoryDAOImpl implements CategoryDAO {
     }
 
     @Override
-    public boolean update(Category category) throws DAOException {
+    public boolean update(Product product) throws DAOException {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
         Connection connection = null;
         PreparedStatement ps = null;
         try {
             connection = connectionPool.takeConnection();
-            String sql = UPDATE_CATEGORY;
+            String sql = UPDATE_PRODUCT;
             ps = connection.prepareStatement(sql);
-            setCategoryQuery(category, ps);
-            ps.setString(3, category.getName());
+            setProductQuery(product, ps);
+            ps.setInt(7, product.getId());
             return ps.executeUpdate() == 1;
         } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);
@@ -92,15 +91,15 @@ public class CategoryDAOImpl implements CategoryDAO {
     }
 
     @Override
-    public boolean remove(Category category) throws DAOException {
+    public boolean remove(Product product) throws DAOException {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
         Connection connection = null;
         PreparedStatement ps = null;
         try {
             connection = connectionPool.takeConnection();
-            String sql = DELETE_CATEGORY;
+            String sql = DELETE_PRODUCT;
             ps = connection.prepareStatement(sql);
-            ps.setString(1, category.getName());
+            ps.setInt(1, product.getId());
             return ps.executeUpdate() == 1;
         } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);
@@ -109,18 +108,27 @@ public class CategoryDAOImpl implements CategoryDAO {
         }
     }
 
-    private void setCategoryQuery(Category category, PreparedStatement ps) throws SQLException {
-        ps.setString(1, category.getName());
-        ps.setString(2, category.getDescription());
+    private void setProductQuery(Product product, PreparedStatement ps) throws SQLException {
+        ps.setString(1, product.getCatName());
+        ps.setString(2, product.getName());
+        ps.setDouble(3, product.getPrice());
+        ps.setString(4, product.getProducer());
+        ps.setString(5, product.getImgPath());
+        ps.setString(6, product.getDescription());
     }
 
-    private void initCategory(ResultSet rs, Category category) throws SQLException {
-        category.setName(rs.getString(1));
-        category.setDescription(rs.getString(2));
+    private void initProduct(ResultSet rs, Product product) throws SQLException {
+        product.setId(rs.getInt(1));
+        product.setCatName(rs.getString(2));
+        product.setName(rs.getString(3));
+        product.setPrice(rs.getDouble(4));
+        product.setProducer(rs.getString(5));
+        product.setImgPath(rs.getString(6));
+        product.setDescription(rs.getString(7));
     }
 
     private static class Holder {
-        private static final CategoryDAO HOLDER_INSTANCE = new CategoryDAOImpl();
+        private static final ProductDAO HOLDER_INSTANCE = new ProductDAOImpl();
     }
 
 }

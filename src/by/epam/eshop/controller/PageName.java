@@ -8,6 +8,7 @@ public final class PageName {
     public static final String USER_REGISTRATION_PAGE = "registration.jsp";
     public static final String EDIT_USERS = "/admin/edit_users";
     public static final String EDIT_CATEGORY = "/admin/edit_categories";
+    public static final String EDIT_PRODUCTS = "/admin/edit_products";
 
     private PageName() {
     }

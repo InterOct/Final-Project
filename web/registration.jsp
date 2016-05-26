@@ -40,6 +40,8 @@
               title="Input correct last name."></p>
     <p><input type="text" name="email" value="" placeholder="${email_label}"
               pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"></p>
+    <input type="tel" pattern="\([0-9]{3}\)\s[0-9]{3}-[0-9]{2}-[0-9]{2}" name="phone" placeholder="+375(29)1213457"
+           title="Телефон" required/><br>
 
     <input type="submit" value="${singup}">
 </form>

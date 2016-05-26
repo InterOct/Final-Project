@@ -39,9 +39,9 @@
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">${categories}<span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">Category1</a></li>
-                        <li><a href="#">Category2</a></li>
-                        <li><a href="#">Category3</a></li>
+                        <c:forEach var="category" items="${applicationScope.categories}">
+                            <li><a href="#">${category.name}</a></li>
+                        </c:forEach>
                     </ul>
                 </li>
             </ul>
@@ -54,10 +54,11 @@
                             <li>
                                 <a href="${pageContext.request.contextPath}/admin/edit_users">${edit_users}</a>
                             </li>
+                            MySQL - eshop@localhost
                             <li>
                                 <a href="${pageContext.request.contextPath}/admin/edit_categories">${edit_categories}</a>
                             </li>
-                            <li><a href="#">${edit_goods}</a></li>
+                            <li><a href="${pageContext.request.contextPath}/admin/edit_products">${edit_goods}</a></li>
                         </ul>
                     </li>
                 </c:if>
@@ -69,7 +70,7 @@
                             <ul class="dropdown-menu">
                                 <li>
                                     <div>
-                                        <form action="Controller" method="post">
+                                        <form action="${pageContext.request.contextPath}/Controller" method="post">
                                             <input type="hidden" name="command" value="login"/>
 
                                             <c:out value="${login_label}"/>: <br/>
