@@ -93,6 +93,36 @@
         <url-pattern>/index.jsp</url-pattern>
     </filter-mapping>
 
+    <servlet>
+        <servlet-name>Cart</servlet-name>
+        <jsp-file>/WEB-INF/jsp/cart.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Cart</servlet-name>
+        <url-pattern>/cart</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>UserPage</servlet-name>
+        <jsp-file>/WEB-INF/jsp/user_page.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>UserPage</servlet-name>
+        <url-pattern>/user_page</url-pattern>
+    </servlet-mapping>
+
+    <filter>
+        <filter-name>UserPage</filter-name>
+        <filter-class>by.epam.eshop.controller.filter.ToUserOrdersFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>UserPage</filter-name>
+        <url-pattern>/user_page</url-pattern>
+    </filter-mapping>
+
     <listener>
         <listener-class>by.epam.eshop.controller.listener.ApplicationListener</listener-class>
     </listener>

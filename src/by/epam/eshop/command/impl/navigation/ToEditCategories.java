@@ -22,7 +22,7 @@ public class ToEditCategories implements Command {
         try {
             request.setAttribute(CATEGORIES, categoryService.getAll());
         } catch (ServiceException e) {
-            LOGGER.error("Error getting products", e);
+            LOGGER.error("Error getting categories", e);
         }
     }
 }

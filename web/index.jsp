@@ -36,8 +36,15 @@
                 <span>${product.name}</span><br>
                 <span>${product.price}</span><br>
             </div>
-            <form action="${pageContext.request.contextPath}/Controller">
+            <form action="${pageContext.request.contextPath}/Controller" method="post">
                 <input type="hidden" name="command" value="add-to-cart">
+                <input type="hidden" name="id" value="${product.id}"/>
+                <input type="hidden" name="name" value="${product.name}"/>
+                <input type="hidden" name="catName" value="${product.catName}"/>
+                <input type="hidden" name="price" value="${product.price}"/>
+                <input type="hidden" name="producer" value="${product.producer}"/>
+                <input type="hidden" name="imgPath" value="${product.imgPath}"/>
+                <input type="hidden" name="description" value="${product.description}"/>
                 <input type="submit" value="Cart" style="float: left">
             </form>
         </div>

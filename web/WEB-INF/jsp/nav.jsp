@@ -46,22 +46,28 @@
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <c:if test="${(not empty sessionScope.user) and (sessionScope.user.role eq 'ADMIN')}">
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">${admin}<span
-                                class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="${pageContext.request.contextPath}/admin/edit_users">${edit_users}</a>
-                            </li>
-                            MySQL - eshop@localhost
-                            <li>
-                                <a href="${pageContext.request.contextPath}/admin/edit_categories">${edit_categories}</a>
-                            </li>
-                            <li><a href="${pageContext.request.contextPath}/admin/edit_products">${edit_goods}</a></li>
-                        </ul>
-                    </li>
-                </c:if>
+                <c:choose>
+                    <c:when test="${(not empty sessionScope.user) and (sessionScope.user.role eq 'ADMIN')}">
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">${admin}<span
+                                    class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="${pageContext.request.contextPath}/admin/edit_users">${edit_users}</a>
+                                </li>
+                                <li>
+                                    <a href="${pageContext.request.contextPath}/admin/edit_categories">${edit_categories}</a>
+                                </li>
+                                <li>
+                                    <a href="${pageContext.request.contextPath}/admin/edit_products">${edit_goods}</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </c:when>
+                    <c:otherwise>
+                        <li><a href="${pageContext.request.contextPath}/cart">Cart</a></li>
+                    </c:otherwise>
+                </c:choose>
                 <li class="dropdown">
                     <c:choose>
                         <c:when test="${empty sessionScope.user.firstName}">
@@ -90,6 +96,9 @@
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span
                                     class="glyphicon glyphicon-user"></span> ${user.firstName}</a>
                             <ul class="dropdown-menu">
+                                <li>
+                                    <a href="/user_page">User page</a>
+                                </li>
                                 <li>
                                     <form action="${pageContext.request.contextPath}/Controller" method="post">
                                         <input type="hidden" name="command" value="logout"/>

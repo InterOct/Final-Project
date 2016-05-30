@@ -18,11 +18,39 @@
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <c:set scope="session" var="url" value="WEB-INF/jsp/user_page.jsp"/>
+    <c:set scope="session" var="url" value="/user_page"/>
 
 </head>
 <body>
 <%@include file="nav.jsp" %>
 <h1><c:out value="${message}"/>, ${user.firstName}!</h1>
+<form action="${pageContext.request.contextPath}/Controller" method="post">
+    <input type="text" name="login" value="${user.login}"/><br>
+    <input type="text" name="password" value="${user.password}"/><br>
+    <input type="text" name="firstName" value="${user.firstName}"/><br>
+    <input type="text" name="lastName" value="${user.lastName}"/><br>
+    <input type="text" name="email" value="${user.email}"/><br>
+</form>
+<table class="table table-condensed">
+    <c:forEach var="order" items="${requestScope.orders}">
+        <tr>
+            <td><span>${order.date}</span></td>
+            <td><span>${order.status}</span></td>
+            <td>
+                <table class="table table-condensed">
+                    <c:forEach var="productMap" items="${order.products}">
+                        <tr>
+                            <td><span>${productMap.key.name}</span></td>
+                            <td><span>${productMap.key.price}</span></td>
+                            <td><span>${productMap.value}</span></td>
+                        </tr>
+                    </c:forEach>
+                </table>
+
+            </td>
+        </tr>
+    </c:forEach>
+</table>
+
 </body>
 </html>

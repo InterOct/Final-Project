@@ -16,7 +16,7 @@ import java.util.List;
 public class UserDAOImpl implements UserDAO {
     private static final String SELECT_USERS = "SELECT login, password, first_name, last_name, email, role FROM Users";
     private static final String INSERT_USER = "INSERT INTO  Users(login,password,first_name,last_name,email) VALUES (?,?,?,?,?)";
-    private static final String SELECT_USER_BY_LOGIN_AND_PASSWORD = "SELECT login, password, first_name, last_name, email, role FROM Users WHERE ? = login AND ? = password";
+    private static final String SELECT_USER_BY_LOGIN_AND_PASSWORD = "SELECT login, password, first_name, last_name, email, role, id FROM Users WHERE ? = login AND ? = password";
     private static final String UPDATE_USER = "UPDATE eshop.users SET login=?, password=?, first_name=?, last_name=?, email=?, role=? WHERE ? = login";
 
     private UserDAOImpl() {
@@ -42,6 +42,7 @@ public class UserDAOImpl implements UserDAO {
             if (rs.next()) {
                 user = new User();
                 initUser(rs, user);
+                user.setId(rs.getInt(7));
             }
 
         } catch (ConnectionPoolException | SQLException e) {

@@ -56,4 +56,24 @@
         <command-name>edit-product</command-name>
         <command-class>by.epam.eshop.command.impl.EditProductCommand</command-class>
     </command>
+    <command>
+        <command-name>add-to-cart</command-name>
+        <command-class>by.epam.eshop.command.impl.AddToCartCommand</command-class>
+    </command>
+    <command>
+        <command-name>remove-from-cart</command-name>
+        <command-class>by.epam.eshop.command.impl.RemoveFromCartCommand</command-class>
+    </command>
+    <command>
+        <command-name>buy</command-name>
+        <command-class>by.epam.eshop.command.impl.BuyCommand</command-class>
+    </command>
+    <command>
+        <command-name>to-user-orders</command-name>
+        <command-class>by.epam.eshop.command.impl.GetUserOrdersCommand</command-class>
+    </command>
+    <command>
+        <command-name>edit-order</command-name>
+        <command-class>by.epam.eshop.command.impl.EditOrderCommand</command-class>
+    </command>
 </configuration>

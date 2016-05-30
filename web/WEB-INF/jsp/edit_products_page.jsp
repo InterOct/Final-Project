@@ -60,7 +60,6 @@
                     <td><input type="text" name="imgPath" value=""/></td>
                     <td><input type="text" name="description" value=""/></td>
                     <td><input type="submit" value="${add}"/></td>
-                <tr></tr>
                 </tr>
             </form>
             </tbody>

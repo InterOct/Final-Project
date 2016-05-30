@@ -109,13 +109,13 @@ public class Product implements Entity {
         int result;
         long temp;
         result = id;
-        result = 31 * result + catName.hashCode();
-        result = 31 * result + name.hashCode();
+        result = 31 * result + (catName != null ? catName.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
         temp = Double.doubleToLongBits(price);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
-        result = 31 * result + producer.hashCode();
-        result = 31 * result + imgPath.hashCode();
-        result = 31 * result + description.hashCode();
+        result = 31 * result + (producer != null ? producer.hashCode() : 0);
+        result = 31 * result + (imgPath != null ? imgPath.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
         return result;
     }
 }

@@ -30,7 +30,6 @@ public class Controller extends HttpServlet {
 
     @Override
     protected void service(HttpServletRequest arg0, HttpServletResponse arg1) throws ServletException, IOException {
-
         super.service(arg0, arg1);
     }
 
@@ -43,6 +42,7 @@ public class Controller extends HttpServlet {
         String commandName = request.getParameter(COMMAND_NAME);
         Command command = commandHelper.getCommand(commandName);
         command.execute(request, response);
+
 
     }
 

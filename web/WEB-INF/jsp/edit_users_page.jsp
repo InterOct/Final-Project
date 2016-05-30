@@ -59,14 +59,15 @@
                             <td><input type="text" name="firstName" value="${user.firstName}"/></td>
                             <td><input type="text" name="lastName" value="${user.lastName}"/></td>
                             <td><input type="text" name="email" value="${user.email}"/></td>
-                            <td><c:choose>
-                                <c:when test="${user.role eq 'ADMIN'}">
-                                    <input type="checkbox" name="role" value="ADMIN" checked/>
-                                </c:when>
-                                <c:otherwise>
-                                    <input type="checkbox" name="role" value="ADMIN"/>
-                                </c:otherwise>
-                            </c:choose></td>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${user.role eq 'ADMIN'}">
+                                        <input type="checkbox" name="role" value="ADMIN" checked/>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <input type="checkbox" name="role" value="ADMIN"/>
+                                    </c:otherwise>
+                                </c:choose></td>
                             <td><input type="submit" value="${edit}"/></td>
                         </tr>
                     </form>

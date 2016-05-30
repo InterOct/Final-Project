@@ -14,9 +14,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class ProductDAOImpl implements ProductDAO {
-    private static final String SELECT_PRODUCTS = "SELECT g_id, cat_name, name, price, producer, imgPath, description FROM Product";
-    private static final String INSERT_PRODUCT = "INSERT INTO  eshop.product(cat_name, name, price, producer, imgPath, description) VALUES (?,?,?,?,?,?)";
-    private static final String UPDATE_PRODUCT = "UPDATE eshop.product SET cat_name=?, name=?,price=?,producer=?,imgPath=?,description=? WHERE ? = g_id";
+    private static final String SELECT_PRODUCTS = "SELECT g_id, cat_name, name, price, short_description, imgPath, description FROM Product";
+    private static final String INSERT_PRODUCT = "INSERT INTO  eshop.product(cat_name, name, price, short_description, imgPath, description) VALUES (?,?,?,?,?,?)";
+    private static final String UPDATE_PRODUCT = "UPDATE eshop.product SET cat_name=?, name=?,price=?,short_description=?,imgPath=?,description=? WHERE ? = g_id";
     private static final String DELETE_PRODUCT = "DELETE FROM eshop.product WHERE g_id = ?";
 
     private ProductDAOImpl() {
