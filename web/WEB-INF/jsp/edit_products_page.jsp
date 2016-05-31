@@ -89,7 +89,7 @@
                             <td><input type="text" name="name" value="${product.name}"/></td>
                             <td><input type="text" name="catName" value="${product.catName}"/></td>
                             <td><input type="text" name="price" value="${product.price}"/></td>
-                            <td><input type="text" name="producer" value="${product.producer}"/></td>
+                            <td><input type="text" name="producer" value="${product.shortDescription}"/></td>
                             <td><input type="text" name="imgPath" value="${product.imgPath}"/></td>
                             <td><input type="text" name="description" value="${product.description}"/></td>
                             <td><input type="submit" value="${edit}"/></td>

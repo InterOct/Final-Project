@@ -14,10 +14,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class UserDAOImpl implements UserDAO {
-    private static final String SELECT_USERS = "SELECT login, password, first_name, last_name, email, role FROM Users";
-    private static final String INSERT_USER = "INSERT INTO  Users(login,password,first_name,last_name,email) VALUES (?,?,?,?,?)";
-    private static final String SELECT_USER_BY_LOGIN_AND_PASSWORD = "SELECT login, password, first_name, last_name, email, role, id FROM Users WHERE ? = login AND ? = password";
-    private static final String UPDATE_USER = "UPDATE eshop.users SET login=?, password=?, first_name=?, last_name=?, email=?, role=? WHERE ? = login";
+    private static final String SELECT_USERS = "SELECT login, password, first_name, last_name, email, role, address, tel, banned, discount FROM Users";
+    private static final String INSERT_USER = "INSERT INTO  Users(login, password, first_name, last_name, email, role, address, tel, banned, discount) VALUES (?,?,?,?,?,?,?,?,?,?)";
+    private static final String SELECT_USER_BY_LOGIN_AND_PASSWORD = "SELECT login, password, first_name, last_name, email, role, address, tel, banned, discount, id FROM Users WHERE ? = login AND ? = password";
+    private static final String UPDATE_USER = "UPDATE eshop.users SET login=?, password=?, first_name=?, last_name=?, email=?, role=?, address=?, tel=?,banned=?, discount=? WHERE ? = login";
 
     private UserDAOImpl() {
     }
@@ -42,7 +42,7 @@ public class UserDAOImpl implements UserDAO {
             if (rs.next()) {
                 user = new User();
                 initUser(rs, user);
-                user.setId(rs.getInt(7));
+                user.setId(rs.getInt(11));
             }
 
         } catch (ConnectionPoolException | SQLException e) {
@@ -109,8 +109,7 @@ public class UserDAOImpl implements UserDAO {
             String sql = UPDATE_USER;
             ps = connection.prepareStatement(sql);
             setUserQuery(user, ps);
-            ps.setString(6, String.valueOf(user.getRole()));
-            ps.setString(7, user.getLogin());
+            ps.setString(11, user.getLogin());
             return ps.executeUpdate() == 1;
         } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);
@@ -130,6 +129,11 @@ public class UserDAOImpl implements UserDAO {
         ps.setString(3, user.getFirstName());
         ps.setString(4, user.getLastName());
         ps.setString(5, user.getEmail());
+        ps.setString(6, String.valueOf(user.getRole()));
+        ps.setString(7, user.getAddress());
+        ps.setString(8, user.getTel());
+        ps.setBoolean(9, user.isBanned());
+        ps.setInt(10, user.getDiscount());
     }
 
     private void initUser(ResultSet rs, User user) throws SQLException {
@@ -139,6 +143,10 @@ public class UserDAOImpl implements UserDAO {
         user.setLastName(rs.getString(4));
         user.setEmail(rs.getString(5));
         user.setRole(rs.getString(6));
+        user.setAddress(rs.getString(7));
+        user.setTel(rs.getString(8));
+        user.setBanned(rs.getBoolean(9));
+        user.setDiscount(rs.getInt(10));
     }
 
     private static class Holder {

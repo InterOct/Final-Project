@@ -34,7 +34,7 @@ public class EditProductCommand implements Command {
         product.setCatName(request.getParameter(CAT_NAME));
         product.setName(request.getParameter(NAME));
         product.setPrice(Double.valueOf(request.getParameter(PRICE)));
-        product.setProducer(request.getParameter(PRODUCER));
+        product.setShortDescription(request.getParameter(PRODUCER));
         product.setImgPath(request.getParameter(IMG_PATH));
         product.setDescription(request.getParameter(DESCRIPTION));
         ProductService productService = ProductServiceImpl.getInstance();

@@ -15,6 +15,7 @@ import java.util.List;
 
 public class ProductDAOImpl implements ProductDAO {
     private static final String SELECT_PRODUCTS = "SELECT g_id, cat_name, name, price, short_description, imgPath, description FROM Product";
+    private static final String SELECT_PRODUCTS_BY_CATEGORY = "SELECT g_id, cat_name, name, price, short_description, imgPath, description FROM Product WHERE ?=cat_name";
     private static final String INSERT_PRODUCT = "INSERT INTO  eshop.product(cat_name, name, price, short_description, imgPath, description) VALUES (?,?,?,?,?,?)";
     private static final String UPDATE_PRODUCT = "UPDATE eshop.product SET cat_name=?, name=?,price=?,short_description=?,imgPath=?,description=? WHERE ? = g_id";
     private static final String DELETE_PRODUCT = "DELETE FROM eshop.product WHERE g_id = ?";
@@ -37,6 +38,34 @@ public class ProductDAOImpl implements ProductDAO {
             connection = connectionPool.takeConnection();
             String sql = SELECT_PRODUCTS;
             ps = connection.prepareStatement(sql);
+            rs = ps.executeQuery();
+            Product product;
+            while (rs.next()) {
+                product = new Product();
+                initProduct(rs, product);
+                products.add(product);
+            }
+
+        } catch (ConnectionPoolException | SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            connectionPool.closeConnection(connection, ps, rs);
+        }
+        return products;
+    }
+
+    @Override
+    public List<Product> getProductsByCategory(String categoryName) throws DAOException {
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+        Connection connection = null;
+        List<Product> products = new LinkedList<>();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            connection = connectionPool.takeConnection();
+            String sql = SELECT_PRODUCTS_BY_CATEGORY;
+            ps = connection.prepareStatement(sql);
+            ps.setString(1, categoryName);
             rs = ps.executeQuery();
             Product product;
             while (rs.next()) {
@@ -112,7 +141,7 @@ public class ProductDAOImpl implements ProductDAO {
         ps.setString(1, product.getCatName());
         ps.setString(2, product.getName());
         ps.setDouble(3, product.getPrice());
-        ps.setString(4, product.getProducer());
+        ps.setString(4, product.getShortDescription());
         ps.setString(5, product.getImgPath());
         ps.setString(6, product.getDescription());
     }
@@ -122,7 +151,7 @@ public class ProductDAOImpl implements ProductDAO {
         product.setCatName(rs.getString(2));
         product.setName(rs.getString(3));
         product.setPrice(rs.getDouble(4));
-        product.setProducer(rs.getString(5));
+        product.setShortDescription(rs.getString(5));
         product.setImgPath(rs.getString(6));
         product.setDescription(rs.getString(7));
     }

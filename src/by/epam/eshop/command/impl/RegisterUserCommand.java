@@ -24,6 +24,8 @@ public class RegisterUserCommand implements Command {
     private static final String FIRST_NAME = "firstName";
     private static final String LAST_NAME = "lastName";
     private static final String EMAIL = "email";
+    private static final String ADDRESS = "address";
+    private static final String TEL = "tel";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
@@ -33,6 +35,11 @@ public class RegisterUserCommand implements Command {
         user.setFirstName(request.getParameter(FIRST_NAME));
         user.setLastName(request.getParameter(LAST_NAME));
         user.setEmail(request.getParameter(EMAIL));
+        user.setAddress(request.getParameter(ADDRESS));
+        user.setTel(request.getParameter(TEL));
+        user.setRole(null);
+        user.setBanned(false);
+        user.setDiscount(0);
         try {
             if(UserServiceImpl.getInstance().registerUser(user)) {
                 request.setAttribute(IS_REGISTERED, Boolean.TRUE);

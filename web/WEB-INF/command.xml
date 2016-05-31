@@ -73,7 +73,15 @@
         <command-class>by.epam.eshop.command.impl.GetUserOrdersCommand</command-class>
     </command>
     <command>
+        <command-name>to-edit-orders</command-name>
+        <command-class>by.epam.eshop.command.impl.navigation.ToEditOrders</command-class>
+    </command>
+    <command>
         <command-name>edit-order</command-name>
         <command-class>by.epam.eshop.command.impl.EditOrderCommand</command-class>
+    </command>
+    <command>
+        <command-name>view-product</command-name>
+        <command-class>by.epam.eshop.command.impl.ViewProductCommand</command-class>
     </command>
 </configuration>

@@ -94,6 +94,31 @@
     </filter-mapping>
 
     <servlet>
+        <servlet-name>EditOrders</servlet-name>
+        <jsp-file>/WEB-INF/jsp/edit_orders_page.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>EditOrders</servlet-name>
+        <url-pattern>/admin/edit_orders</url-pattern>
+    </servlet-mapping>
+
+    <filter-mapping>
+        <filter-name>EditOrders</filter-name>
+        <url-pattern>/admin/edit_orders</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>EditOrders</filter-name>
+        <filter-class>by.epam.eshop.controller.filter.ToEditOrdersFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>EditProducts</filter-name>
+        <url-pattern>/index.jsp</url-pattern>
+    </filter-mapping>
+
+    <servlet>
         <servlet-name>Cart</servlet-name>
         <jsp-file>/WEB-INF/jsp/cart.jsp</jsp-file>
     </servlet>

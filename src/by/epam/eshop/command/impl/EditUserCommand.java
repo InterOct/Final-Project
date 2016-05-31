@@ -24,6 +24,10 @@ public class EditUserCommand implements Command {
     private static final String LAST_NAME = "lastName";
     private static final String EMAIL = "email";
     private static final String ROLE = "role";
+    private static final String ADDRESS = "address";
+    private static final String TEL = "tel";
+    private static final String BANNED = "banned";
+    private static final String DISCOUNT = "discount";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
@@ -33,6 +37,11 @@ public class EditUserCommand implements Command {
         user.setFirstName(request.getParameter(FIRST_NAME));
         user.setLastName(request.getParameter(LAST_NAME));
         user.setEmail(request.getParameter(EMAIL));
+        user.setAddress(request.getParameter(ADDRESS));
+        user.setTel(request.getParameter(TEL));
+        user.setRole(request.getParameter(ROLE));
+        user.setBanned(Boolean.valueOf(request.getParameter(BANNED)));
+        user.setDiscount(Integer.valueOf(request.getParameter(DISCOUNT)));
         user.setRole(request.getParameter(ROLE));
         UserService userService = UserServiceImpl.getInstance();
         try {

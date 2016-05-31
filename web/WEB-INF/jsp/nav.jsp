@@ -61,6 +61,9 @@
                                 <li>
                                     <a href="${pageContext.request.contextPath}/admin/edit_products">${edit_goods}</a>
                                 </li>
+                                <li>
+                                    <a href="${pageContext.request.contextPath}/admin/edit_orders">${edit_goods}</a>
+                                </li>
                             </ul>
                         </li>
                     </c:when>

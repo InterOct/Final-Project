@@ -47,7 +47,7 @@
                 <td><span>${product.name}</span></td>
                 <td><span>${product.catName}</span></td>
                 <td><span>${product.price}</span></td>
-                <td><span>${product.producer}</span></td>
+                <td><span>${product.shortDescription}</span></td>
                 <td><span>${product.description}</span></td>
                 <form action="${pageContext.request.contextPath}/Controller" method="post">
                     <input type="hidden" name="command" value="remove-from-cart">

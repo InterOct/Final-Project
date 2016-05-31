@@ -37,7 +37,17 @@ public class ProductServiceImpl implements ProductService {
         try {
             return productDAO.getAll();
         } catch (DAOException e) {
-            throw new ServiceException("Error access database,while getting product", e);
+            throw new ServiceException("Error access database,while getting products", e);
+        }
+    }
+
+    @Override
+    public List<Product> getProductsByCategory(String categoryName) throws ServiceException {
+        ProductDAO productDAO = ProductDAOImpl.getInstance();
+        try {
+            return productDAO.getProductsByCategory(categoryName);
+        } catch (DAOException e) {
+            throw new ServiceException("Error access database,while getting products", e);
         }
     }
 
@@ -73,7 +83,7 @@ public class ProductServiceImpl implements ProductService {
             if (product.getName().isEmpty()) {
                 return false;
             }
-            if (product.getProducer().isEmpty()) {
+            if (product.getShortDescription().isEmpty()) {
                 return false;
             }
             if (product.getImgPath().isEmpty()) {

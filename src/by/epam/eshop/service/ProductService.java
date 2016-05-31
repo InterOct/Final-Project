@@ -10,6 +10,8 @@ public interface ProductService {
 
     List<Product> getAll() throws ServiceException;
 
+    List<Product> getProductsByCategory(String categoryName) throws ServiceException;
+
     boolean updateProduct(Product product) throws ServiceException;
 
     boolean removeProduct(Product product) throws ServiceException;

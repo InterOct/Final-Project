@@ -45,7 +45,11 @@
                     <th>${name_label}</th>
                     <th>${surname_label}</th>
                     <th>${email_label}</th>
+                    <th>address</th>
+                    <th>tel</th>
                     <th>${admin}</th>
+                    <th>banned</th>
+                    <th>discount</th>
                     <th>${edit}</th>
                 </tr>
                 </thead>
@@ -59,15 +63,29 @@
                             <td><input type="text" name="firstName" value="${user.firstName}"/></td>
                             <td><input type="text" name="lastName" value="${user.lastName}"/></td>
                             <td><input type="text" name="email" value="${user.email}"/></td>
+                            <td><input type="text" name="address" value="${user.address}"/></td>
+                            <td><input type="text" name="tel" value="${user.tel}"/></td>
                             <td>
                                 <c:choose>
                                     <c:when test="${user.role eq 'ADMIN'}">
                                         <input type="checkbox" name="role" value="ADMIN" checked/>
                                     </c:when>
                                     <c:otherwise>
-                                        <input type="checkbox" name="role" value="ADMIN"/>
+                                        <input type="checkbox" name="role"/>
                                     </c:otherwise>
-                                </c:choose></td>
+                                </c:choose>
+                            </td>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${user.banned}">
+                                        <input type="checkbox" name="banned" value="true" checked/>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <input type="checkbox" name="banned"/>
+                                    </c:otherwise>
+                                </c:choose>
+                            </td>
+                            <td><input type="text" name="discount" value="${user.discount}"/></td>
                             <td><input type="submit" value="${edit}"/></td>
                         </tr>
                     </form>

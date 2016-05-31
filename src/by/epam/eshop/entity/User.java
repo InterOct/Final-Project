@@ -9,10 +9,47 @@ public class User implements Entity {
     private String password;
     private String firstName;
     private String lastName;
+    private String address;
+    private String tel;
+    private boolean banned;
+    private int discount;
     private String email;
     private Role role;
 
-    public User () {}
+    public User() {
+    }
+
+    public int getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(int discount) {
+        this.discount = discount;
+    }
+
+    public boolean isBanned() {
+        return banned;
+    }
+
+    public void setBanned(boolean banned) {
+        this.banned = banned;
+    }
+
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
     public int getId() {
         return id;
@@ -88,23 +125,34 @@ public class User implements Entity {
         if (id != user.id) {
             return false;
         }
-        if (login==null || !login.equals(user.getLogin())) {
+        if (banned != user.banned) {
             return false;
         }
-        if (password==null || !password.equals(user.getPassword())) {
+        if (discount != user.discount) {
             return false;
         }
-        if (firstName == null || !firstName.equals(user.getFirstName())) {
+        if (login != null ? !login.equals(user.login) : user.login != null) {
             return false;
         }
-        if (lastName == null || !lastName.equals(user.getLastName())) {
+        if (password != null ? !password.equals(user.password) : user.password != null) {
             return false;
         }
-        if (email == null || !email.equals(user.getEmail())) {
+        if (firstName != null ? !firstName.equals(user.firstName) : user.firstName != null) {
             return false;
         }
-        return role == getRole();
-
+        if (lastName != null ? !lastName.equals(user.lastName) : user.lastName != null) {
+            return false;
+        }
+        if (address != null ? !address.equals(user.address) : user.address != null) {
+            return false;
+        }
+        if (tel != null ? !tel.equals(user.tel) : user.tel != null) {
+            return false;
+        }
+        if (email != null ? !email.equals(user.email) : user.email != null) {
+            return false;
+        }
+        return role == user.role;
     }
 
     @Override
@@ -114,13 +162,17 @@ public class User implements Entity {
         result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+        result = 31 * result + (address != null ? address.hashCode() : 0);
+        result = 31 * result + (tel != null ? tel.hashCode() : 0);
+        result = 31 * result + (banned ? 1 : 0);
+        result = 31 * result + discount;
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (role != null ? role.hashCode() : 0);
         return result;
     }
 
     private enum Role {
-        ADMIN,CUSTOMER
+        ADMIN, CUSTOMER
 
     }
 

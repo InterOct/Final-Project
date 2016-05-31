@@ -17,7 +17,7 @@
 
     <fmt:setLocale value="${sessionScope.local}"/>
     <fmt:setBundle basename="localization.local" var="loc"/>
-    <c:set scope="session" var="url" value="index.jsp"/>
+    <c:set scope="session" var="url" value="category.jsp"/>
 </head>
 <body>
 <%@include file="/WEB-INF/jsp/nav.jsp" %>
@@ -42,21 +42,10 @@
                 <input type="hidden" name="name" value="${product.name}"/>
                 <input type="hidden" name="catName" value="${product.catName}"/>
                 <input type="hidden" name="price" value="${product.price}"/>
-                <input type="hidden" name="producer" value="${product.shortDescription}"/>
+                <input type="hidden" name="producer" value="${product.producer}"/>
                 <input type="hidden" name="imgPath" value="${product.imgPath}"/>
                 <input type="hidden" name="description" value="${product.description}"/>
                 <input type="submit" value="Cart" style="float: left">
-            </form>
-            <form action="${pageContext.request.contextPath}/Controller" method="post">
-                <input type="hidden" name="command" value="view-product">
-                <input type="hidden" name="id" value="${product.id}"/>
-                <input type="hidden" name="name" value="${product.name}"/>
-                <input type="hidden" name="catName" value="${product.catName}"/>
-                <input type="hidden" name="price" value="${product.price}"/>
-                <input type="hidden" name="producer" value="${product.shortDescription}"/>
-                <input type="hidden" name="imgPath" value="${product.imgPath}"/>
-                <input type="hidden" name="description" value="${product.description}"/>
-                <input type="submit" value="View" style="float: left">
             </form>
         </div>
     </c:forEach>

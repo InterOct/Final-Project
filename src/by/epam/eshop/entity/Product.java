@@ -11,9 +11,9 @@ public class Product implements Entity {
     private String catName;
     private String name;
     private double price;
-    private String producer;
     private String imgPath;
     private String description;
+    private String shortDescription;
 
     public int getId() {
         return id;
@@ -47,14 +47,6 @@ public class Product implements Entity {
         this.price = price;
     }
 
-    public String getProducer() {
-        return producer;
-    }
-
-    public void setProducer(String producer) {
-        this.producer = producer;
-    }
-
     public String getImgPath() {
         return imgPath;
     }
@@ -82,25 +74,25 @@ public class Product implements Entity {
 
         Product product = (Product) o;
 
+        if (id != product.id) {
+            return false;
+        }
         if (Double.compare(product.price, price) != 0) {
             return false;
         }
-        if (id != product.getId()) {
+        if (catName != null ? !catName.equals(product.catName) : product.catName != null) {
             return false;
         }
-        if (catName == null || !catName.equals(product.getCatName())) {
+        if (name != null ? !name.equals(product.name) : product.name != null) {
             return false;
         }
-        if (name == null || !name.equals(product.getName())) {
+        if (imgPath != null ? !imgPath.equals(product.imgPath) : product.imgPath != null) {
             return false;
         }
-        if (producer == null || !producer.equals(product.getProducer())) {
+        if (description != null ? !description.equals(product.description) : product.description != null) {
             return false;
         }
-        if (imgPath == null || !imgPath.equals(product.getProducer())) {
-            return false;
-        }
-        return !(description == null || !description.equals(product.getDescription()));
+        return shortDescription != null ? shortDescription.equals(product.shortDescription) : product.shortDescription == null;
 
     }
 
@@ -113,9 +105,17 @@ public class Product implements Entity {
         result = 31 * result + (name != null ? name.hashCode() : 0);
         temp = Double.doubleToLongBits(price);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
-        result = 31 * result + (producer != null ? producer.hashCode() : 0);
         result = 31 * result + (imgPath != null ? imgPath.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (shortDescription != null ? shortDescription.hashCode() : 0);
         return result;
+    }
+
+    public String getShortDescription() {
+        return shortDescription;
+    }
+
+    public void setShortDescription(String shortDescription) {
+        this.shortDescription = shortDescription;
     }
 }
