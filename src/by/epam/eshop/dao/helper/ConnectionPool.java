@@ -12,13 +12,10 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executor;
 
-
-/**
- * Created by Aspire on 08.04.2016.
- */
 public final class ConnectionPool {
 
     private static final Logger LOGGER = LogManager.getRootLogger();
+    private static ConnectionPool instance = new ConnectionPool();
     private BlockingQueue<Connection> connectionQueue;
     private BlockingQueue<Connection> givenAwayConQueue;
     private String driverName;
@@ -26,12 +23,6 @@ public final class ConnectionPool {
     private String user;
     private String password;
     private int poolSize;
-
-    private static ConnectionPool instance = new ConnectionPool();
-
-    public static ConnectionPool getInstance() {
-        return instance;
-    }
 
     private ConnectionPool() {
         DBResourceManager dbResourceManager = DBResourceManager.getInstance();
@@ -44,6 +35,10 @@ public final class ConnectionPool {
         } catch (NumberFormatException e) {
             poolSize = 5;
         }
+    }
+
+    public static ConnectionPool getInstance() {
+        return instance;
     }
 
     public  void initPoolData() throws ConnectionPoolException {

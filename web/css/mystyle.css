@@ -1,0 +1,11 @@
+body {
+    background: url(/img/wood.jpg);
+}
+
+.background {
+    background-color: #ffffff;
+}
+
+label {
+    color: #31708f;
+}

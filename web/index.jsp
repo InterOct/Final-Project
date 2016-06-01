@@ -21,6 +21,11 @@
 </head>
 <body>
 <%@include file="/WEB-INF/jsp/nav.jsp" %>
+<c:if test="${not empty requestScope.message}">
+    <div class="col-md-12">
+        <span>${requestScope.message}</span>
+    </div>
+</c:if>
 <div style="float: left">
     <ul>
         <c:forEach var="category" items="${applicationScope.categories}">

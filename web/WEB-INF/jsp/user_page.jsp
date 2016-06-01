@@ -23,13 +23,13 @@
 </head>
 <body>
 <%@include file="nav.jsp" %>
-<h1><c:out value="${message}"/>, ${user.firstName}!</h1>
+<h1><c:out value="${message}"/>, ${sessionScope.sessionScope.user.firstName}!</h1>
 <form action="${pageContext.request.contextPath}/Controller" method="post">
-    <input type="text" name="login" value="${user.login}"/><br>
-    <input type="text" name="password" value="${user.password}"/><br>
-    <input type="text" name="firstName" value="${user.firstName}"/><br>
-    <input type="text" name="lastName" value="${user.lastName}"/><br>
-    <input type="text" name="email" value="${user.email}"/><br>
+    <input type="text" name="login" value="${sessionScope.user.login}"/><br>
+    <input type="text" name="password" value="${sessionScope.user.password}"/><br>
+    <input type="text" name="firstName" value="${sessionScope.user.firstName}"/><br>
+    <input type="text" name="lastName" value="${sessionScope.user.lastName}"/><br>
+    <input type="text" name="email" value="${sessionScope.user.email}"/><br>
 </form>
 <table class="table table-condensed">
     <c:forEach var="order" items="${requestScope.orders}">

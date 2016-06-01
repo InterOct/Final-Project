@@ -11,9 +11,12 @@
     <fmt:message bundle="${loc}" key="local.singup.text" var="title"/>
     <fmt:message bundle="${loc}" key="local.label.login" var="login_label"/>
     <fmt:message bundle="${loc}" key="local.label.password" var="password_label"/>
-    <fmt:message bundle="${loc}" key="local.userregistration.name.first" var="name_label"/>
-    <fmt:message bundle="${loc}" key="local.userregistration.name.last" var="surname_label"/>
-    <fmt:message bundle="${loc}" key="local.userregistration.email" var="email_label"/>
+    <fmt:message bundle="${loc}" key="local.registration.name.first" var="name_label"/>
+    <fmt:message bundle="${loc}" key="local.registration.name.last" var="surname_label"/>
+    <fmt:message bundle="${loc}" key="local.registration.email" var="email_label"/>
+    <fmt:message bundle="${loc}" key="local.registration.tel" var="tel_label"/>
+    <fmt:message bundle="${loc}" key="local.registration.address" var="address_label"/>
+    <fmt:message bundle="${loc}" key="local.registration.failed" var="failed"/>
     <title>${title}</title>
 
     <meta charset="utf-8">
@@ -21,30 +24,76 @@
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <c:set scope="session" var="url" value="registration.jsp"/>
+    <link rel="stylesheet"
+          href="${pageContext.request.contextPath}css/mystyle.css" type="text/css">
+    <c:set scope="session" var="url" value="/registration.jsp"/>
 
 </head>
 <body>
 <%@include file="WEB-INF/jsp/nav.jsp" %>
-<form action="${pageContext.request.contextPath}/Controller" method="post">
+<div class="container-fluid">
+    <c:if test="${not empty requestScope.isRegistered}">
+        <div class="row">
+            <div class="col-xs-12 alert-danger">
+                <strong>${failed}</strong>
+            </div>
+        </div>
+    </c:if>
+    <div class="row">
+        <div class="col-xs-12">
+            <h1 class="text-center strong text-info">${title}</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-offset-4 col-xs-4">
+            <form action="${pageContext.request.contextPath}/Controller" method="post">
 
-    <input type="hidden" name="command" value="register-user"/>
-
-    <p><input type="text" name="login" value="" placeholder="${login_label}" pattern="^[a-z0-9_-]{3,16}$"
-              title="Input correct login."></p>
-    <p><input type="password" name="password" value="" placeholder="${password_label}" pattern="^[a-zA-Z\d]{8,}$"
-              title="Input correct password."></p>
-    <p><input type="text" name="firstName" value="" placeholder="${name_label}" pattern="[А-ЯA-Zа-яa-z\s-]{2,45}"
-              title="Input correct first name."></p>
-    <p><input type="text" name="lastName" value="" placeholder="${surname_label}" pattern="[А-ЯA-Zа-яa-z\s-]{2,45}"
-              title="Input correct last name."></p>
-    <p><input type="text" name="email" value="" placeholder="${email_label}"
-              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"></p>
-    <input type="text" name="phone" placeholder="+375(29)1213457"
-           title="Телефон" required/><br>
-
-    <input type="submit" value="${singup}">
-</form>
-
+                <input type="hidden" name="command" value="register-user"/>
+                <div class="form-group">
+                    <label for="login">${login_label}</label>
+                    <input type="text" name="login" class="form-control" id="login" value=""
+                           placeholder="${login_label}"
+                           pattern="^[a-zA-Z\d]{3,16}$" title="Input correct login.">
+                </div>
+                <div class="form-group">
+                    <label for="password">${password_label}</label>
+                    <input type="password" name="password" class="form-control" id="password" value=""
+                           placeholder="${password_label}"
+                           title="Input correct password.">
+                </div>
+                <div class="form-group">
+                    <label for="firstName">${name_label}</label>
+                    <input type="text" name="firstName" value="" placeholder="${name_label}"
+                           pattern="[А-ЯA-Zа-яa-z\s-]{2,45}"
+                           title="Input correct first name." class="form-control" id="firstName">
+                </div>
+                <div class="form-group">
+                    <label for="lastName">${surname_label}</label>
+                    <input type="text" name="lastName" value="" placeholder="${surname_label}"
+                           pattern="[А-ЯA-Zа-яa-z\s-]{2,45}"
+                           title="Input correct last name." class="form-control" id="lastName">
+                </div>
+                <div class="form-group">
+                    <label for="email">${email_label}</label>
+                    <input type="text" name="email" value="" placeholder="${email_label}"
+                           pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" class="form-control" id="email">
+                </div>
+                <div class="form-group">
+                    <label for="address">${address_label}</label>
+                    <input type="text" name="address" placeholder="${address_label}"
+                           title="Input correct address" pattern="^.{2,}$" class="form-control"
+                           id="address">
+                </div>
+                <div class="form-group">
+                    <label for="tel">${tel_label}</label>
+                    <input type="text" name="tel" placeholder="+375(29)1213457"
+                           title="Input correct phone number" pattern="^[0-9]{12,15}$" class="form-control"
+                           id="tel">
+                </div>
+                <input type="submit" class="btn btn-default" value="${singup}">
+            </form>
+        </div>
+    </div>
+</div>
 </body>
 </html>

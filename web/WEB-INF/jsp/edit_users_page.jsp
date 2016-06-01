@@ -23,9 +23,9 @@
     <fmt:setBundle basename="localization.local" var="loc"/>
     <fmt:message bundle="${loc}" key="local.label.login" var="login_label"/>
     <fmt:message bundle="${loc}" key="local.label.password" var="password_label"/>
-    <fmt:message bundle="${loc}" key="local.userregistration.name.first" var="name_label"/>
-    <fmt:message bundle="${loc}" key="local.userregistration.name.last" var="surname_label"/>
-    <fmt:message bundle="${loc}" key="local.userregistration.email" var="email_label"/>
+    <fmt:message bundle="${loc}" key="local.registration.name.first" var="name_label"/>
+    <fmt:message bundle="${loc}" key="local.registration.name.last" var="surname_label"/>
+    <fmt:message bundle="${loc}" key="local.registration.email" var="email_label"/>
     <fmt:message bundle="${loc}" key="local.nav.admin" var="admin"/>
     <fmt:message bundle="${loc}" key="local.edit" var="edit"/>
     <c:set scope="session" var="url" value="/admin/edit_users"/>

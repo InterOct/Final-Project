@@ -41,12 +41,15 @@ public class RegisterUserCommand implements Command {
         user.setBanned(false);
         user.setDiscount(0);
         try {
+            String page;
             if(UserServiceImpl.getInstance().registerUser(user)) {
                 request.setAttribute(IS_REGISTERED, Boolean.TRUE);
+                page = PageName.USER_LOGIN;
             } else {
                 request.setAttribute(IS_REGISTERED, Boolean.FALSE);
+                page = PageName.USER_REGISTRATION_PAGE;
             }
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher(PageName.INDEX_PAGE);
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher(page);
             if (requestDispatcher == null) {
                 throw new RuntimeException("Impossible to reach page");
             }

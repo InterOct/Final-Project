@@ -5,8 +5,6 @@ import by.epam.eshop.controller.PageName;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -25,12 +23,8 @@ public class LogoutCommand implements Command {
             session.removeAttribute(USER);
         }
         try {
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher(PageName.INDEX_PAGE);
-            if (requestDispatcher == null) {
-                throw new RuntimeException("Impossible to reach page");
-            }
-            requestDispatcher.forward(request, response);
-        } catch (IOException | ServletException e) {
+            response.sendRedirect(PageName.INDEX_PAGE);
+        } catch (IOException e) {
             LOGGER.error("Can't reach page", e);
         }
     }

@@ -17,11 +17,11 @@
 <fmt:message bundle="${loc}" key="local.label.password"
              var="password_label"/>
 <fmt:message bundle="${loc}" key="local.login"
-             var="b_login"/>
+             var="login"/>
 <fmt:message bundle="${loc}" key="local.singup.text"
              var="singup"/>
-
-<jsp:useBean id="user" class="by.epam.eshop.entity.User" scope="session"/>
+<fmt:message bundle="${loc}" key="local.cart" var="cart"/>
+<fmt:message bundle="${loc}" key="local.account" var="account"/>
 
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
@@ -46,31 +46,34 @@
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <c:choose>
-                    <c:when test="${(not empty sessionScope.user) and (sessionScope.user.role eq 'ADMIN')}">
-                        <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">${admin}<span
-                                    class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a href="${pageContext.request.contextPath}/admin/edit_users">${edit_users}</a>
-                                </li>
-                                <li>
-                                    <a href="${pageContext.request.contextPath}/admin/edit_categories">${edit_categories}</a>
-                                </li>
-                                <li>
-                                    <a href="${pageContext.request.contextPath}/admin/edit_products">${edit_goods}</a>
-                                </li>
-                                <li>
-                                    <a href="${pageContext.request.contextPath}/admin/edit_orders">${edit_goods}</a>
-                                </li>
-                            </ul>
-                        </li>
-                    </c:when>
-                    <c:otherwise>
-                        <li><a href="${pageContext.request.contextPath}/cart">Cart</a></li>
-                    </c:otherwise>
-                </c:choose>
+                <c:if test="${(not empty sessionScope.user)}">
+                    <c:choose>
+                        <c:when test="${sessionScope.user.role eq 'ADMIN'}">
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">${admin}<span
+                                        class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="${pageContext.request.contextPath}/admin/edit_users">${edit_users}</a>
+                                    </li>
+                                    <li>
+                                        <a href="${pageContext.request.contextPath}/admin/edit_categories">${edit_categories}</a>
+                                    </li>
+                                    <li>
+                                        <a href="${pageContext.request.contextPath}/admin/edit_products">${edit_goods}</a>
+                                    </li>
+                                    <li>
+                                        <a href="${pageContext.request.contextPath}/admin/edit_orders">${edit_goods}</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </c:when>
+                        <c:otherwise>
+                            <li><a href="${pageContext.request.contextPath}/cart"><span
+                                    class="glyphicon glyphicon-shopping-cart"></span> ${cart}</a></li>
+                        </c:otherwise>
+                    </c:choose>
+                </c:if>
                 <li class="dropdown">
                     <c:choose>
                         <c:when test="${empty sessionScope.user.firstName}">
@@ -78,35 +81,59 @@
                                     class="glyphicon glyphicon-log-in"></span> ${login}</a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <div>
-                                        <form action="${pageContext.request.contextPath}/Controller" method="post">
-                                            <input type="hidden" name="command" value="login"/>
-
-                                            <c:out value="${login_label}"/>: <br/>
-                                            <input type="text" name="login" value=""/> <br/>
-
-                                            <c:out value="${password_label}"/>: <br/>
-                                            <input type="password" name="password" value=""/><br/>
-
-                                            <input type="submit" value="${b_login}"/>
-                                        </form>
-                                        <a href="${pageContext.request.contextPath}/registration.jsp">${singup}</a>
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <form action="${pageContext.request.contextPath}/Controller"
+                                                      method="post">
+                                                    <input type="hidden" name="command" value="login"/>
+                                                    <div class="form-group">
+                                                        <label for="login">${login_label}</label>
+                                                        <input type="text" name="login" class="form-control" id="login"
+                                                               value=""
+                                                               placeholder="${login_label}"
+                                                               pattern="^[a-zA-Z\d]{3,16}$"
+                                                               title="Input correct login.">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="password">${password_label}</label>
+                                                        <input type="password" name="password" class="form-control"
+                                                               id="password" value=""
+                                                               placeholder="${password_label}"
+                                                               title="Input correct password.">
+                                                    </div>
+                                                    <input type="submit" class="btn btn-default" value="${login}">
+                                                </form>
+                                            </div>
+                                        </div>
                                     </div>
+                                </li>
+                                <li>
+                                    <a href="${pageContext.request.contextPath}/registration.jsp"
+                                       class="hyperlink text-center">${singup}</a>
                                 </li>
                             </ul>
                         </c:when>
                         <c:otherwise>
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span
-                                    class="glyphicon glyphicon-user"></span> ${user.firstName}</a>
+                                    class="glyphicon glyphicon-user"></span> ${sessionScope.user.firstName}</a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="/user_page">User page</a>
+                                    <a href="${pageContext.request.contextPath}/user_page">${account}</a>
                                 </li>
                                 <li>
-                                    <form action="${pageContext.request.contextPath}/Controller" method="post">
-                                        <input type="hidden" name="command" value="logout"/>
-                                        <input type="submit" value="${logout}"/><br/>
-                                    </form>
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <form action="${pageContext.request.contextPath}/Controller"
+                                                      method="post">
+                                                    <input type="hidden" name="command" value="logout"/>
+                                                    <input type="submit" class="btn btn-default"
+                                                           value="${logout}"/><br/>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </li>
                             </ul>
                         </c:otherwise>

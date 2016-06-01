@@ -5,6 +5,7 @@ import by.epam.eshop.dao.exception.ConnectionPoolException;
 import by.epam.eshop.dao.exception.DAOException;
 import by.epam.eshop.dao.helper.ConnectionPool;
 import by.epam.eshop.entity.User;
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -92,6 +93,8 @@ public class UserDAOImpl implements UserDAO {
             ps = connection.prepareStatement(sql);
             setUserQuery(user, ps);
             return ps.executeUpdate() == 1;
+        } catch (MySQLIntegrityConstraintViolationException e) {
+            return false;
         } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);
         } finally {
