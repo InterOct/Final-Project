@@ -15,7 +15,7 @@ public class GetProductsByCategoryCommand implements Command {
 
     private static final Logger LOGGER = LogManager.getRootLogger();
     private static final String PRODUCTS = "products";
-    private static final String CATEGORY_NAME = "categoryName";
+    private static final String CATEGORY_NAME = "cat";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {

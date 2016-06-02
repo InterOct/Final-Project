@@ -14,23 +14,51 @@
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-
+    <link rel="stylesheet" href="${pageContext.request.contextPath}css/mystyle.css" type="text/css">
     <fmt:setLocale value="${sessionScope.local}"/>
     <fmt:setBundle basename="localization.local" var="loc"/>
     <c:set scope="session" var="url" value="/product_page.jsp"/>
 </head>
 <body>
 <%@include file="/WEB-INF/jsp/nav.jsp" %>
-
 <jsp:useBean id="product" class="by.epam.eshop.entity.Product" scope="request"/>
-<img src="${product.imgPath}" alt="${product.name}" height="400px"><br>
-${product.name}<br>
-${product.price}<br>
-${product.description}<br>
-${product.shortDescription}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-offset-3 col-xs-2">
+            <div class="window container-fluid">
+                ${product.name}
+                <img class="img-responsive" src="${product.imgPath}" alt="${product.name}" height="400px"><br>
+                ${product.price}<br>
+                <form action="${pageContext.request.contextPath}/Controller" method="post">
+                    <input type="hidden" name="command" value="add-to-cart">
+                    <input type="hidden" name="id" value="${product.id}"/>
+                    <input type="hidden" name="name" value="${product.name}"/>
+                    <input type="hidden" name="catName" value="${product.catName}"/>
+                    <input type="hidden" name="price" value="${product.price}"/>
+                    <input type="hidden" name="producer" value="${product.shortDescription}"/>
+                    <input type="hidden" name="imgPath" value="${product.imgPath}"/>
+                    <input type="hidden" name="description" value="${product.description}"/>
+                    <input type="submit" class="btn btn-default" value="${cart}" style="float: left; width: 100px;">
+                </form>
+            </div>
 
-<div style="float: left">
+        </div>
+
+        <div class="col-xs-offset-1 col-xs-4">
+            <div class="window">
+                ${product.shortDescription}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-offset-3 col-xs-7">
+            <div class="window">
+                ${product.description}
+            </div>
+        </div>
+    </div>
 
 </div>
+
 </body>
 </html>

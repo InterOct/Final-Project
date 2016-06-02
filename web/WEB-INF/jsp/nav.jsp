@@ -40,7 +40,9 @@
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">${categories}<span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <c:forEach var="category" items="${applicationScope.categories}">
-                            <li><a href="#">${category.name}</a></li>
+                            <li>
+                                <a href="${pageContext.request.contextPath}/index.jsp?cat=${category.name}">${category.name}</a>
+                            </li>
                         </c:forEach>
                     </ul>
                 </li>

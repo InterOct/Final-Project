@@ -9,3 +9,44 @@ body {
 label {
     color: #31708f;
 }
+
+.sidenav {
+    padding-top: 20px;
+    background-color: #313131;
+    height: 100%;
+    color: #d7d7d7;
+}
+
+.full {
+    height: 100%;
+}
+
+.panel-primary {
+    background-color: #31708f;
+    color: #d7d7d7;
+}
+
+.window {
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+}
+
+.panel-heading {
+    background-color: #313131;
+}
+
+@media screen and (max-width: 767px) {
+    .sidenav {
+        height: auto;
+        padding: 15px;
+    }
+
+    .row.content {
+        height: auto;
+    }
+}

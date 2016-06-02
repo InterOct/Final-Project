@@ -84,4 +84,8 @@
         <command-name>view-product</command-name>
         <command-class>by.epam.eshop.command.impl.ViewProductCommand</command-class>
     </command>
+    <command>
+        <command-name>get-products-by-category</command-name>
+        <command-class>by.epam.eshop.command.impl.GetProductsByCategoryCommand</command-class>
+    </command>
 </configuration>
