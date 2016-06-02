@@ -2,8 +2,6 @@ package by.epam.eshop.controller;
 
 import by.epam.eshop.command.Command;
 import by.epam.eshop.controller.helper.CommandHelper;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -14,10 +12,8 @@ import java.io.IOException;
 
 public class Controller extends HttpServlet {
 
-    private static final Logger LOGGER = LogManager.getRootLogger();
     private static final long serialVersionUID = 1L;
     private static final String COMMAND_NAME = "command";
-    private final CommandHelper commandHelper = new CommandHelper();
 
     public Controller() {
         super();
@@ -40,7 +36,7 @@ public class Controller extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String commandName = request.getParameter(COMMAND_NAME);
-        Command command = commandHelper.getCommand(commandName);
+        Command command = CommandHelper.getInstance().getCommand(commandName);
         command.execute(request, response);
 
 

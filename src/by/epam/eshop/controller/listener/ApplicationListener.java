@@ -1,6 +1,4 @@
-package by.epam.eshop.controller.listener; /**
- * Created by Aspire on 30.04.2016.
- */
+package by.epam.eshop.controller.listener;
 
 import by.epam.eshop.dao.exception.ConnectionPoolException;
 import by.epam.eshop.dao.helper.ConnectionPool;
@@ -12,7 +10,6 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-
 
 public class ApplicationListener implements ServletContextListener {
 

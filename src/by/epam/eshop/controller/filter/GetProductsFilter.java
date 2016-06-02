@@ -14,9 +14,6 @@ public class GetProductsFilter implements Filter {
     private static final String CATEGORY_NAME = "cat";
     private static final String GET_PRODUCTS_BY_CATEGORY = "get-products-by-category";
 
-    private final CommandHelper commandHelper = new CommandHelper();
-
-
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
@@ -27,9 +24,9 @@ public class GetProductsFilter implements Filter {
         Command command = null;
         String categoryName = request.getParameter(CATEGORY_NAME);
         if (categoryName != null) {
-            command = commandHelper.getCommand(GET_PRODUCTS_BY_CATEGORY);
+            command = CommandHelper.getInstance().getCommand(GET_PRODUCTS_BY_CATEGORY);
         } else {
-            command = commandHelper.getCommand(TO_EDIT_PRODUCTS);
+            command = CommandHelper.getInstance().getCommand(TO_EDIT_PRODUCTS);
         }
         command.execute((HttpServletRequest) request, (HttpServletResponse) response);
         chain.doFilter(request, response);

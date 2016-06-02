@@ -7,18 +7,25 @@ import by.epam.eshop.controller.initializer.InitCommandHelper;
 import java.util.Map;
 
 public final class CommandHelper {
-    private final static Map<String, Command> commands = InitCommandHelper.init();
 
-      public Command getCommand(String commandName) {
-        Command command = null;
+    private static final Map<String, Command> commands = new InitCommandHelper().init();
+    private static CommandHelper instance = null;
 
-        command = commands.get(commandName);
+    private CommandHelper() {
+    }
 
+    public static CommandHelper getInstance() {
+        if (instance == null) {
+            instance = new CommandHelper();
+        }
+        return instance;
+    }
+
+    public Command getCommand(String commandName) {
+        Command command = commands.get(commandName);
         if (command == null) {
             command = new UnknownCommand();
         }
-
         return command;
     }
-
 }
