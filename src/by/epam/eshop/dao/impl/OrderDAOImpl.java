@@ -168,7 +168,7 @@ public class OrderDAOImpl implements OrderDAO {
     private boolean initOrder(ResultSet rs, Order order) throws SQLException {
         order.setId(rs.getInt(1));
         order.setUserId(rs.getInt(2));
-        order.setDate(rs.getDate(3));
+        order.setDate(rs.getTimestamp(3));
         order.setStatus(rs.getString(4));
         HashMap<Product, Integer> products = new HashMap<>();
         return initProductsMap(rs, order, products);

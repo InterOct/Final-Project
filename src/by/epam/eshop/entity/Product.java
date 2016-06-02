@@ -92,8 +92,7 @@ public class Product implements Entity {
         if (description != null ? !description.equals(product.description) : product.description != null) {
             return false;
         }
-        return shortDescription != null ? shortDescription.equals(product.shortDescription) : product.shortDescription == null;
-
+        return shortDescription != null ? !shortDescription.equals(product.shortDescription) : product.shortDescription == null;
     }
 
     @Override

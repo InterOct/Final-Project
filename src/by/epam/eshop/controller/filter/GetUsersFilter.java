@@ -13,7 +13,7 @@ import java.io.IOException;
 /**
  * Created by Aspire on 10.05.2016.
  */
-public class EditUserFilter implements Filter {
+public class GetUsersFilter implements Filter {
 
     private static final Logger LOGGER = LogManager.getRootLogger();
     private static final String TO_EDIT_USERS = "to-edit-users";

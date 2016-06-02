@@ -47,7 +47,6 @@
     <div class="row">
         <div class="col-xs-offset-4 col-xs-4">
             <form action="${pageContext.request.contextPath}/Controller" method="post">
-
                 <input type="hidden" name="command" value="register-user"/>
                 <div class="form-group">
                     <label for="login">${login_label}</label>

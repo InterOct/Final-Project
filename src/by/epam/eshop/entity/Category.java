@@ -34,13 +34,13 @@ public class Category implements Entity {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
+
         Category category = (Category) o;
 
-        if (name == null || !name.equals(category.getName())) {
+        if (name != null ? !name.equals(category.name) : category.name != null) {
             return false;
         }
-        return !(description == null || !description.equals(category.getDescription()));
-
+        return description != null ? !description.equals(category.description) : category.description == null;
     }
 
     @Override

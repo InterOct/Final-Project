@@ -2,21 +2,17 @@ package by.epam.eshop.controller.filter;
 
 import by.epam.eshop.command.Command;
 import by.epam.eshop.controller.helper.CommandHelper;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/**
- * Created by Aspire on 10.05.2016.
- */
-public class ToUserOrdersFilter implements Filter {
+public class GetProductsFilter implements Filter {
 
-    private static final Logger LOGGER = LogManager.getRootLogger();
-    private static final String TO_USER_ORDERS = "to-user-orders";
+    private static final String TO_EDIT_PRODUCTS = "to-edit-products";
+    private static final String CATEGORY_NAME = "cat";
+    private static final String GET_PRODUCTS_BY_CATEGORY = "get-products-by-category";
 
     private final CommandHelper commandHelper = new CommandHelper();
 
@@ -29,7 +25,12 @@ public class ToUserOrdersFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         Command command = null;
-        command = commandHelper.getCommand(TO_USER_ORDERS);
+        String categoryName = request.getParameter(CATEGORY_NAME);
+        if (categoryName != null) {
+            command = commandHelper.getCommand(GET_PRODUCTS_BY_CATEGORY);
+        } else {
+            command = commandHelper.getCommand(TO_EDIT_PRODUCTS);
+        }
         command.execute((HttpServletRequest) request, (HttpServletResponse) response);
         chain.doFilter(request, response);
     }

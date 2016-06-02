@@ -56,17 +56,28 @@ public class Order implements Entity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         Order order = (Order) o;
 
-        if (id != order.id) return false;
-        if (userId != order.userId) return false;
-        if (date == null || !date.equals(order.date)) return false;
-        if (status != order.status) return false;
-        return !(products == null || !products.equals(order.products));
-
+        if (id != order.id) {
+            return false;
+        }
+        if (userId != order.userId) {
+            return false;
+        }
+        if (date != null ? !date.equals(order.date) : order.date != null) {
+            return false;
+        }
+        if (status != order.status) {
+            return false;
+        }
+        return products != null ? !products.equals(order.products) : order.products == null;
     }
 
     @Override

@@ -34,10 +34,9 @@
 </head>
 <body>
 <%@include file="/WEB-INF/jsp/nav.jsp" %>
-<div class="col-md-12">
-
-    <div class="row">
-        <table class="table table-condensed">
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-condensed table-hover">
             <thead>
             <tr>
                 <th>${name}</th>

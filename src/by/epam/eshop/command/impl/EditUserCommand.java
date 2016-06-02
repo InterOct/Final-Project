@@ -1,7 +1,6 @@
 package by.epam.eshop.command.impl;
 
 import by.epam.eshop.command.Command;
-import by.epam.eshop.controller.PageName;
 import by.epam.eshop.entity.User;
 import by.epam.eshop.service.UserService;
 import by.epam.eshop.service.exception.ServiceException;
@@ -28,6 +27,7 @@ public class EditUserCommand implements Command {
     private static final String TEL = "tel";
     private static final String BANNED = "banned";
     private static final String DISCOUNT = "discount";
+    private static final String URL = "url";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
@@ -46,7 +46,7 @@ public class EditUserCommand implements Command {
         UserService userService = UserServiceImpl.getInstance();
         try {
             userService.updateUser(user);
-            response.sendRedirect(PageName.EDIT_USERS);
+            response.sendRedirect(request.getSession().getAttribute(URL).toString());
         } catch (ServiceException e) {
             LOGGER.error("Error edit user", e);
         } catch (IOException e) {

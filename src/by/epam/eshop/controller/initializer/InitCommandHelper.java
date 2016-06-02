@@ -16,20 +16,23 @@ import java.util.Map;
 
 public class InitCommandHelper {
     private static final Logger LOGGER = LogManager.getRootLogger();
+    private static final String URL = "D:\\web_epam_2015\\Task_Final_eshop\\project\\web\\WEB-INF\\command.xml";
+
     public static Map<String, Command> init() {
         XMLStreamReader reader = null;
         XMLInputFactory inputFactory = XMLInputFactory.newInstance();
         InputStream inputStream = null;
         try {
-            inputStream = new FileInputStream("D:\\web_epam_2015\\Task_Final_eshop\\project\\web\\WEB-INF\\command.xml");
+            inputStream = new FileInputStream(URL);
             reader = inputFactory.createXMLStreamReader(inputStream);
             return getCommands(reader);
         } catch (FileNotFoundException e) {
            LOGGER.error("command.xml not found",e);
+            throw new CommandInitializationException("command.xml not found", e);
         } catch (XMLStreamException e) {
-            LOGGER.error("Error initializing commands",e);
+            LOGGER.error("Initialization error", e);
+            throw new CommandInitializationException("command.xml not found", e);
         }
-        return null;
     }
 
     private static Map<String, Command> getCommands(XMLStreamReader reader) throws XMLStreamException {
@@ -60,6 +63,7 @@ public class InitCommandHelper {
                                     (Command) Class.forName(command.getClassName()).newInstance());
                         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
                             LOGGER.error("Error initialization commands",e);
+                            throw new CommandInitializationException("command.xml not found", e);
                         }
                     }
                     break;

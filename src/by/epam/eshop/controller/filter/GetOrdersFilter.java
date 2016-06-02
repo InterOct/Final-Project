@@ -13,10 +13,10 @@ import java.io.IOException;
 /**
  * Created by Aspire on 10.05.2016.
  */
-public class EditCategoriesFilter implements Filter {
+public class GetOrdersFilter implements Filter {
 
     private static final Logger LOGGER = LogManager.getRootLogger();
-    private static final String TO_EDIT_USERS = "to-edit-categories";
+    private static final String TO_EDIT_ORDERS = "to-edit-orders";
 
     private final CommandHelper commandHelper = new CommandHelper();
 
@@ -29,7 +29,7 @@ public class EditCategoriesFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         Command command = null;
-        command = commandHelper.getCommand(TO_EDIT_USERS);
+        command = commandHelper.getCommand(TO_EDIT_ORDERS);
         command.execute((HttpServletRequest) request, (HttpServletResponse) response);
         chain.doFilter(request, response);
     }

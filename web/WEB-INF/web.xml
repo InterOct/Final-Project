@@ -45,7 +45,7 @@
 
     <filter>
         <filter-name>EditUsers</filter-name>
-        <filter-class>by.epam.eshop.controller.filter.EditUserFilter</filter-class>
+        <filter-class>by.epam.eshop.controller.filter.GetUsersFilter</filter-class>
     </filter>
 
     <servlet>
@@ -65,7 +65,7 @@
 
     <filter>
         <filter-name>EditCategories</filter-name>
-        <filter-class>by.epam.eshop.controller.filter.EditCategoriesFilter</filter-class>
+        <filter-class>by.epam.eshop.controller.filter.GetCategoriesFilter</filter-class>
     </filter>
 
     <servlet>
@@ -85,7 +85,7 @@
 
     <filter>
         <filter-name>EditProducts</filter-name>
-        <filter-class>by.epam.eshop.controller.filter.EditProductsFilter</filter-class>
+        <filter-class>by.epam.eshop.controller.filter.GetProductsFilter</filter-class>
     </filter>
 
     <filter-mapping>
@@ -110,7 +110,7 @@
 
     <filter>
         <filter-name>EditOrders</filter-name>
-        <filter-class>by.epam.eshop.controller.filter.ToEditOrdersFilter</filter-class>
+        <filter-class>by.epam.eshop.controller.filter.GetOrdersFilter</filter-class>
     </filter>
 
     <filter-mapping>
@@ -140,7 +140,7 @@
 
     <filter>
         <filter-name>UserPage</filter-name>
-        <filter-class>by.epam.eshop.controller.filter.ToUserOrdersFilter</filter-class>
+        <filter-class>by.epam.eshop.controller.filter.GetUserOrdersFilter</filter-class>
     </filter>
 
     <filter-mapping>
