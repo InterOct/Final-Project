@@ -21,11 +21,11 @@ public class OrderDAOImpl implements OrderDAO {
 
     private static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-    private static final String SELECT_ORDERS = "SELECT Orders.order_id, Orders.users_id, Orders.date, Orders.status, Product.g_id, Product.cat_name, Product.name, Product.price, Product.description, Orderproduct.quantity FROM Orders INNER JOIN Orderproduct ON Orders.order_id = Orderproduct.order_id RIGHT JOIN Product ON orderproduct.product_id = product.g_id ORDER BY Orders.order_id";
-    private static final String SELECT_ORDERS_BY_USER_ID = "SELECT Orders.order_id, Orders.users_id, Orders.date, Orders.status, Product.g_id, Product.cat_name, Product.name, Product.price, Product.description, Orderproduct.quantity FROM Orders INNER JOIN Orderproduct ON Orders.order_id = Orderproduct.order_id RIGHT JOIN Product ON orderproduct.product_id = product.g_id WHERE ? = Orders.users_id ORDER BY Orders.order_id";
-    private static final String INSERT_ORDER = "INSERT INTO  Orders(order_id,users_id,date,status) VALUES (?,?,?,?)";
-    private static final String INSERT_INTO_ORDER_PRODUCT = "INSERT INTO Orderproduct(order_id, product_id, quantity) VALUES (?,?,?)";
-    private static final String UPDATE_ORDER = "UPDATE eshop.Orders SET status=? WHERE ? = order_id";
+    private static final String SELECT_ORDERS = "SELECT orders.order_id, orders.users_id, orders.date, orders.status, product.g_id, product.cat_name, product.name, product.price, product.description, orderproduct.quantity FROM orders INNER JOIN orderproduct ON orders.order_id = orderproduct.order_id RIGHT JOIN product ON orderproduct.product_id = product.g_id ORDER BY orders.order_id";
+    private static final String SELECT_ORDERS_BY_USER_ID = "SELECT orders.order_id, orders.users_id, orders.date, orders.status, product.g_id, product.cat_name, product.name, product.price, product.description, Orderproduct.quantity FROM orders INNER JOIN orderproduct ON orders.order_id = orderproduct.order_id RIGHT JOIN product ON orderproduct.product_id = product.g_id WHERE ? = orders.users_id ORDER BY orders.order_id";
+    private static final String INSERT_ORDER = "INSERT INTO  orders(order_id,users_id,date,status) VALUES (?,?,?,?)";
+    private static final String INSERT_INTO_ORDER_PRODUCT = "INSERT INTO orderproduct(order_id, product_id, quantity) VALUES (?,?,?)";
+    private static final String UPDATE_ORDER = "UPDATE eshop.orders SET status=? WHERE ? = order_id";
 
     private OrderDAOImpl() {
     }

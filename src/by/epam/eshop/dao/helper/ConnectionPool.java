@@ -41,7 +41,7 @@ public final class ConnectionPool {
         return instance;
     }
 
-    public  void initPoolData() throws ConnectionPoolException {
+    public void initPoolData() throws ConnectionPoolException {
         try {
             Class.forName(driverName);
             givenAwayConQueue = new ArrayBlockingQueue<>(poolSize);
@@ -75,18 +75,24 @@ public final class ConnectionPool {
 
     public void closeConnection(Connection con, Statement st, ResultSet rs) {
         try {
-            con.close();
+            if (con != null) {
+                con.close();
+            }
         } catch (SQLException e) {
             LOGGER.error("Error closing connection.", e);
         }
         try {
-            rs.close();
+            if (rs != null) {
+                rs.close();
+            }
         } catch (SQLException e) {
             LOGGER.error("Error closing connection.", e);
         }
 
         try {
-            st.close();
+            if (st != null) {
+                st.close();
+            }
         } catch (SQLException e) {
             LOGGER.error("Error closing connection.", e);
         }
@@ -94,16 +100,18 @@ public final class ConnectionPool {
 
     public void closeConnection(Connection con, Statement st) {
         try {
-            con.close();
+            if (con != null) {
+                con.close();
+            }
         } catch (SQLException e) {
             LOGGER.error("Error closing connection.", e);
         }
-
         try {
-            st.close();
+            if (st != null) {
+                st.close();
+            }
         } catch (SQLException e) {
             LOGGER.error("Error closing connection.", e);
-
         }
     }
 
