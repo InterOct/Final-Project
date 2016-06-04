@@ -38,7 +38,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-xs-offset-4 col-xs-4">
+        <div class="col-xs-offset-4 col-xs-4 window">
             <form action="${pageContext.request.contextPath}/Controller" method="post">
                 <input type="hidden" name="command" value="login"/>
                 <div class="form-group">
@@ -54,6 +54,9 @@
                            title="Input correct password.">
                 </div>
                 <input type="submit" class="btn btn-default" value="${login}">
+                <a href="${pageContext.request.contextPath}/registration.jsp">
+                    <button type="button" class="btn btn-default">${singup}</button>
+                </a>
             </form>
         </div>
     </div>

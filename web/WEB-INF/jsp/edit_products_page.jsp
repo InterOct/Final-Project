@@ -101,7 +101,7 @@
                             <input type="hidden" name="id" value="${product.id}"/>
                             <td>
                                 <button type="submit" class="btn btn-xs btn-danger">
-                                    <span class="glyphicon glyphicon-remove"></span>&nbsp;
+                                    <span class="glyphicon glyphicon-remove"></span>
                                 </button>
                             </td>
                         </form>

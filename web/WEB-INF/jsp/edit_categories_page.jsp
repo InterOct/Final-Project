@@ -77,7 +77,7 @@
                             <input type="hidden" name="description" value="${category.description}"/>
                             <td>
                                 <button type="submit" class="btn btn-xs btn-danger">
-                                    <span class="glyphicon glyphicon-remove"></span>&nbsp;
+                                    <span class="glyphicon glyphicon-remove"></span>
                                 </button>
                             </td>
                         </form>

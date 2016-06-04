@@ -8,6 +8,7 @@
 <fmt:message bundle="${loc}" key="local.admin.edit.categories" var="edit_categories"/>
 <fmt:message bundle="${loc}" key="local.admin.edit.users" var="edit_users"/>
 <fmt:message bundle="${loc}" key="local.admin.edit.goods" var="edit_goods"/>
+<fmt:message bundle="${loc}" key="local.admin.edit.orders" var="edit_orders"/>
 <fmt:message bundle="${loc}" key="local.locbutton.name.ru"
              var="ru_button"/>
 <fmt:message bundle="${loc}" key="local.locbutton.name.en"
@@ -68,7 +69,7 @@
                                         <a href="${pageContext.request.contextPath}/admin/edit_products">${edit_goods}</a>
                                     </li>
                                     <li>
-                                        <a href="${pageContext.request.contextPath}/admin/edit_orders">${edit_goods}</a>
+                                        <a href="${pageContext.request.contextPath}/admin/edit_orders">${edit_orders}</a>
                                     </li>
                                 </ul>
                             </li>
