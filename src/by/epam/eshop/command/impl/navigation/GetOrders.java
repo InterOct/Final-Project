@@ -1,9 +1,9 @@
 package by.epam.eshop.command.impl.navigation;
 
 import by.epam.eshop.command.Command;
-import by.epam.eshop.service.CategoryService;
+import by.epam.eshop.service.OrderService;
 import by.epam.eshop.service.exception.ServiceException;
-import by.epam.eshop.service.impl.CategoryServiceImpl;
+import by.epam.eshop.service.impl.OrderServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -11,18 +11,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
-public class ToEditCategories implements Command {
+public class GetOrders implements Command {
 
     private static final Logger LOGGER = LogManager.getRootLogger();
-    private static final String CATEGORIES = "categories";
+    private static final String ORDERS = "orders";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
-        CategoryService categoryService = CategoryServiceImpl.getInstance();
+        OrderService orderService = OrderServiceImpl.getInstance();
         try {
-            request.setAttribute(CATEGORIES, categoryService.getAll());
+            request.setAttribute(ORDERS, orderService.getAll());
         } catch (ServiceException e) {
-            LOGGER.error("Error getting categories", e);
+            LOGGER.error("Error getting user orders", e);
         }
     }
 }

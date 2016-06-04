@@ -20,6 +20,9 @@
     <fmt:message bundle="${loc}" key="local.welcome.message" var="welcome"/>
     <fmt:message bundle="${loc}" key="local.product.price" var="price"/>
     <c:set scope="session" var="url" value="index.jsp"/>
+    <jsp:include page="${pageContext.request.contextPath}/Controller">
+        <jsp:param name="command" value="get-products"/>
+    </jsp:include>
 </head>
 <body>
 <%@include file="/WEB-INF/jsp/nav.jsp" %>
@@ -40,7 +43,7 @@
         <div class="col-sm-2 sidenav">
             <ul class="list-group">
                 <li class="list-group-item-heading h2 text-center">${categories}</li>
-                <c:forEach var="category" items="${applicationScope.categories}">
+                <c:forEach var="category" items="${requestScope.categories}">
                     <li class="list-group-item"><a
                             href="${pageContext.request.contextPath}/index.jsp?cat=${category.name}">${category.name}</a>
                     </li>

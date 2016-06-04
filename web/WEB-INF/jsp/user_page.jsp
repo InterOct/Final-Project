@@ -27,7 +27,9 @@
     <fmt:message bundle="${loc}" key="local.registration.tel" var="tel_label"/>
     <fmt:message bundle="${loc}" key="local.registration.address" var="address_label"/>
     <c:set scope="session" var="url" value="/user_page"/>
-
+    <jsp:include page="${pageContext.request.contextPath}/Controller">
+        <jsp:param name="command" value="get-user-orders"/>
+    </jsp:include>
 </head>
 <body>
 <%@include file="/WEB-INF/jsp/nav.jsp" %>

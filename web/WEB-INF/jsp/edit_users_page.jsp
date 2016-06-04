@@ -38,6 +38,9 @@
 </head>
 <body>
 <%@include file="/WEB-INF/jsp/nav.jsp" %>
+<jsp:include page="${pageContext.request.contextPath}/Controller">
+    <jsp:param name="command" value="get-users"/>
+</jsp:include>
 <div class="container-fluid">
     <div class="row">
         <div class="col-xs-12">
@@ -61,6 +64,7 @@
                     <c:forEach var="user" items="${requestScope.users}">
                         <form action="${pageContext.request.contextPath}/Controller" method="post">
                             <input type="hidden" name="command" value="edit-user">
+                            <input type="hidden" name="password" value="${user.password}">
                             <tr>
                                 <td><input type="text" name="login" value="${user.login}"/></td>
                                 <td><input type="text" name="firstName" value="${user.firstName}"/></td>
@@ -74,7 +78,7 @@
                                             <input type="checkbox" name="role" value="ADMIN" checked/>
                                         </c:when>
                                         <c:otherwise>
-                                            <input type="checkbox" name="role"/>
+                                            <input type="checkbox" name="role" value="ADMIN"/>
                                         </c:otherwise>
                                     </c:choose>
                                 </td>
@@ -84,7 +88,7 @@
                                             <input type="checkbox" name="banned" value="true" checked/>
                                         </c:when>
                                         <c:otherwise>
-                                            <input type="checkbox" name="banned"/>
+                                            <input type="checkbox" name="banned" value="true"/>
                                         </c:otherwise>
                                     </c:choose>
                                 </td>

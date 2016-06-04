@@ -31,6 +31,9 @@ public class Controller extends HttpServlet {
 
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String commandName = request.getParameter(COMMAND_NAME);
+        Command command = CommandHelper.getInstance().getCommand(commandName);
+        command.execute(request, response);
     }
 
 
@@ -38,8 +41,6 @@ public class Controller extends HttpServlet {
         String commandName = request.getParameter(COMMAND_NAME);
         Command command = CommandHelper.getInstance().getCommand(commandName);
         command.execute(request, response);
-
-
     }
 
 }

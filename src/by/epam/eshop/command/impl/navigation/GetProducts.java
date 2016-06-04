@@ -11,16 +11,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
-public class ToEditProducts implements Command {
+public class GetProducts implements Command {
 
     private static final Logger LOGGER = LogManager.getRootLogger();
     private static final String PRODUCTS = "products";
+    private static final String CATEGORY_NAME = "cat";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
         ProductService productService = ProductServiceImpl.getInstance();
+        String categoryName = request.getParameter(CATEGORY_NAME);
         try {
-            request.setAttribute(PRODUCTS, productService.getAll());
+            if (categoryName == null) {
+                request.setAttribute(PRODUCTS, productService.getAll());
+            } else {
+                request.setAttribute(PRODUCTS, productService.getProductsByCategory(categoryName));
+            }
         } catch (ServiceException e) {
             LOGGER.error("Error getting products", e);
         }

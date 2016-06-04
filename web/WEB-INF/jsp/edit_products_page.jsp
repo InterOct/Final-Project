@@ -30,10 +30,13 @@
     <fmt:message bundle="${loc}" key="local.edit" var="edit"/>
     <fmt:message bundle="${loc}" key="local.add" var="add"/>
     <c:set scope="session" var="url" value="/admin/edit_products"/>
-
+    <jsp:include page="${pageContext.request.contextPath}/Controller">
+        <jsp:param name="command" value="get-products"/>
+    </jsp:include>
 </head>
 <body>
 <%@include file="/WEB-INF/jsp/nav.jsp" %>
+
 <div class="row">
     <div class="col-md-12">
         <table class="table table-condensed table-hover">

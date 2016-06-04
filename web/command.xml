@@ -17,16 +17,16 @@
         <command-class>by.epam.eshop.command.impl.LogoutCommand</command-class>
     </command>
     <command>
-        <command-name>to-edit-users</command-name>
-        <command-class>by.epam.eshop.command.impl.navigation.ToEditUsers</command-class>
+        <command-name>get-users</command-name>
+        <command-class>by.epam.eshop.command.impl.navigation.GetUsers</command-class>
     </command>
     <command>
         <command-name>edit-user</command-name>
         <command-class>by.epam.eshop.command.impl.EditUserCommand</command-class>
     </command>
     <command>
-        <command-name>to-edit-categories</command-name>
-        <command-class>by.epam.eshop.command.impl.navigation.ToEditCategories</command-class>
+        <command-name>get-categories</command-name>
+        <command-class>by.epam.eshop.command.impl.navigation.GetCategories</command-class>
     </command>
     <command>
         <command-name>add-category</command-name>
@@ -41,8 +41,8 @@
         <command-class>by.epam.eshop.command.impl.EditCategoryCommand</command-class>
     </command>
     <command>
-        <command-name>to-edit-products</command-name>
-        <command-class>by.epam.eshop.command.impl.navigation.ToEditProducts</command-class>
+        <command-name>get-products</command-name>
+        <command-class>by.epam.eshop.command.impl.navigation.GetProducts</command-class>
     </command>
     <command>
         <command-name>add-product</command-name>
@@ -69,12 +69,12 @@
         <command-class>by.epam.eshop.command.impl.BuyCommand</command-class>
     </command>
     <command>
-        <command-name>to-user-orders</command-name>
-        <command-class>by.epam.eshop.command.impl.GetUserOrdersCommand</command-class>
+        <command-name>get-user-orders</command-name>
+        <command-class>by.epam.eshop.command.impl.navigation.GetUserOrdersCommand</command-class>
     </command>
     <command>
-        <command-name>to-edit-orders</command-name>
-        <command-class>by.epam.eshop.command.impl.navigation.ToEditOrders</command-class>
+        <command-name>get-orders</command-name>
+        <command-class>by.epam.eshop.command.impl.navigation.GetOrders</command-class>
     </command>
     <command>
         <command-name>edit-order</command-name>
@@ -86,6 +86,6 @@
     </command>
     <command>
         <command-name>get-products-by-category</command-name>
-        <command-class>by.epam.eshop.command.impl.GetProductsByCategoryCommand</command-class>
+        <command-class>by.epam.eshop.command.impl.navigation.GetProductsByCategoryCommand</command-class>
     </command>
 </configuration>

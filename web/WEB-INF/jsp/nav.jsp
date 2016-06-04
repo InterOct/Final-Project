@@ -22,7 +22,9 @@
              var="singup"/>
 <fmt:message bundle="${loc}" key="local.cart" var="cart"/>
 <fmt:message bundle="${loc}" key="local.account" var="account"/>
-
+<jsp:include page="${pageContext.request.contextPath}/Controller">
+    <jsp:param name="command" value="get-categories"/>
+</jsp:include>
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -33,13 +35,14 @@
             </button>
             <a class="navbar-brand" href="#">E-SHOP</a>
         </div>
+        ${pageContext.request.contextPath}
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
                 <li><a href="${pageContext.request.contextPath}/index.jsp">${home}</a></li>
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">${categories}<span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <c:forEach var="category" items="${applicationScope.categories}">
+                        <c:forEach var="category" items="${requestScope.categories}">
                             <li>
                                 <a href="${pageContext.request.contextPath}/index.jsp?cat=${category.name}">${category.name}</a>
                             </li>

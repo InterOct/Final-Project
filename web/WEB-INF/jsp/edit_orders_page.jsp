@@ -26,7 +26,9 @@
     <fmt:message bundle="${loc}" key="local.edit" var="edit"/>
     <fmt:message bundle="${loc}" key="local.add" var="add"/>
     <c:set scope="session" var="url" value="/admin/edit_orders"/>
-
+    <jsp:include page="${pageContext.request.contextPath}/Controller">
+        <jsp:param name="command" value="get-orders"/>
+    </jsp:include>
 </head>
 <body>
 <%@include file="/WEB-INF/jsp/nav.jsp" %>

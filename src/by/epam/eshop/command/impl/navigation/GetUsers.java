@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
-public class ToEditUsers implements Command {
+public class GetUsers implements Command {
 
     private static final Logger LOGGER = LogManager.getRootLogger();
     private static final String USERS = "users";

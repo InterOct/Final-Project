@@ -1,4 +1,4 @@
-package by.epam.eshop.command.impl;
+package by.epam.eshop.command.impl.navigation;
 
 import by.epam.eshop.command.Command;
 import by.epam.eshop.controller.PageName;

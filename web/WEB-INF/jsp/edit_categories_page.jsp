@@ -26,7 +26,6 @@
     <fmt:message bundle="${loc}" key="local.edit" var="edit"/>
     <fmt:message bundle="${loc}" key="local.add" var="add"/>
     <c:set scope="session" var="url" value="/admin/edit_categories"/>
-
 </head>
 <body>
 <%@include file="/WEB-INF/jsp/nav.jsp" %>

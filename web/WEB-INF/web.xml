@@ -7,15 +7,15 @@
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 
-    <!--<error-page>-->
-    <!--<error-code>404</error-code>-->
-    <!--<location>/error.jsp</location>-->
-    <!--</error-page>-->
+    <error-page>
+        <error-code>404</error-code>
+        <location>/error.jsp</location>
+    </error-page>
 
-    <!--<error-page>-->
-    <!--<error-code>500</error-code>-->
-    <!--<location>/error.jsp</location>-->
-    <!--</error-page>-->
+    <error-page>
+        <error-code>500</error-code>
+        <location>/error.jsp</location>
+    </error-page>
 
     <servlet>
         <display-name>Controller</display-name>
@@ -38,16 +38,6 @@
         <url-pattern>/admin/edit_users</url-pattern>
     </servlet-mapping>
 
-    <filter-mapping>
-        <filter-name>EditUsers</filter-name>
-        <url-pattern>/admin/edit_users</url-pattern>
-    </filter-mapping>
-
-    <filter>
-        <filter-name>EditUsers</filter-name>
-        <filter-class>by.epam.eshop.controller.filter.GetUsersFilter</filter-class>
-    </filter>
-
     <servlet>
         <servlet-name>EditCategories</servlet-name>
         <jsp-file>/WEB-INF/jsp/edit_categories_page.jsp</jsp-file>
@@ -57,16 +47,6 @@
         <servlet-name>EditCategories</servlet-name>
         <url-pattern>/admin/edit_categories</url-pattern>
     </servlet-mapping>
-
-    <filter-mapping>
-        <filter-name>EditCategories</filter-name>
-        <url-pattern>/admin/edit_categories</url-pattern>
-    </filter-mapping>
-
-    <filter>
-        <filter-name>EditCategories</filter-name>
-        <filter-class>by.epam.eshop.controller.filter.GetCategoriesFilter</filter-class>
-    </filter>
 
     <servlet>
         <servlet-name>EditProducts</servlet-name>
@@ -78,21 +58,6 @@
         <url-pattern>/admin/edit_products</url-pattern>
     </servlet-mapping>
 
-    <filter-mapping>
-        <filter-name>EditProducts</filter-name>
-        <url-pattern>/admin/edit_products</url-pattern>
-    </filter-mapping>
-
-    <filter>
-        <filter-name>EditProducts</filter-name>
-        <filter-class>by.epam.eshop.controller.filter.GetProductsFilter</filter-class>
-    </filter>
-
-    <filter-mapping>
-        <filter-name>EditProducts</filter-name>
-        <url-pattern>/index.jsp</url-pattern>
-    </filter-mapping>
-
     <servlet>
         <servlet-name>EditOrders</servlet-name>
         <jsp-file>/WEB-INF/jsp/edit_orders_page.jsp</jsp-file>
@@ -102,21 +67,6 @@
         <servlet-name>EditOrders</servlet-name>
         <url-pattern>/admin/edit_orders</url-pattern>
     </servlet-mapping>
-
-    <filter-mapping>
-        <filter-name>EditOrders</filter-name>
-        <url-pattern>/admin/edit_orders</url-pattern>
-    </filter-mapping>
-
-    <filter>
-        <filter-name>EditOrders</filter-name>
-        <filter-class>by.epam.eshop.controller.filter.GetOrdersFilter</filter-class>
-    </filter>
-
-    <filter-mapping>
-        <filter-name>EditProducts</filter-name>
-        <url-pattern>/index.jsp</url-pattern>
-    </filter-mapping>
 
     <servlet>
         <servlet-name>Cart</servlet-name>
@@ -137,16 +87,6 @@
         <servlet-name>UserPage</servlet-name>
         <url-pattern>/user_page</url-pattern>
     </servlet-mapping>
-
-    <filter>
-        <filter-name>UserPage</filter-name>
-        <filter-class>by.epam.eshop.controller.filter.GetUserOrdersFilter</filter-class>
-    </filter>
-
-    <filter-mapping>
-        <filter-name>UserPage</filter-name>
-        <url-pattern>/user_page</url-pattern>
-    </filter-mapping>
 
     <filter>
         <filter-name>CheckRole</filter-name>
