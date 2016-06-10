@@ -4,8 +4,8 @@ import by.epam.eshop.command.Command;
 import by.epam.eshop.service.ProductService;
 import by.epam.eshop.service.exception.ServiceException;
 import by.epam.eshop.service.impl.ProductServiceImpl;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

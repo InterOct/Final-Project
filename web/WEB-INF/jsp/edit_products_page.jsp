@@ -12,7 +12,6 @@
         }
     </style>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Edit products</title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,42 +23,44 @@
     <fmt:message bundle="${loc}" key="local.product.name" var="name"/>
     <fmt:message bundle="${loc}" key="local.category.name" var="categoty_name"/>
     <fmt:message bundle="${loc}" key="local.product.price" var="price"/>
-    <fmt:message bundle="${loc}" key="local.product.producer" var="producer"/>
+    <fmt:message bundle="${loc}" key="local.product.shortdesc" var="short_desc"/>
     <fmt:message bundle="${loc}" key="local.product.image" var="image_path"/>
     <fmt:message bundle="${loc}" key="local.description" var="description"/>
     <fmt:message bundle="${loc}" key="local.edit" var="edit"/>
     <fmt:message bundle="${loc}" key="local.add" var="add"/>
+    <fmt:message bundle="${loc}" key="local.admin.edit.goods" var="edit_goods"/>
     <c:set scope="session" var="url" value="/admin/edit_products"/>
     <jsp:include page="${pageContext.request.contextPath}/Controller">
         <jsp:param name="command" value="get-products"/>
     </jsp:include>
+    <title>${edit_goods}</title>
 </head>
 <body>
 <%@include file="/WEB-INF/jsp/nav.jsp" %>
 
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-8">
         <table class="table table-condensed table-hover">
             <thead>
             <tr>
+                <th></th>
                 <th>${name}</th>
                 <th>${categoty_name}</th>
                 <th>${price}</th>
-                <th>${producer}</th>
-                <th>${image_path}</th>
+                <th>${short_desc}</th>
                 <th>${description}</th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
-            <form action="${pageContext.request.contextPath}/Controller" method="post">
+            <form action="${pageContext.request.contextPath}/Controller" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="command" value="add-product">
                 <tr>
+                    <td><input type="file" name="file" accept="image/jpeg"></td>
                     <td><input type="text" name="name" value=""/></td>
                     <td><input type="text" name="catName" value=""/></td>
                     <td><input type="text" name="price" value=""/></td>
                     <td><input type="text" name="producer" value=""/></td>
-                    <td><input type="text" name="imgPath" value=""/></td>
                     <td><input type="text" name="description" value=""/></td>
                     <td><input type="submit" value="${add}"/></td>
                 </tr>
@@ -75,7 +76,7 @@
                     <th>${name}</th>
                     <th>${categoty_name}</th>
                     <th>${price}</th>
-                    <th>${producer}</th>
+                    <th>${short_desc}</th>
                     <th>${image_path}</th>
                     <th>${description}</th>
                 </tr>

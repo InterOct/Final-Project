@@ -12,7 +12,6 @@
         }
     </style>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Edit categories</title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -25,7 +24,9 @@
     <fmt:message bundle="${loc}" key="local.description" var="description"/>
     <fmt:message bundle="${loc}" key="local.edit" var="edit"/>
     <fmt:message bundle="${loc}" key="local.add" var="add"/>
+    <fmt:message bundle="${loc}" key="local.admin.edit.orders" var="edit_orders"/>
     <c:set scope="session" var="url" value="/admin/edit_orders"/>
+    <title>${edit_orders}</title>
     <jsp:include page="${pageContext.request.contextPath}/Controller">
         <jsp:param name="command" value="get-orders"/>
     </jsp:include>
@@ -58,7 +59,6 @@
                                 </tr>
                             </c:forEach>
                         </table>
-
                     </td>
                 </tr>
             </c:forEach>

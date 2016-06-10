@@ -2,8 +2,8 @@ package by.epam.eshop.dao.helper;
 
 
 import by.epam.eshop.dao.exception.ConnectionPoolException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.util.Map;

@@ -8,7 +8,7 @@ import java.util.Map;
 
 public final class CommandHelper {
 
-    private static final Map<String, Command> commands = new InitCommandHelper().init();
+    private static final Map<String, Command> commands = InitCommandHelper.init();
     private static CommandHelper instance = null;
 
     private CommandHelper() {

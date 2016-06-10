@@ -7,9 +7,7 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-/**
- * Created by Aspire on 10.05.2016.
- */
+
 public class CheckRoleFilter implements Filter {
 
     private static final String USER = "user";

@@ -18,7 +18,7 @@
     <fmt:message bundle="${loc}" key="local.product.name" var="name"/>
     <fmt:message bundle="${loc}" key="local.category.name" var="categoty_name"/>
     <fmt:message bundle="${loc}" key="local.product.price" var="price"/>
-    <fmt:message bundle="${loc}" key="local.product.producer" var="producer"/>
+    <fmt:message bundle="${loc}" key="local.product.shortdesc" var="producer"/>
     <fmt:message bundle="${loc}" key="local.product.image" var="image_path"/>
     <fmt:message bundle="${loc}" key="local.description" var="description"/>
     <fmt:message bundle="${loc}" key="local.edit" var="edit"/>

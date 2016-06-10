@@ -4,12 +4,13 @@ import by.epam.eshop.command.Command;
 import by.epam.eshop.controller.helper.CommandHelper;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-
+@MultipartConfig
 public class Controller extends HttpServlet {
 
     private static final long serialVersionUID = 1L;

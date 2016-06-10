@@ -12,8 +12,6 @@
         }
     </style>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Edit categories</title>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
@@ -25,7 +23,9 @@
     <fmt:message bundle="${loc}" key="local.description" var="description"/>
     <fmt:message bundle="${loc}" key="local.edit" var="edit"/>
     <fmt:message bundle="${loc}" key="local.add" var="add"/>
+    <fmt:message bundle="${loc}" key="local.admin.edit.categories" var="edit_categories"/>
     <c:set scope="session" var="url" value="/admin/edit_categories"/>
+    <title>${edit_categories}</title>
 </head>
 <body>
 <%@include file="/WEB-INF/jsp/nav.jsp" %>
@@ -49,7 +49,6 @@
                     <td><input type="text" name="description" value=""/></td>
                     <td><input type="submit" value="${add}"/></td>
                 <tr></tr>
-                </tr>
             </form>
             </tbody>
         </table>

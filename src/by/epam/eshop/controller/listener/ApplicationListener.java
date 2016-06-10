@@ -2,8 +2,8 @@ package by.epam.eshop.controller.listener;
 
 import by.epam.eshop.dao.exception.ConnectionPoolException;
 import by.epam.eshop.dao.helper.ConnectionPool;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;

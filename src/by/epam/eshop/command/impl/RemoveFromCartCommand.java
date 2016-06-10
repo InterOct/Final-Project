@@ -3,8 +3,8 @@ package by.epam.eshop.command.impl;
 import by.epam.eshop.command.Command;
 import by.epam.eshop.controller.PageName;
 import by.epam.eshop.entity.Product;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

@@ -3,15 +3,22 @@ package by.epam.eshop.command.impl;
 import by.epam.eshop.command.Command;
 import by.epam.eshop.controller.PageName;
 import by.epam.eshop.entity.Product;
+import by.epam.eshop.resource.MessageManager;
 import by.epam.eshop.service.ProductService;
 import by.epam.eshop.service.exception.ServiceException;
 import by.epam.eshop.service.impl.ProductServiceImpl;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 
 
 public class AddProductCommand implements Command {
@@ -24,6 +31,11 @@ public class AddProductCommand implements Command {
     private static final String PRODUCER = "producer";
     private static final String IMG_PATH = "imgPath";
     private static final String DESCRIPTION = "description";
+    private static final String PICTURE_UPLOAD_PATH = "/img/";
+    private static final String IMAGE_MIME_TYPE = "image/";
+    private static final String FILE = "file";
+    private static final String MESSAGE = "message";
+
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
@@ -32,17 +44,33 @@ public class AddProductCommand implements Command {
         product.setName(request.getParameter(NAME));
         product.setPrice(Double.valueOf(request.getParameter(PRICE)));
         product.setShortDescription(request.getParameter(PRODUCER));
-        product.setImgPath(request.getParameter(IMG_PATH));
         product.setDescription(request.getParameter(DESCRIPTION));
 
-        ProductService productService = ProductServiceImpl.getInstance();
         try {
-            productService.addProduct(product);
+            Part filePart = request.getPart(FILE);
+            String filename = filePart.getSubmittedFileName();
+            if (!filename.isEmpty()) {
+                String mimeType = request.getServletContext().getMimeType(filename);
+                if (mimeType.startsWith(IMAGE_MIME_TYPE)) {
+                    File uploads = new File(request.getServletContext().getRealPath("") + PICTURE_UPLOAD_PATH);
+                    File file = new File(uploads, filename);
+                    try (InputStream input = filePart.getInputStream()) {
+                        Files.copy(input, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                    }
+                    product.setImgPath(PICTURE_UPLOAD_PATH + filename);
+                    ProductService productService = ProductServiceImpl.getInstance();
+                    productService.addProduct(product);
+                } else {
+                    request.setAttribute(MESSAGE, MessageManager.NOT_JPG_IMAGE);
+                }
+            }
             response.sendRedirect(PageName.EDIT_PRODUCTS);
         } catch (ServiceException e) {
             LOGGER.error("Error add product", e);
         } catch (IOException e) {
             LOGGER.error("Can't reach page", e);
+        } catch (ServletException e) {
+            LOGGER.error(e);
         }
     }
 }

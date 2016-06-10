@@ -16,5 +16,4 @@ public final class PageName {
 
     private PageName() {
     }
-
 }
