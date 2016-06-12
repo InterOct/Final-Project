@@ -3,6 +3,7 @@ package by.epam.eshop.service.impl;
 import by.epam.eshop.dao.ProductDAO;
 import by.epam.eshop.dao.exception.DAOException;
 import by.epam.eshop.dao.impl.ProductDAOImpl;
+import by.epam.eshop.entity.Page;
 import by.epam.eshop.entity.Product;
 import by.epam.eshop.service.ProductService;
 import by.epam.eshop.service.exception.ServiceException;
@@ -40,6 +41,27 @@ public class ProductServiceImpl implements ProductService {
             throw new ServiceException("Error access database,while getting products", e);
         }
     }
+
+    @Override
+    public Page getPage(int offset, int numberOfRows) throws ServiceException {
+        ProductDAO productDAO = ProductDAOImpl.getInstance();
+        try {
+            return productDAO.getPage(offset, numberOfRows);
+        } catch (DAOException e) {
+            throw new ServiceException("Error access database,while getting products", e);
+        }
+    }
+
+    @Override
+    public Page getPageByCategory(int offset, int numberOfRows, String categoryName) throws ServiceException {
+        ProductDAO productDAO = ProductDAOImpl.getInstance();
+        try {
+            return productDAO.getPageByCategory(offset, numberOfRows, categoryName);
+        } catch (DAOException e) {
+            throw new ServiceException("Error access database,while getting products", e);
+        }
+    }
+
 
     @Override
     public List<Product> getProductsByCategory(String categoryName) throws ServiceException {

@@ -4,6 +4,7 @@ import by.epam.eshop.dao.ProductDAO;
 import by.epam.eshop.dao.exception.ConnectionPoolException;
 import by.epam.eshop.dao.exception.DAOException;
 import by.epam.eshop.dao.helper.ConnectionPool;
+import by.epam.eshop.entity.Page;
 import by.epam.eshop.entity.Product;
 
 import java.sql.Connection;
@@ -14,8 +15,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class ProductDAOImpl implements ProductDAO {
+    private static final String SELECT_NUM_OF_ITEMS = "SELECT COUNT(g_id) FROM product";
+    private static final String SELECT_NUM_OF_ITEMS_BY_CATEGORY = "SELECT COUNT(g_id) FROM product WHERE ?=cat_name";
     private static final String SELECT_PRODUCTS = "SELECT g_id, cat_name, name, price, short_description, imgPath, description FROM product";
     private static final String SELECT_PRODUCTS_BY_CATEGORY = "SELECT g_id, cat_name, name, price, short_description, imgPath, description FROM product WHERE ?=cat_name";
+    private static final String SELECT_PRODUCTS_WITH_LIMIT = "SELECT g_id, cat_name, name, price, short_description, imgPath, description FROM product LIMIT ?,?";
+    private static final String SELECT_PRODUCTS_BY_CATEGORY_WITH_LIMIT = "SELECT g_id, cat_name, name, price, short_description, imgPath, description FROM product WHERE ?=cat_name LIMIT ?,?";
     private static final String INSERT_PRODUCT = "INSERT INTO  eshop.product(cat_name, name, price, short_description, imgPath, description) VALUES (?,?,?,?,?,?)";
     private static final String UPDATE_PRODUCT = "UPDATE eshop.product SET cat_name=?, name=?,price=?,short_description=?,imgPath=?,description=? WHERE ? = g_id";
     private static final String DELETE_PRODUCT = "DELETE FROM eshop.product WHERE g_id = ?";
@@ -25,6 +30,82 @@ public class ProductDAOImpl implements ProductDAO {
 
     public static ProductDAO getInstance() {
         return Holder.HOLDER_INSTANCE;
+    }
+
+    @Override
+    public Page getPage(int offset, int numberOfRows) throws DAOException {
+        Page page = new Page();
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+        Connection connection = null;
+        List<Product> products = new LinkedList<>();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            connection = connectionPool.takeConnection();
+            String sql = SELECT_PRODUCTS_WITH_LIMIT;
+            ps = connection.prepareStatement(sql);
+            ps.setInt(1, offset);
+            ps.setInt(2, numberOfRows);
+            rs = ps.executeQuery();
+            Product product;
+            while (rs.next()) {
+                product = new Product();
+                initProduct(rs, product);
+                products.add(product);
+            }
+            page.setList(products);
+            rs.close();
+            ps.close();
+            ps = connection.prepareStatement(SELECT_NUM_OF_ITEMS);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                page.setNumberOfItems(rs.getInt(1));
+            }
+        } catch (ConnectionPoolException | SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            connectionPool.closeConnection(connection, ps, rs);
+        }
+        return page;
+    }
+
+    @Override
+    public Page getPageByCategory(int offset, int numberOfRows, String categoryName) throws DAOException {
+        Page page = new Page();
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+        Connection connection = null;
+        List<Product> products = new LinkedList<>();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            connection = connectionPool.takeConnection();
+            String sql = SELECT_PRODUCTS_BY_CATEGORY_WITH_LIMIT;
+            ps = connection.prepareStatement(sql);
+            ps.setString(1, categoryName);
+            ps.setInt(2, offset);
+            ps.setInt(3, numberOfRows);
+            rs = ps.executeQuery();
+            Product product;
+            while (rs.next()) {
+                product = new Product();
+                initProduct(rs, product);
+                products.add(product);
+            }
+            page.setList(products);
+            rs.close();
+            ps.close();
+            ps = connection.prepareStatement(SELECT_NUM_OF_ITEMS_BY_CATEGORY);
+            ps.setString(1, categoryName);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                page.setNumberOfItems(rs.getInt(1));
+            }
+        } catch (ConnectionPoolException | SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            connectionPool.closeConnection(connection, ps, rs);
+        }
+        return page;
     }
 
     @Override

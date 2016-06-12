@@ -4,6 +4,7 @@ import by.epam.eshop.dao.UserDAO;
 import by.epam.eshop.dao.exception.ConnectionPoolException;
 import by.epam.eshop.dao.exception.DAOException;
 import by.epam.eshop.dao.helper.ConnectionPool;
+import by.epam.eshop.entity.Page;
 import by.epam.eshop.entity.User;
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
@@ -52,6 +53,11 @@ public class UserDAOImpl implements UserDAO {
             connectionPool.closeConnection(connection, ps);
         }
         return user;
+    }
+
+    @Override
+    public Page getPage(int offset, int numberOfRows) {
+        return null;
     }
 
     @Override

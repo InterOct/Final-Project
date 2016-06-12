@@ -20,6 +20,8 @@
     <fmt:message bundle="${loc}" key="local.welcome.message" var="welcome"/>
     <fmt:message bundle="${loc}" key="local.product.price" var="price"/>
     <c:set scope="session" var="url" value="index.jsp"/>
+    <c:set scope="page" var="currentPage" value="${requestScope.currentPage}"/>
+    <c:set scope="page" var="curCategory" value="${param.get('cat').toString()}"/>
     <jsp:include page="${pageContext.request.contextPath}/Controller">
         <jsp:param name="command" value="get-products"/>
     </jsp:include>
@@ -37,6 +39,53 @@
             <h1 class="text-center strong text-info">${welcome}</h1>
             <br>
             <br>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+
+            <ul class="pagination">
+                <c:choose>
+                    <c:when test="${currentPage le 1}">
+                        <li class="disabled"><a href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a></li>
+                    </c:when>
+                    <c:otherwise>
+                        <li>
+                            <a href="${pageContext.request.contextPath}/index.jsp?page=${currentPage - 1}&cat=${curCategory}"
+                               aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a></li>
+                    </c:otherwise>
+                </c:choose>
+                <c:forEach begin="1" end="${requestScope.numOfPages}" var="i">
+                    <c:choose>
+                        <c:when test="${currentPage eq i}">
+                            <li class="active"><a href="#">${i}</a></li>
+                        </c:when>
+                        <c:otherwise>
+                            <li>
+                                <a href="${pageContext.request.contextPath}/index.jsp?page=${i}&cat=${curCategory}">${i}</a>
+                            </li>
+                        </c:otherwise>
+                    </c:choose>
+                </c:forEach>
+                <c:choose>
+                    <c:when test="${currentPage ge requestScope.numOfPages}">
+                        <li class="disabled"><a href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a></li>
+                    </c:when>
+                    <c:otherwise>
+                        <li>
+                            <a href="${pageContext.request.contextPath}/index.jsp?page=${currentPage + 1}&cat=${curCategory}"
+                               aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a></li>
+                    </c:otherwise>
+                </c:choose>
+            </ul>
         </div>
     </div>
     <div class="row content">
@@ -63,7 +112,7 @@
                                                          alt="Image"></div>
                             <div class="panel-footer">
                                 <div class="container">
-                                    <span class="h3">${price}:${product.price}$</span>
+                                    <span class="h3">${price}:${product.price}$${product.id}</span>
                                     <form action="${pageContext.request.contextPath}/Controller" method="post">
                                         <input type="hidden" name="command" value="add-to-cart">
                                         <input type="hidden" name="id" value="${product.id}"/>

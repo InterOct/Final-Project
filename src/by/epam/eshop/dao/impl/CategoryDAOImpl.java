@@ -5,6 +5,7 @@ import by.epam.eshop.dao.exception.ConnectionPoolException;
 import by.epam.eshop.dao.exception.DAOException;
 import by.epam.eshop.dao.helper.ConnectionPool;
 import by.epam.eshop.entity.Category;
+import by.epam.eshop.entity.Page;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -24,6 +25,11 @@ public class CategoryDAOImpl implements CategoryDAO {
 
     public static CategoryDAO getInstance() {
         return Holder.HOLDER_INSTANCE;
+    }
+
+    @Override
+    public Page getPage(int offset, int numberOfRows) {
+        return null;
     }
 
     @Override

@@ -5,6 +5,7 @@ import by.epam.eshop.dao.exception.ConnectionPoolException;
 import by.epam.eshop.dao.exception.DAOException;
 import by.epam.eshop.dao.helper.ConnectionPool;
 import by.epam.eshop.entity.Order;
+import by.epam.eshop.entity.Page;
 import by.epam.eshop.entity.Product;
 import com.mysql.jdbc.Statement;
 
@@ -32,6 +33,11 @@ public class OrderDAOImpl implements OrderDAO {
 
     public static OrderDAO getInstance() {
         return Holder.HOLDER_INSTANCE;
+    }
+
+    @Override
+    public Page getPage(int offset, int numberOfRows) {
+        return null;
     }
 
     @Override
