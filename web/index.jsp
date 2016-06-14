@@ -8,7 +8,6 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>E-SHOP</title>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
@@ -19,12 +18,12 @@
     <fmt:setBundle basename="localization.local" var="loc"/>
     <fmt:message bundle="${loc}" key="local.welcome.message" var="welcome"/>
     <fmt:message bundle="${loc}" key="local.product.price" var="price"/>
-    <c:set scope="session" var="url" value="index.jsp"/>
     <c:set scope="page" var="currentPage" value="${requestScope.currentPage}"/>
     <c:set scope="page" var="curCategory" value="${param.get('cat').toString()}"/>
     <jsp:include page="${pageContext.request.contextPath}/Controller">
         <jsp:param name="command" value="get-products"/>
     </jsp:include>
+    <c:set scope="session" var="url" value="index.jsp"/>
 </head>
 <body>
 <%@include file="/WEB-INF/jsp/nav.jsp" %>
