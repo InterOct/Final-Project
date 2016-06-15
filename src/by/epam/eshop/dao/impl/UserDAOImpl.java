@@ -19,7 +19,7 @@ import java.util.List;
 public class UserDAOImpl implements UserDAO {
     private static final String SELECT_USERS = "SELECT users.login, users.password, users.first_name, users.last_name, users.email, users.role, users.address, users.tel, users.banned, users.discount FROM users";
     private static final String INSERT_USER = "INSERT INTO  users(login, password, first_name, last_name, email, role, address, tel, banned, discount) VALUES (?,?,?,?,?,?,?,?,?,?)";
-    private static final String SELECT_USER_BY_LOGIN_AND_PASSWORD = "SELECT users.login, users.password, users.first_name, users.last_name, users.email, users.role, users.address, tel, users.banned, users.discount, users.id, coupons.id_coup, coupons.product_id,coupons.discount FROM users INNER JOIN coupons ON users.id = coupons.user_id WHERE ? = users.login AND ? = users.password";
+    private static final String SELECT_USER_BY_LOGIN_AND_PASSWORD = "SELECT users.login, users.password, users.first_name, users.last_name, users.email, users.role, users.address, tel, users.banned, users.discount, users.id, coupons.id_coup, coupons.product_id,coupons.discount FROM users LEFT JOIN coupons ON users.id = coupons.user_id WHERE ? = users.login AND ? = users.password";
     private static final String UPDATE_USER = "UPDATE eshop.users SET login=?, password=?, first_name=?, last_name=?, email=?, role=?, address=?, tel=?,banned=?, discount=? WHERE ? = login";
 
     private UserDAOImpl() {

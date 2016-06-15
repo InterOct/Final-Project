@@ -34,18 +34,18 @@
 <div class="container-fluid">
     <c:if test="${not empty requestScope.isRegistered}">
         <div class="row">
-            <div class="col-xs-12 alert-danger">
+            <div class="col-sm-12 alert-danger">
                 <strong>${failed}</strong>
             </div>
         </div>
     </c:if>
     <div class="row">
-        <div class="col-xs-12">
+        <div class="col-sm-12">
             <h1 class="text-center strong text-info">${title}</h1>
         </div>
     </div>
     <div class="row">
-        <div class="col-xs-offset-4 col-xs-4">
+        <div class="col-sm-offset-4 col-sm-4 window">
             <form action="${pageContext.request.contextPath}/Controller" method="post">
                 <input type="hidden" name="command" value="register-user"/>
                 <div class="form-group">
@@ -89,7 +89,7 @@
                            title="Input correct phone number" pattern="^[0-9]{12,15}$" class="form-control"
                            id="tel">
                 </div>
-                <input type="submit" class="btn btn-default" value="${singup}">
+                <input type="submit" class="btn btn-primary full" value="${singup}">
             </form>
         </div>
     </div>

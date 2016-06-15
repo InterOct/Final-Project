@@ -33,12 +33,12 @@
         </div>
     </c:if>
     <div class="row">
-        <div class="col-xs-12">
+        <div class="col-sm-12">
             <h1 class="text-center strong text-info">${login}</h1>
         </div>
     </div>
     <div class="row">
-        <div class="col-xs-offset-4 col-xs-4 window">
+        <div class="col-sm-offset-4 col-sm-4 window">
             <form action="${pageContext.request.contextPath}/Controller" method="post">
                 <input type="hidden" name="command" value="login"/>
                 <div class="form-group">
@@ -53,11 +53,13 @@
                            placeholder="${password_label}"
                            title="Input correct password.">
                 </div>
-                <input type="submit" class="btn btn-default" value="${login}">
-                <a href="${pageContext.request.contextPath}/registration.jsp">
-                    <button type="button" class="btn btn-default">${singup}</button>
-                </a>
+                <br>
+                <input type="submit" class="btn btn-primary full" value="${login}">
             </form>
+            <br>
+            <a href="${pageContext.request.contextPath}/registration.jsp">
+                <button type="button" class="btn btn-primary full">${singup}</button>
+            </a>
         </div>
     </div>
 </div>

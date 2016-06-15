@@ -15,7 +15,7 @@
     <fmt:setBundle basename="localization.local" var="loc"/>
     <fmt:message bundle="${loc}" key="local.error500.text" var="text"/>
     <fmt:message bundle="${loc}" key="local.error500.title" var="title"/>
-    <c:set scope="session" var="url" value="/404.jsp"/>
+    <c:set scope="session" var="url" value="/500.jsp"/>
     <title>${title}</title>
 </head>
 <body>

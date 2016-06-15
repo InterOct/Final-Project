@@ -108,7 +108,7 @@
                                                                placeholder="${password_label}"
                                                                title="Input correct password.">
                                                     </div>
-                                                    <input type="submit" class="btn btn-default" value="${login}">
+                                                    <input type="submit" class="btn btn-primary full" value="${login}">
                                                 </form>
                                             </div>
                                         </div>
@@ -130,11 +130,11 @@
                                 <li>
                                     <div class="container-fluid">
                                         <div class="row">
-                                            <div class="col-xs-12">
+                                            <div class="col-sm-12">
                                                 <form action="${pageContext.request.contextPath}/Controller"
-                                                      method="post">
+                                                      method="post" style="display: block;">
                                                     <input type="hidden" name="command" value="logout"/>
-                                                    <input type="submit" class="btn btn-default"
+                                                    <input type="submit" class="btn btn-primary full"
                                                            value="${logout}"/><br/>
                                                 </form>
                                             </div>
