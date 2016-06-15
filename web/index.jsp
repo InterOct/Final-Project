@@ -18,17 +18,18 @@
     <fmt:setBundle basename="localization.local" var="loc"/>
     <fmt:message bundle="${loc}" key="local.welcome.message" var="welcome"/>
     <fmt:message bundle="${loc}" key="local.product.price" var="price"/>
+    <fmt:message bundle="${loc}" key="local.details" var="details"/>
+    <c:set scope="page" var="currentPage" value="${requestScope.currentPage}"/>
+    <c:set scope="page" var="curCategory" value="${param.get('cat').toString()}"/>
     <jsp:include page="${pageContext.request.contextPath}/Controller">
         <jsp:param name="command" value="get-products"/>
     </jsp:include>
-    <c:set scope="session" var="url" value="index.jsp"/>
+    <c:set scope="session" var="url" value="index.jsp?cat=${curCategory}&page=${currentPage}"/>
     <style type="text/css">
         form {
             display: inline-block;
         }
     </style>
-    <c:set scope="page" var="currentPage" value="${requestScope.currentPage}"/>
-    <c:set scope="page" var="curCategory" value="${param.get('cat').toString()}"/>
 </head>
 <body>
 <%@include file="/WEB-INF/jsp/nav.jsp" %>
@@ -41,11 +42,10 @@
     <div class="row">
         <div class="col-sm-12">
             <h1 class="text-center strong text-info">${welcome}</h1>
-            <br>
-            <br>
+
         </div>
     </div>
-
+    <br>
     <div class="row content">
         <div class="col-sm-2 sidenav hidden-xs">
             <ul class="list-group">
@@ -140,7 +140,7 @@
                                         <input type="hidden" name="producer" value="${product.shortDescription}"/>
                                         <input type="hidden" name="imgPath" value="${product.imgPath}"/>
                                         <input type="hidden" name="description" value="${product.description}"/>
-                                        <input type="submit" class="btn btn-primary full" value="View"
+                                        <input type="submit" class="btn btn-primary full" value="${details}"
                                                style="min-width: 100px;">
                                     </form>
                                 </div>

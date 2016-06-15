@@ -12,37 +12,29 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.List;
+import java.util.Map;
 
 
 public class RemoveFromCartCommand implements Command {
     private static final Logger LOGGER = LogManager.getRootLogger();
-
-    private static final String CAT_NAME = "catName";
-    private static final String NAME = "name";
-    private static final String PRICE = "price";
-    private static final String PRODUCER = "producer";
-    private static final String IMG_PATH = "imgPath";
-    private static final String DESCRIPTION = "description";
     private static final String CART = "cart";
-    private static final String URL = "url";
     private static final String ID = "id";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
 
         HttpSession session = request.getSession();
-        List<Product> productList = (List<Product>) session.getAttribute(CART);
+        Map<Product, Integer> productMap = (Map<Product, Integer>) session.getAttribute(CART);
         int delProductId = Integer.valueOf(request.getParameter(ID));
-        if (productList != null) {
-            for (Product product : productList) {
+        if (productMap != null) {
+            for (Product product : productMap.keySet()) {
                 if (product.getId() == delProductId) {
-                    productList.remove(product);
+                    productMap.remove(product);
                     break;
                 }
             }
         }
-        session.setAttribute(CART, productList);
+        session.setAttribute(CART, productMap);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher(PageName.CART);
         if (requestDispatcher == null) {
             throw new RuntimeException("Impossible to reach page");

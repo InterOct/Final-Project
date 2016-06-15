@@ -24,47 +24,52 @@
     <fmt:message bundle="${loc}" key="local.edit" var="edit"/>
     <fmt:message bundle="${loc}" key="local.add" var="add"/>
     <fmt:message bundle="${loc}" key="local.cart" var="cart"/>
+    <fmt:message bundle="${loc}" key="local.amount" var="amount"/>
     <c:set scope="session" var="url" value="/cart"/>
     <title>${cart}</title>
 </head>
 <body>
 <%@include file="/WEB-INF/jsp/nav.jsp" %>
 <div class="row">
-    <div class="col-md-offset-3 col-md-6 window">
-        <c:if test="${not empty sessionScope.cart}">
-            <table class="table table-condensed table-hover">
-                <thead>
-                <tr>
-                    <th></th>
-                    <th>${name}</th>
-                    <th>${price}</th>
-                </tr>
-                </thead>
-                <tbody>
-                <c:forEach var="product" items="${sessionScope.cart}">
+    <div class="col-md-offset-3 col-md-6">
+        <div class="window">
+            <c:if test="${not empty sessionScope.cart}">
+                <table class="table table-condensed table-hover">
+                    <thead>
                     <tr>
-                        <td><img src="${pageContext.request.contextPath}${product.imgPath}" height="50px"
-                                 alt="Image"/></td>
-                        <td><span>${product.name}</span></td>
-                        <td><span>${product.price}</span></td>
-                        <td>
-                            <form action="${pageContext.request.contextPath}/Controller" method="post">
-                                <input type="hidden" name="command" value="remove-from-cart">
-                                <input type="hidden" name="id" value="${product.id}"/>
-                                <button type="submit" class="btn btn-xs btn-danger">
-                                    <span class="glyphicon glyphicon-remove"></span>
-                                </button>
-                            </form>
-                        </td>
+                        <th></th>
+                        <th>${name}</th>
+                        <th>${price}</th>
+                        <th>${amount}</th>
                     </tr>
-                </c:forEach>
-                </tbody>
-            </table>
-            <form action="${pageContext.request.contextPath}/Controller" method="post">
-                <input type="hidden" name="command" value="buy">
-                <input type="submit" class="btn btn-default" value="Buy">
-            </form>
-        </c:if>
+                    </thead>
+                    <tbody>
+                    <c:forEach var="productMap" items="${sessionScope.cart}">
+                        <tr>
+                            <td><img src="${pageContext.request.contextPath}${productMap.key.imgPath}" height="50px"
+                                     alt="Image"/></td>
+                            <td><span>${productMap.key.name}</span></td>
+                            <td><span>${productMap.key.price}</span></td>
+                            <td><span>${productMap.value}</span></td>
+                            <td>
+                                <form action="${pageContext.request.contextPath}/Controller" method="post">
+                                    <input type="hidden" name="command" value="remove-from-cart">
+                                    <input type="hidden" name="id" value="${productMap.key.id}"/>
+                                    <button type="submit" class="btn btn-xs btn-danger">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+                <form action="${pageContext.request.contextPath}/Controller" method="post">
+                    <input type="hidden" name="command" value="buy">
+                    <input type="submit" class="btn btn-primary" value="Buy">
+                </form>
+            </c:if>
+        </div>
     </div>
 </div>
 </body>

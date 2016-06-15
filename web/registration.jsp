@@ -45,52 +45,54 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-offset-4 col-sm-4 window">
-            <form action="${pageContext.request.contextPath}/Controller" method="post">
-                <input type="hidden" name="command" value="register-user"/>
-                <div class="form-group">
-                    <label for="login">${login_label}</label>
-                    <input type="text" name="login" class="form-control" id="login" value=""
-                           placeholder="${login_label}"
-                           pattern="^[a-zA-Z\d]{3,16}$" title="Input correct login.">
-                </div>
-                <div class="form-group">
-                    <label for="password">${password_label}</label>
-                    <input type="password" name="password" class="form-control" id="password" value=""
-                           placeholder="${password_label}"
-                           title="Input correct password.">
-                </div>
-                <div class="form-group">
-                    <label for="firstName">${name_label}</label>
-                    <input type="text" name="firstName" value="" placeholder="${name_label}"
-                           pattern="[А-ЯA-Zа-яa-z\s-]{2,45}"
-                           title="Input correct first name." class="form-control" id="firstName">
-                </div>
-                <div class="form-group">
-                    <label for="lastName">${surname_label}</label>
-                    <input type="text" name="lastName" value="" placeholder="${surname_label}"
-                           pattern="[А-ЯA-Zа-яa-z\s-]{2,45}"
-                           title="Input correct last name." class="form-control" id="lastName">
-                </div>
-                <div class="form-group">
-                    <label for="email">${email_label}</label>
-                    <input type="text" name="email" value="" placeholder="${email_label}"
-                           pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" class="form-control" id="email">
-                </div>
-                <div class="form-group">
-                    <label for="address">${address_label}</label>
-                    <input type="text" name="address" placeholder="${address_label}"
-                           title="Input correct address" pattern="^.{2,}$" class="form-control"
-                           id="address">
-                </div>
-                <div class="form-group">
-                    <label for="tel">${tel_label}</label>
-                    <input type="text" name="tel" placeholder="+375(29)1213457"
-                           title="Input correct phone number" pattern="^[0-9]{12,15}$" class="form-control"
-                           id="tel">
-                </div>
-                <input type="submit" class="btn btn-primary full" value="${singup}">
-            </form>
+        <div class="col-sm-offset-3 col-sm-6">
+            <div class="window">
+                <form action="${pageContext.request.contextPath}/Controller" method="post">
+                    <input type="hidden" name="command" value="register-user"/>
+                    <div class="form-group">
+                        <label for="login">${login_label}</label>
+                        <input type="text" name="login" class="form-control" id="login" value=""
+                               placeholder="${login_label}"
+                               pattern="^[a-zA-Z\d]{3,16}$" title="Input correct login.">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">${password_label}</label>
+                        <input type="password" name="password" class="form-control" id="password" value=""
+                               placeholder="${password_label}"
+                               title="Input correct password.">
+                    </div>
+                    <div class="form-group">
+                        <label for="firstName">${name_label}</label>
+                        <input type="text" name="firstName" value="" placeholder="${name_label}"
+                               pattern="[А-ЯA-Zа-яa-z\s-]{2,45}"
+                               title="Input correct first name." class="form-control" id="firstName">
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">${surname_label}</label>
+                        <input type="text" name="lastName" value="" placeholder="${surname_label}"
+                               pattern="[А-ЯA-Zа-яa-z\s-]{2,45}"
+                               title="Input correct last name." class="form-control" id="lastName">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">${email_label}</label>
+                        <input type="text" name="email" value="" placeholder="${email_label}"
+                               pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" class="form-control" id="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="address">${address_label}</label>
+                        <input type="text" name="address" placeholder="${address_label}"
+                               title="Input correct address" pattern="^.{2,}$" class="form-control"
+                               id="address">
+                    </div>
+                    <div class="form-group">
+                        <label for="tel">${tel_label}</label>
+                        <input type="text" name="tel" placeholder="+375(29)1213457"
+                               title="Input correct phone number" pattern="^[0-9]{12,15}$" class="form-control"
+                               id="tel">
+                    </div>
+                    <input type="submit" class="btn btn-primary full" value="${singup}">
+                </form>
+            </div>
         </div>
     </div>
 </div>

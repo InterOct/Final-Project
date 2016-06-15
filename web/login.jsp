@@ -38,28 +38,30 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-offset-4 col-sm-4 window">
-            <form action="${pageContext.request.contextPath}/Controller" method="post">
-                <input type="hidden" name="command" value="login"/>
-                <div class="form-group">
-                    <label for="login">${login_label}</label>
-                    <input type="text" name="login" class="form-control" id="login" value=""
-                           placeholder="${login_label}"
-                           pattern="^[a-zA-Z\d]{3,16}$" title="Input correct login.">
-                </div>
-                <div class="form-group">
-                    <label for="password">${password_label}</label>
-                    <input type="password" name="password" class="form-control" id="password" value=""
-                           placeholder="${password_label}"
-                           title="Input correct password.">
-                </div>
+        <div class="col-sm-offset-4 col-sm-4">
+            <div class="window">
+                <form action="${pageContext.request.contextPath}/Controller" method="post">
+                    <input type="hidden" name="command" value="login"/>
+                    <div class="form-group">
+                        <label for="login">${login_label}</label>
+                        <input type="text" name="login" class="form-control" id="login" value=""
+                               placeholder="${login_label}"
+                               pattern="^[a-zA-Z\d]{3,16}$" title="Input correct login.">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">${password_label}</label>
+                        <input type="password" name="password" class="form-control" id="password" value=""
+                               placeholder="${password_label}"
+                               title="Input correct password.">
+                    </div>
+                    <br>
+                    <input type="submit" class="btn btn-primary full" value="${login}">
+                </form>
                 <br>
-                <input type="submit" class="btn btn-primary full" value="${login}">
-            </form>
-            <br>
-            <a href="${pageContext.request.contextPath}/registration.jsp">
-                <button type="button" class="btn btn-primary full">${singup}</button>
-            </a>
+                <a href="${pageContext.request.contextPath}/registration.jsp">
+                    <button type="button" class="btn btn-primary full">${singup}</button>
+                </a>
+            </div>
         </div>
     </div>
 </div>

@@ -14,6 +14,13 @@ label {
     color: #31708f;
 }
 
+.description {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.42857;
+    color: #333;
+}
+
 .pagination {
     margin: 0;
 }
@@ -49,6 +56,9 @@ label {
     border-radius: 6px;
 }
 
+.img-responsive {
+    margin: auto;
+}
 .panel-heading {
     background-color: #313131;
 }

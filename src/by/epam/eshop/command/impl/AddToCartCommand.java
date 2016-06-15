@@ -7,14 +7,13 @@ import by.epam.eshop.entity.User;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class AddToCartCommand implements Command {
@@ -30,10 +29,10 @@ public class AddToCartCommand implements Command {
     private static final String URL = "url";
     private static final String ID = "id";
     private static final String USER = "user";
+    private static final String MESSAGE = "message";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
-
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute(USER);
         if (user == null) {
@@ -43,9 +42,9 @@ public class AddToCartCommand implements Command {
                 LOGGER.error("Can't reach page", e);
             }
         } else {
-            List<Product> productList = (List<Product>) session.getAttribute(CART);
-            if (productList == null) {
-                productList = new ArrayList<>();
+            Map<Product, Integer> productMap = (Map<Product, Integer>) session.getAttribute(CART);
+            if (productMap == null) {
+                productMap = new HashMap<>();
             }
             Product product = new Product();
             product.setId(Integer.valueOf(request.getParameter(ID)));
@@ -55,15 +54,15 @@ public class AddToCartCommand implements Command {
             product.setShortDescription(request.getParameter(PRODUCER));
             product.setImgPath(request.getParameter(IMG_PATH));
             product.setDescription(request.getParameter(DESCRIPTION));
-            productList.add(product);
-            session.setAttribute(CART, productList);
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher(PageName.CART);
+            Integer cur = productMap.get(product);
+            if (cur == null) {
+                cur = 0;
+            }
+            productMap.put(product, cur + 1);
+            session.setAttribute(CART, productMap);
             try {
-                if (requestDispatcher == null) {
-                    throw new RuntimeException("Impossible to reach page");
-                }
-                requestDispatcher.forward(request, response);
-            } catch (IOException | ServletException e) {
+                response.sendRedirect(PageName.CART);
+            } catch (IOException e) {
                 LOGGER.error("Can't reach page", e);
             }
         }

@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 
 
 public class BuyCommand implements Command {
@@ -33,10 +32,7 @@ public class BuyCommand implements Command {
         order.setUserId(user.getId());
         order.setDate(new Date());
         order.setStatus(null);
-        HashMap<Product, Integer> productsMap = new HashMap<>();
-        for (Product product : (List<Product>) request.getSession().getAttribute(CART)) {
-            productsMap.put(product, 1);
-        }
+        HashMap<Product, Integer> productsMap = (HashMap<Product, Integer>) request.getSession().getAttribute(CART);
         request.getSession().removeAttribute(CART);
         order.setProducts(productsMap);
         OrderService orderService = OrderServiceImpl.getInstance();

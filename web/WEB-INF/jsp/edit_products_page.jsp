@@ -82,24 +82,24 @@
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach var="product" items="${requestScope.products}">
+                <c:forEach var="productMap" items="${requestScope.products}">
                     <tr>
                         <form action="${pageContext.request.contextPath}/Controller" method="post">
                             <input type="hidden" name="command" value="edit-product">
-                            <td><img src="${pageContext.request.contextPath}${product.imgPath}" height="50px"
+                            <td><img src="${pageContext.request.contextPath}${productMap.imgPath}" height="50px"
                                      alt="Image"/></td>
-                            <td><input type="text" name="id" value="${product.id}"/></td>
-                            <td><input type="text" name="name" value="${product.name}"/></td>
-                            <td><input type="text" name="catName" value="${product.catName}"/></td>
-                            <td><input type="text" name="price" value="${product.price}"/></td>
-                            <td><input type="text" name="producer" value="${product.shortDescription}"/></td>
-                            <td><input type="text" name="imgPath" value="${product.imgPath}"/></td>
-                            <td><input type="text" name="description" value="${product.description}"/></td>
+                            <td><input type="text" name="id" value="${productMap.id}"/></td>
+                            <td><input type="text" name="name" value="${productMap.name}"/></td>
+                            <td><input type="text" name="catName" value="${productMap.catName}"/></td>
+                            <td><input type="text" name="price" value="${productMap.price}"/></td>
+                            <td><input type="text" name="producer" value="${productMap.shortDescription}"/></td>
+                            <td><input type="text" name="imgPath" value="${productMap.imgPath}"/></td>
+                            <td><input type="text" name="description" value="${productMap.description}"/></td>
                             <td><input type="submit" value="${edit}"/></td>
                         </form>
                         <form action="${pageContext.request.contextPath}/Controller" method="post">
                             <input type="hidden" name="command" value="remove-product">
-                            <input type="hidden" name="id" value="${product.id}"/>
+                            <input type="hidden" name="id" value="${productMap.id}"/>
                             <td>
                                 <button type="submit" class="btn btn-xs btn-danger">
                                     <span class="glyphicon glyphicon-remove"></span>
