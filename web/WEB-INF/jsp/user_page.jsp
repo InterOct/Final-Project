@@ -27,6 +27,13 @@
     <fmt:message bundle="${loc}" key="local.registration.email" var="email_label"/>
     <fmt:message bundle="${loc}" key="local.registration.tel" var="tel_label"/>
     <fmt:message bundle="${loc}" key="local.registration.address" var="address_label"/>
+    <fmt:message bundle="${loc}" key="local.info" var="info"/>
+    <fmt:message bundle="${loc}" key="local.orders" var="orders"/>
+    <fmt:message bundle="${loc}" key="local.coupons" var="coupons"/>
+    <fmt:message bundle="${loc}" key="local.order.date" var="date"/>
+    <fmt:message bundle="${loc}" key="local.order.status" var="status"/>
+    <fmt:message bundle="${loc}" key="local.products" var="products"/>
+    <fmt:message bundle="${loc}" key="local.empty" var="empty_c"/>
     <c:set scope="session" var="url" value="/user_page"/>
     <jsp:include page="${pageContext.request.contextPath}/Controller">
         <jsp:param name="command" value="get-user-orders"/>
@@ -36,77 +43,131 @@
 <%@include file="/WEB-INF/jsp/nav.jsp" %>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-xs-offset-2 col-xs-4">
-            <form action="${pageContext.request.contextPath}/Controller" method="post">
-                <input type="hidden" name="command" value="edit-user"/>
-                <input type="hidden" name="login" value="${sessionScope.user.login}">
-                <input type="hidden" name="password" value="${sessionScope.user.password}">
-                <input type="hidden" name="discount" value="${sessionScope.user.discount}">
-                <input type="hidden" name="banned" value="${sessionScope.user.banned}">
+        <div class="col-xs-offset-2 col-xs-8">
+            <h2 class="strong text-info">${info}</h2>
+            <div class="window">
+                <form action="${pageContext.request.contextPath}/Controller" method="post">
+                    <input type="hidden" name="command" value="edit-user"/>
+                    <input type="hidden" name="id" value="${sessionScope.user.id}"/>
+                    <input type="hidden" name="login" value="${sessionScope.user.login}">
+                    <input type="hidden" name="password" value="${sessionScope.user.password}">
+                    <input type="hidden" name="discount" value="${sessionScope.user.discount}">
+                    <input type="hidden" name="banned" value="${sessionScope.user.banned}">
 
-                <div class="form-group">
-                    <label for="firstName">${name_label}</label>
-                    <input type="text" name="firstName" value="${sessionScope.user.firstName}"
-                           placeholder="${sessionScope.user.firstName}"
-                           pattern="[А-ЯA-Zа-яa-z\s-]{2,45}"
-                           title="Input correct first name." class="form-control" id="firstName">
-                </div>
-                <div class="form-group">
-                    <label for="lastName">${surname_label}</label>
-                    <input type="text" name="lastName" value="${sessionScope.user.lastName}"
-                           placeholder="${sessionScope.user.lastName}"
-                           pattern="[А-ЯA-Zа-яa-z\s-]{2,45}"
-                           title="Input correct last name." class="form-control" id="lastName">
-                </div>
-                <div class="form-group">
-                    <label for="email">${email_label}</label>
-                    <input type="text" name="email" value="${sessionScope.user.email}"
-                           placeholder="${sessionScope.user.email}"
-                           pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" class="form-control" id="email">
-                </div>
-                <div class="form-group">
-                    <label for="address">${address_label}</label>
-                    <input type="text" name="address" placeholder="${sessionScope.user.address}"
-                           value="${sessionScope.user.address}"
-                           title="Input correct address" pattern="^.{2,}$" class="form-control"
-                           id="address">
-                </div>
-                <div class="form-group">
-                    <label for="tel">${tel_label}</label>
-                    <input type="text" name="tel" placeholder="+375(29)1213457" value="${sessionScope.user.tel}"
-                           title="Input correct phone number" pattern="^[0-9]{12,15}$" class="form-control"
-                           id="tel">
-                </div>
-                <input type="submit" class="btn btn-default" value="${title}">
-            </form>
-
-        </div>
-        <div class="col-xs-4">
-            <table class="table table-condensed">
-                <c:forEach var="order" items="${requestScope.orders}">
-                    <tr>
-                        <td><span>${order.date}</span></td>
-                        <td><span>${order.status}</span></td>
-                        <td>
-                            <table class="table table-condensed">
-                                <c:forEach var="productMap" items="${order.products}">
-                                    <tr>
-                                        <td><span>${productMap.key.name}</span></td>
-                                        <td><span>${productMap.key.price}</span></td>
-                                        <td><span>${productMap.value}</span></td>
-                                    </tr>
-                                </c:forEach>
-                            </table>
-                        </td>
-                    </tr>
-                </c:forEach>
-            </table>
+                    <div class="form-group">
+                        <label for="firstName">${name_label}</label>
+                        <input type="text" name="firstName" value="${sessionScope.user.firstName}"
+                               placeholder="${sessionScope.user.firstName}"
+                               pattern="[А-ЯA-Zа-яa-z\s-]{2,45}"
+                               title="Input correct first name." class="form-control" id="firstName">
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">${surname_label}</label>
+                        <input type="text" name="lastName" value="${sessionScope.user.lastName}"
+                               placeholder="${sessionScope.user.lastName}"
+                               pattern="[А-ЯA-Zа-яa-z\s-]{2,45}"
+                               title="Input correct last name." class="form-control" id="lastName">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">${email_label}</label>
+                        <input type="text" name="email" value="${sessionScope.user.email}"
+                               placeholder="${sessionScope.user.email}"
+                               pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" class="form-control" id="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="address">${address_label}</label>
+                        <input type="text" name="address" placeholder="${sessionScope.user.address}"
+                               value="${sessionScope.user.address}"
+                               title="Input correct address" pattern="^.{2,}$" class="form-control"
+                               id="address">
+                    </div>
+                    <div class="form-group">
+                        <label for="tel">${tel_label}</label>
+                        <input type="text" name="tel" placeholder="+375(29)1213457" value="${sessionScope.user.tel}"
+                               title="Input correct phone number" pattern="^[0-9]{12,15}$" class="form-control"
+                               id="tel">
+                    </div>
+                    <input type="submit" class="btn btn-primary" value="${title}">
+                </form>
+            </div>
         </div>
     </div>
-
-
+    <div class="row">
+        <div class="col-xs-offset-2 col-xs-8">
+            <h2 class="strong text-info">${orders}</h2>
+            <div class="window">
+                <c:choose>
+                    <c:when test="${not empty requestScope.orders}">
+                        <table>
+                            <tr>
+                                <th>${date}</th>
+                                <th>${status}</th>
+                                <th>${products}</th>
+                            </tr>
+                            <c:forEach var="order" items="${requestScope.orders}">
+                                <tr>
+                                    <td>${order.date}</td>
+                                    <td>${order.status}</td>
+                                    <td>
+                                        <table class="">
+                                            <c:forEach var="productMap" items="${order.products}">
+                                                <tr>
+                                                    <td>${productMap.key.name}</td>
+                                                    <td>${productMap.key.price}</td>
+                                                    <td>${productMap.value}</td>
+                                                </tr>
+                                            </c:forEach>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </table>
+                    </c:when>
+                    <c:otherwise>
+                        <h2 class="text-center strong text-info">${empty_c}</h2>
+                    </c:otherwise>
+                </c:choose>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-offset-2 col-xs-8">
+            <h2 class="strong text-info">${coupons}</h2>
+            <div class="window">
+                <c:choose>
+                    <c:when test="${not empty requestScope.coupons}">
+                        <table>
+                            <tr>
+                                <th>${date}</th>
+                                <th>${status}</th>
+                                <th>${products}</th>
+                            </tr>
+                            <c:forEach var="order" items="${requestScope.orders}">
+                                <tr>
+                                    <td>${order.date}</td>
+                                    <td>${order.status}</td>
+                                    <td>
+                                        <table>
+                                            <c:forEach var="productMap" items="${order.products}">
+                                                <tr>
+                                                    <td>${productMap.key.name}</td>
+                                                    <td>${productMap.key.price}</td>
+                                                    <td>${productMap.value}</td>
+                                                </tr>
+                                            </c:forEach>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </table>
+                    </c:when>
+                    <c:otherwise>
+                        <h2 class="text-center strong text-info">${empty_c}</h2>
+                    </c:otherwise>
+                </c:choose>
+            </div>
+        </div>
+    </div>
 </div>
-
-
 </body>
 </html>

@@ -15,9 +15,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class CouponDAOImpl implements CouponDAO {
-    private static final String SELECT_COUPONS = "SELECT id_coup,user_id,product_id,discount FROM coupons";
-    private static final String INSERT_COUPON = "INSERT INTO  coupons (user_id,product_id,discount) VALUES (?,?,?)";
-    private static final String UPDATE_COUPON = "UPDATE eshop.coupons SET user_id=?, product_id=?, discount=? WHERE ? = id_coup";
+    private static final String SELECT_COUPONS = "SELECT id_coup,user_id,discount FROM coupons";
+    private static final String INSERT_COUPON = "INSERT INTO  coupons (user_id,discount) VALUES (?,?)";
+    private static final String UPDATE_COUPON = "UPDATE eshop.coupons SET user_id=?, discount=? WHERE ? = id_coup";
     private static final String DELETE_COUPON = "DELETE FROM eshop.coupons WHERE ? = id_coup";
 
     private CouponDAOImpl() {
@@ -87,7 +87,7 @@ public class CouponDAOImpl implements CouponDAO {
             String sql = UPDATE_COUPON;
             ps = connection.prepareStatement(sql);
             setCouponQuery(coupon, ps);
-            ps.setInt(4, coupon.getId());
+            ps.setInt(3, coupon.getId());
             return ps.executeUpdate() == 1;
         } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);
@@ -116,15 +116,13 @@ public class CouponDAOImpl implements CouponDAO {
 
     private void setCouponQuery(Coupon coupon, PreparedStatement ps) throws SQLException {
         ps.setInt(1, coupon.getUserId());
-        ps.setInt(2, coupon.getProductId());
-        ps.setByte(3, coupon.getDiscount());
+        ps.setByte(2, coupon.getDiscount());
     }
 
     private void initCoupon(ResultSet rs, Coupon coupon) throws SQLException {
         coupon.setId(rs.getInt(1));
         coupon.setUserId(rs.getInt(2));
-        coupon.setProductId(rs.getInt(3));
-        coupon.setDiscount(rs.getByte(4));
+        coupon.setDiscount(rs.getByte(3));
     }
 
     private static class Holder {

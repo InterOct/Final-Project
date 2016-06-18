@@ -3,7 +3,6 @@ package by.epam.eshop.entity;
 public class Coupon implements Entity {
     private int id;
     private int userId;
-    private int productId;
     private byte discount;
 
     public int getId() {
@@ -20,14 +19,6 @@ public class Coupon implements Entity {
 
     public void setUserId(int userId) {
         this.userId = userId;
-    }
-
-    public int getProductId() {
-        return productId;
-    }
-
-    public void setProductId(int productId) {
-        this.productId = productId;
     }
 
     public byte getDiscount() {
@@ -55,9 +46,6 @@ public class Coupon implements Entity {
         if (userId != coupon.userId) {
             return false;
         }
-        if (productId != coupon.productId) {
-            return false;
-        }
         return discount == coupon.discount;
     }
 
@@ -65,7 +53,6 @@ public class Coupon implements Entity {
     public int hashCode() {
         int result = id;
         result = 31 * result + userId;
-        result = 31 * result + productId;
         result = 31 * result + discount;
         return result;
     }

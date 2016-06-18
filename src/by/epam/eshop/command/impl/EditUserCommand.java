@@ -30,10 +30,12 @@ public class EditUserCommand implements Command {
     private static final String DISCOUNT = "discount";
     private static final String URL = "url";
     private static final String USER = "user";
+    private static final String ID = "id";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
         User user = new User();
+        user.setId(Integer.valueOf(request.getParameter(ID)));
         user.setLogin(request.getParameter(LOGIN));
         user.setPassword(request.getParameter(PASSWORD));
         user.setFirstName(request.getParameter(FIRST_NAME));
