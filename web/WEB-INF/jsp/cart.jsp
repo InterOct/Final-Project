@@ -24,6 +24,8 @@
     <fmt:message bundle="${loc}" key="local.edit" var="edit"/>
     <fmt:message bundle="${loc}" key="local.add" var="add"/>
     <fmt:message bundle="${loc}" key="local.cart" var="cart"/>
+    <fmt:message bundle="${loc}" key="local.cart.empty" var="empty_cart"/>
+    <fmt:message bundle="${loc}" key="local.cart.shopping" var="go"/>
     <fmt:message bundle="${loc}" key="local.amount" var="amount"/>
     <c:set scope="session" var="url" value="/cart"/>
     <title>${cart}</title>
@@ -33,7 +35,8 @@
 <div class="row">
     <div class="col-md-offset-3 col-md-6">
         <div class="window">
-            <c:if test="${not empty sessionScope.cart}">
+            <c:choose>
+                <c:when test="${not empty sessionScope.cart}">
                 <table class="table table-condensed table-hover">
                     <thead>
                     <tr>
@@ -68,7 +71,14 @@
                     <input type="hidden" name="command" value="buy">
                     <input type="submit" class="btn btn-primary" value="Buy">
                 </form>
-            </c:if>
+                </c:when>
+                <c:otherwise>
+                    <h2 class="text-center strong text-info">${empty_cart}</h2>
+                    <a href="${pageContext.request.contextPath}/index.jsp">
+                        <button type="button" class="btn btn-primary full">${go}</button>
+                    </a>
+                </c:otherwise>
+            </c:choose>
         </div>
     </div>
 </div>
