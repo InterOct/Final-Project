@@ -9,9 +9,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}css/mystyle.css" type="text/css">
     <fmt:setLocale value="${sessionScope.local}"/>
     <fmt:setBundle basename="localization.local" var="loc"/>
@@ -37,40 +37,40 @@
         <div class="window">
             <c:choose>
                 <c:when test="${not empty sessionScope.cart}">
-                <table class="table table-condensed table-hover">
-                    <thead>
-                    <tr>
-                        <th></th>
-                        <th>${name}</th>
-                        <th>${price}</th>
-                        <th>${amount}</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <c:forEach var="productMap" items="${sessionScope.cart}">
+                    <table class="table table-condensed table-hover">
+                        <thead>
                         <tr>
-                            <td><img src="${pageContext.request.contextPath}${productMap.key.imgPath}" height="50px"
-                                     alt="Image"/></td>
-                            <td><span>${productMap.key.name}</span></td>
-                            <td><span>${productMap.key.price}</span></td>
-                            <td><span>${productMap.value}</span></td>
-                            <td>
-                                <form action="${pageContext.request.contextPath}/Controller" method="post">
-                                    <input type="hidden" name="command" value="remove-from-cart">
-                                    <input type="hidden" name="id" value="${productMap.key.id}"/>
-                                    <button type="submit" class="btn btn-xs btn-danger">
-                                        <span class="glyphicon glyphicon-remove"></span>
-                                    </button>
-                                </form>
-                            </td>
+                            <th></th>
+                            <th>${name}</th>
+                            <th>${price}</th>
+                            <th>${amount}</th>
                         </tr>
-                    </c:forEach>
-                    </tbody>
-                </table>
-                <form action="${pageContext.request.contextPath}/Controller" method="post">
-                    <input type="hidden" name="command" value="buy">
-                    <input type="submit" class="btn btn-primary" value="Buy">
-                </form>
+                        </thead>
+                        <tbody>
+                        <c:forEach var="productMap" items="${sessionScope.cart}">
+                            <tr>
+                                <td><img src="${pageContext.request.contextPath}${productMap.key.imgPath}" height="50px"
+                                         alt="Image"/></td>
+                                <td><span>${productMap.key.name}</span></td>
+                                <td><span>${productMap.key.price}</span></td>
+                                <td><span>${productMap.value}</span></td>
+                                <td>
+                                    <form action="${pageContext.request.contextPath}/Controller" method="post">
+                                        <input type="hidden" name="command" value="remove-from-cart">
+                                        <input type="hidden" name="id" value="${productMap.key.id}"/>
+                                        <button type="submit" class="btn btn-xs btn-danger">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                    <form action="${pageContext.request.contextPath}/Controller" method="post">
+                        <input type="hidden" name="command" value="buy">
+                        <input type="submit" class="btn btn-primary" value="Buy">
+                    </form>
                 </c:when>
                 <c:otherwise>
                     <h2 class="text-center strong text-info">${empty_cart}</h2>

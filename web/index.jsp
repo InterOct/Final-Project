@@ -20,7 +20,7 @@
     <fmt:message bundle="${loc}" key="local.product.price" var="price"/>
     <fmt:message bundle="${loc}" key="local.details" var="details"/>
     <c:set scope="page" var="currentPage" value="${requestScope.currentPage}"/>
-    <c:set scope="page" var="curCategory" value="${param.get('cat').toString()}"/>
+    <c:set scope="page" var="curCategory" value="${param.get('cat')}"/>
     <jsp:include page="${pageContext.request.contextPath}/Controller">
         <jsp:param name="command" value="get-products"/>
     </jsp:include>

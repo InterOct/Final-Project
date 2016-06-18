@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 
@@ -28,6 +29,7 @@ public class EditUserCommand implements Command {
     private static final String BANNED = "banned";
     private static final String DISCOUNT = "discount";
     private static final String URL = "url";
+    private static final String USER = "user";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
@@ -45,8 +47,15 @@ public class EditUserCommand implements Command {
         user.setRole(request.getParameter(ROLE));
         UserService userService = UserServiceImpl.getInstance();
         try {
-            userService.updateUser(user);
-            response.sendRedirect(request.getSession().getAttribute(URL).toString());
+            HttpSession session = request.getSession();
+            if (userService.updateUser(user)) {
+                User loggedUser = (User) session.getAttribute(USER);
+                if (loggedUser.getLogin().equals(user.getLogin())) {
+                    session.removeAttribute(USER);
+                    session.setAttribute(USER, user);
+                }
+            }
+            response.sendRedirect(session.getAttribute(URL).toString());
         } catch (ServiceException e) {
             LOGGER.error("Error edit user", e);
         } catch (IOException e) {
