@@ -96,6 +96,16 @@
         <url-pattern>/user_page</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>OrderPage</servlet-name>
+        <jsp-file>/WEB-INF/jsp/order_page.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>OrderPage</servlet-name>
+        <url-pattern>/order_page</url-pattern>
+    </servlet-mapping>
+
     <filter>
         <filter-name>CheckRole</filter-name>
         <filter-class>by.epam.eshop.controller.filter.CheckRoleFilter</filter-class>
@@ -109,6 +119,5 @@
     <listener>
         <listener-class>by.epam.eshop.controller.listener.ApplicationListener</listener-class>
     </listener>
-
 
 </web-app>

@@ -15,5 +15,7 @@ public interface OrderService {
 
     List<Order> getOrdersByUserId(int userId) throws ServiceException;
 
+    Order getOrder(int id) throws ServiceException;
+
     boolean updateOrder(Order order) throws ServiceException;
 }

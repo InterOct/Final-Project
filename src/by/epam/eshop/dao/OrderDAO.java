@@ -10,4 +10,6 @@ import java.util.List;
  */
 public interface OrderDAO extends GenericDAO<Order> {
     List<Order> findOrdersByUserId(int userId) throws DAOException;
+
+    Order getOrder(int id) throws DAOException;
 }

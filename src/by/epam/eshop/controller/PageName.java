@@ -13,6 +13,7 @@ public final class PageName {
     public static final String CART = "/cart";
     public static final String PRODUCT_PAGE = "/product_page.jsp";
     public static final String USER_LOGIN = "/login.jsp";
+    public static final String ORDER_PAGE = "/order_page";
 
     private PageName() {
     }

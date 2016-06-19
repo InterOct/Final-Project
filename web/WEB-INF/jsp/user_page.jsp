@@ -8,7 +8,6 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>User page</title>
     <fmt:setLocale value="${sessionScope.local}"/>
     <fmt:setBundle basename="localization.local" var="loc"/>
     <fmt:message bundle="${loc}" key="local.message" var="message"/>
@@ -33,7 +32,11 @@
     <fmt:message bundle="${loc}" key="local.order.date" var="date"/>
     <fmt:message bundle="${loc}" key="local.order.status" var="status"/>
     <fmt:message bundle="${loc}" key="local.products" var="products"/>
+    <fmt:message bundle="${loc}" key="local.total" var="total"/>
+    <fmt:message bundle="${loc}" key="local.details" var="details"/>
     <fmt:message bundle="${loc}" key="local.empty" var="empty_c"/>
+    <fmt:message bundle="${loc}" key="local.account" var="account"/>
+    <title>${account}</title>
     <c:set scope="session" var="url" value="/user_page"/>
     <jsp:include page="${pageContext.request.contextPath}/Controller">
         <jsp:param name="command" value="get-user-orders"/>
@@ -95,29 +98,35 @@
     <div class="row">
         <div class="col-xs-offset-2 col-xs-8">
             <h2 class="strong text-info">${orders}</h2>
-            <div class="window">
+            <div class="window" style="overflow-x: auto;">
                 <c:choose>
                     <c:when test="${not empty requestScope.orders}">
                         <table>
                             <tr>
                                 <th>${date}</th>
                                 <th>${status}</th>
-                                <th>${products}</th>
+                                <th>${total}</th>
+                                <th></th>
                             </tr>
                             <c:forEach var="order" items="${requestScope.orders}">
                                 <tr>
                                     <td>${order.date}</td>
                                     <td>${order.status}</td>
                                     <td>
-                                        <table class="">
-                                            <c:forEach var="productMap" items="${order.products}">
-                                                <tr>
-                                                    <td>${productMap.key.name}</td>
-                                                    <td>${productMap.key.price}</td>
-                                                    <td>${productMap.value}</td>
-                                                </tr>
-                                            </c:forEach>
-                                        </table>
+                                        <c:set var="totalPrice" value="${0}" scope="page"/>
+                                        <c:forEach var="productMap" items="${order.products}">
+                                            <c:set var="totalPrice"
+                                                   value="${totalPrice + productMap.key.price * productMap.value}"/>
+                                        </c:forEach>
+                                            ${totalPrice}
+                                    </td>
+                                    <td>
+                                        <form action="${pageContext.request.contextPath}/Controller" method="post">
+                                            <input type="hidden" name="command" value="view-order">
+                                            <input type="hidden" name="id" value="${order.id}">
+                                            <input type="submit" value="${details}" class="btn btn-primary full"
+                                                   style="margin: 0;">
+                                        </form>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -133,31 +142,13 @@
     <div class="row">
         <div class="col-xs-offset-2 col-xs-8">
             <h2 class="strong text-info">${coupons}</h2>
-            <div class="window">
+            <div class="window" style="overflow-x: auto;">
                 <c:choose>
                     <c:when test="${not empty requestScope.coupons}">
                         <table>
                             <tr>
-                                <th>${date}</th>
-                                <th>${status}</th>
-                                <th>${products}</th>
                             </tr>
                             <c:forEach var="order" items="${requestScope.orders}">
-                                <tr>
-                                    <td>${order.date}</td>
-                                    <td>${order.status}</td>
-                                    <td>
-                                        <table>
-                                            <c:forEach var="productMap" items="${order.products}">
-                                                <tr>
-                                                    <td>${productMap.key.name}</td>
-                                                    <td>${productMap.key.price}</td>
-                                                    <td>${productMap.value}</td>
-                                                </tr>
-                                            </c:forEach>
-                                        </table>
-                                    </td>
-                                </tr>
                             </c:forEach>
                         </table>
                     </c:when>

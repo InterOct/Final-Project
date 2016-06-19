@@ -24,6 +24,7 @@ public class OrderDAOImpl implements OrderDAO {
 
     private static final String SELECT_ORDERS = "SELECT orders.order_id, orders.users_id, orders.date, orders.status, product.g_id, product.cat_name, product.name, product.price, product.description, orderproduct.quantity FROM orders INNER JOIN orderproduct ON orders.order_id = orderproduct.order_id RIGHT JOIN product ON orderproduct.product_id = product.g_id ORDER BY orders.order_id";
     private static final String SELECT_ORDERS_BY_USER_ID = "SELECT orders.order_id, orders.users_id, orders.date, orders.status, product.g_id, product.cat_name, product.name, product.price, product.description, Orderproduct.quantity FROM orders INNER JOIN orderproduct ON orders.order_id = orderproduct.order_id RIGHT JOIN product ON orderproduct.product_id = product.g_id WHERE ? = orders.users_id ORDER BY orders.order_id";
+    private static final String SELECT_ORDER = "SELECT orders.order_id, orders.users_id, orders.date, orders.status, product.g_id, product.cat_name, product.name, product.price, product.imgPath, Orderproduct.quantity FROM orders INNER JOIN orderproduct ON orders.order_id = orderproduct.order_id RIGHT JOIN product ON orderproduct.product_id = product.g_id WHERE ? = orders.order_id";
     private static final String INSERT_ORDER = "INSERT INTO  orders(order_id,users_id,date,status) VALUES (?,?,?,?)";
     private static final String INSERT_INTO_ORDER_PRODUCT = "INSERT INTO orderproduct(order_id, product_id, quantity) VALUES (?,?,?)";
     private static final String UPDATE_ORDER = "UPDATE eshop.orders SET status=? WHERE ? = order_id";
@@ -101,6 +102,36 @@ public class OrderDAOImpl implements OrderDAO {
             connectionPool.closeConnection(connection, ps, rs);
         }
         return orders;
+    }
+
+    @Override
+    public Order getOrder(int id) throws DAOException {
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Order order = null;
+        try {
+            connection = connectionPool.takeConnection();
+            String sql = SELECT_ORDER;
+            ps = connection.prepareStatement(sql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            if (!rs.next()) {
+                return null;
+            }
+            boolean hasMore;
+            do {
+                order = new Order();
+                hasMore = initOrder(rs, order);
+            } while (hasMore);
+
+        } catch (ConnectionPoolException | SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            connectionPool.closeConnection(connection, ps, rs);
+        }
+        return order;
     }
 
     @Override
@@ -187,7 +218,7 @@ public class OrderDAOImpl implements OrderDAO {
             product.setCatName(rs.getString(6));
             product.setName(rs.getString(7));
             product.setPrice(rs.getDouble(8));
-            product.setDescription(rs.getString(9));
+            product.setImgPath(rs.getString(9));
             products.put(product, rs.getInt(10));
             if (!rs.next()) {
                 order.setProducts(products);
