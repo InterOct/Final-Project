@@ -56,7 +56,6 @@
                         <th>${tel}</th>
                         <th>${admin}</th>
                         <th>${banned}</th>
-                        <th>${discount}</th>
                         <th>${edit}</th>
                     </tr>
                     </thead>
@@ -92,7 +91,6 @@
                                         </c:otherwise>
                                     </c:choose>
                                 </td>
-                                <td><input type="text" name="discount" value="${user.discount}"/></td>
                                 <td><input type="submit" value="${edit}"/></td>
                             </tr>
                         </form>

@@ -10,5 +10,7 @@ public interface ProductDAO extends GenericDAO<Product> {
 
     Page getPageByCategory(int offset, int numberOfRows, String categoryName) throws DAOException;
 
+    Product getProductById(int id) throws DAOException;
+
     List<Product> getProductsByCategory(String categoryName) throws DAOException;
 }

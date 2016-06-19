@@ -14,6 +14,7 @@ public class Product implements Entity {
     private String imgPath;
     private String description;
     private String shortDescription;
+    private double discountPrice;
 
     public int getId() {
         return id;
@@ -63,6 +64,14 @@ public class Product implements Entity {
         this.description = description;
     }
 
+    public double getDiscountPrice() {
+        return discountPrice;
+    }
+
+    public void setDiscountPrice(double discountPrice) {
+        this.discountPrice = discountPrice;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -92,7 +101,11 @@ public class Product implements Entity {
         if (description != null ? !description.equals(product.description) : product.description != null) {
             return false;
         }
-        return shortDescription != null ? shortDescription.equals(product.shortDescription) : product.shortDescription != null;
+        if (shortDescription != null ? !shortDescription.equals(product.shortDescription) : product.shortDescription != null) {
+            return false;
+        }
+        return discountPrice == product.discountPrice;
+
     }
 
     @Override
@@ -107,6 +120,8 @@ public class Product implements Entity {
         result = 31 * result + (imgPath != null ? imgPath.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (shortDescription != null ? shortDescription.hashCode() : 0);
+        temp = Double.doubleToLongBits(discountPrice);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
     }
 

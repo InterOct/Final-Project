@@ -43,6 +43,16 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public Product getProductById(int id) throws ServiceException {
+        ProductDAO productDAO = ProductDAOImpl.getInstance();
+        try {
+            return productDAO.getProductById(id);
+        } catch (DAOException e) {
+            throw new ServiceException("Error access database,while getting products", e);
+        }
+    }
+
+    @Override
     public Page getPage(int offset, int numberOfRows) throws ServiceException {
         ProductDAO productDAO = ProductDAOImpl.getInstance();
         try {

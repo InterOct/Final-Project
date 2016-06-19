@@ -9,6 +9,8 @@ import java.util.List;
 public interface ProductService {
     boolean addProduct(Product product) throws ServiceException;
 
+    Product getProductById(int id) throws ServiceException;
+
     Page getPage(int offset, int numberOfRows) throws ServiceException;
 
     Page getPageByCategory(int offset, int numberOfRows, String categoryName) throws ServiceException;

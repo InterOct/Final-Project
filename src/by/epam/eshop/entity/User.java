@@ -14,20 +14,11 @@ public class User implements Entity {
     private String address;
     private String tel;
     private boolean banned;
-    private int discount;
     private String email;
     private List<Coupon> coupons;
     private Role role;
 
     public User() {
-    }
-
-    public int getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(int discount) {
-        this.discount = discount;
     }
 
     public boolean isBanned() {
@@ -139,9 +130,6 @@ public class User implements Entity {
         if (banned != user.banned) {
             return false;
         }
-        if (discount != user.discount) {
-            return false;
-        }
         if (login != null ? !login.equals(user.login) : user.login != null) {
             return false;
         }
@@ -179,7 +167,6 @@ public class User implements Entity {
         result = 31 * result + (address != null ? address.hashCode() : 0);
         result = 31 * result + (tel != null ? tel.hashCode() : 0);
         result = 31 * result + (banned ? 1 : 0);
-        result = 31 * result + discount;
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (coupons != null ? coupons.hashCode() : 0);
         result = 31 * result + (role != null ? role.hashCode() : 0);

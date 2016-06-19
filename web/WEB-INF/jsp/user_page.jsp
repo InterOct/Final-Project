@@ -54,7 +54,6 @@
                     <input type="hidden" name="id" value="${sessionScope.user.id}"/>
                     <input type="hidden" name="login" value="${sessionScope.user.login}">
                     <input type="hidden" name="password" value="${sessionScope.user.password}">
-                    <input type="hidden" name="discount" value="${sessionScope.user.discount}">
                     <input type="hidden" name="banned" value="${sessionScope.user.banned}">
 
                     <div class="form-group">

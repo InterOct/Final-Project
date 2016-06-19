@@ -39,7 +39,6 @@ public class RegisterUserCommand implements Command {
         user.setTel(request.getParameter(TEL));
         user.setRole(null);
         user.setBanned(false);
-        user.setDiscount(0);
         try {
             String page;
             if(UserServiceImpl.getInstance().registerUser(user)) {

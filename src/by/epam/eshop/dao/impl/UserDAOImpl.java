@@ -17,10 +17,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class UserDAOImpl implements UserDAO {
-    private static final String SELECT_USERS = "SELECT users.login, users.password, users.first_name, users.last_name, users.email, users.role, users.address, users.tel, users.banned, users.discount FROM users";
-    private static final String INSERT_USER = "INSERT INTO  users(login, password, first_name, last_name, email, role, address, tel, banned, discount) VALUES (?,?,?,?,?,?,?,?,?,?)";
-    private static final String SELECT_USER_BY_LOGIN_AND_PASSWORD = "SELECT users.login, users.password, users.first_name, users.last_name, users.email, users.role, users.address, tel, users.banned, users.discount, users.id, coupons.id_coup,coupons.discount FROM users LEFT JOIN coupons ON users.id = coupons.user_id WHERE ? = users.login AND ? = users.password";
-    private static final String UPDATE_USER = "UPDATE eshop.users SET login=?, password=?, first_name=?, last_name=?, email=?, role=?, address=?, tel=?,banned=?, discount=? WHERE ? = login";
+    private static final String SELECT_USERS = "SELECT users.login, users.password, users.first_name, users.last_name, users.email, users.role, users.address, users.tel, users.banned FROM eshop.users";
+    private static final String INSERT_USER = "INSERT INTO  eshop.users(login, password, first_name, last_name, email, role, address, tel, banned) VALUES (?,?,?,?,?,?,?,?,?)";
+    private static final String SELECT_USER_BY_LOGIN_AND_PASSWORD = "SELECT users.login, users.password, users.first_name, users.last_name, users.email, users.role, users.address, tel, users.banned, users.id, coupons.id_coup,coupons.discount FROM eshop.users LEFT JOIN eshop.coupons ON eshop.users.id = eshop.coupons.user_id WHERE ? = users.login AND ? = users.password";
+    private static final String UPDATE_USER = "UPDATE eshop.users SET login=?, password=?, first_name=?, last_name=?, email=?, role=?, address=?, tel=?,banned=? WHERE ? = login";
 
     private UserDAOImpl() {
     }
@@ -47,13 +47,13 @@ public class UserDAOImpl implements UserDAO {
             }
             user = new User();
             initUser(rs, user);
-            user.setId(rs.getInt(11));
+            user.setId(rs.getInt(10));
             List<Coupon> coupons = new LinkedList<>();
             do {
                 Coupon coupon = new Coupon();
-                coupon.setId(rs.getInt(12));
+                coupon.setId(rs.getInt(11));
                 coupon.setUserId(user.getId());
-                coupon.setDiscount(rs.getByte(13));
+                coupon.setDiscount(rs.getByte(12));
                 coupons.add(coupon);
             } while (rs.next());
             user.setCoupons(coupons);
@@ -128,7 +128,7 @@ public class UserDAOImpl implements UserDAO {
             String sql = UPDATE_USER;
             ps = connection.prepareStatement(sql);
             setUserQuery(user, ps);
-            ps.setString(11, user.getLogin());
+            ps.setString(10, user.getLogin());
             return ps.executeUpdate() == 1;
         } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);
@@ -152,7 +152,6 @@ public class UserDAOImpl implements UserDAO {
         ps.setString(7, user.getAddress());
         ps.setString(8, user.getTel());
         ps.setBoolean(9, user.isBanned());
-        ps.setInt(10, user.getDiscount());
     }
 
     private void initUser(ResultSet rs, User user) throws SQLException {
@@ -165,7 +164,6 @@ public class UserDAOImpl implements UserDAO {
         user.setAddress(rs.getString(7));
         user.setTel(rs.getString(8));
         user.setBanned(rs.getBoolean(9));
-        user.setDiscount(rs.getInt(10));
     }
 
     private static class Holder {

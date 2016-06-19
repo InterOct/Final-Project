@@ -45,7 +45,6 @@ public class EditUserCommand implements Command {
         user.setTel(request.getParameter(TEL));
         user.setRole(request.getParameter(ROLE));
         user.setBanned(Boolean.valueOf(request.getParameter(BANNED)));
-        user.setDiscount(Integer.valueOf(request.getParameter(DISCOUNT)));
         user.setRole(request.getParameter(ROLE));
         UserService userService = UserServiceImpl.getInstance();
         try {
