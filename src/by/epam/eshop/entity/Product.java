@@ -1,8 +1,5 @@
 package by.epam.eshop.entity;
 
-/**
- * Created by Aspire on 15.05.2016.
- */
 public class Product implements Entity {
 
     private static final long serialVersionUID = 1L;

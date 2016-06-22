@@ -2,10 +2,10 @@ package by.epam.eshop.command.impl;
 
 import by.epam.eshop.command.Command;
 import by.epam.eshop.controller.PageName;
-import by.epam.eshop.entity.Product;
-import by.epam.eshop.service.ProductService;
+import by.epam.eshop.entity.Coupon;
+import by.epam.eshop.service.CouponService;
 import by.epam.eshop.service.exception.ServiceException;
-import by.epam.eshop.service.impl.ProductServiceImpl;
+import by.epam.eshop.service.impl.CouponServiceImpl;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -14,22 +14,23 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-public class RemoveProductCommand implements Command {
-
+public class RemoveCouponCommand implements Command {
     private static final Logger LOGGER = LogManager.getRootLogger();
 
     private static final String ID = "id";
+    private static final String USER_ID = "userId";
+    private static final String DISCOUNT = "discount";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
-        Product product = new Product();
-        product.setId(Integer.parseInt(request.getParameter(ID)));
-        ProductService productService = ProductServiceImpl.getInstance();
+        Coupon coupon = new Coupon();
+        coupon.setId(Integer.parseInt(request.getParameter(ID)));
+        CouponService couponService = CouponServiceImpl.getInstance();
         try {
-            productService.removeProduct(product);
-            response.sendRedirect(PageName.EDIT_PRODUCTS);
+            couponService.removeCoupon(coupon);
+            response.sendRedirect(PageName.EDIT_COUPON);
         } catch (ServiceException e) {
-            LOGGER.error("Error edit product", e);
+            LOGGER.error("Error add coupon", e);
         } catch (IOException e) {
             LOGGER.error("Can't reach page", e);
         }

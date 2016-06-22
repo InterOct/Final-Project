@@ -14,6 +14,7 @@ public final class PageName {
     public static final String PRODUCT_PAGE = "/product_page.jsp";
     public static final String USER_LOGIN = "/login.jsp";
     public static final String ORDER_PAGE = "/order_page";
+    public static final String EDIT_COUPON = "/admin/edit_coupon";
 
     private PageName() {
     }

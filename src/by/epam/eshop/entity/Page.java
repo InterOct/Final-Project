@@ -2,7 +2,7 @@ package by.epam.eshop.entity;
 
 import java.util.List;
 
-public class Page {
+public class Page implements Entity {
     private List<? extends Entity> list;
     private int numberOfItems;
 

@@ -15,8 +15,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class CouponDAOImpl implements CouponDAO {
-    private static final String SELECT_COUPONS = "SELECT id_coup,user_id,discount FROM coupons";
-    private static final String INSERT_COUPON = "INSERT INTO  coupons (user_id,discount) VALUES (?,?)";
+    private static final String SELECT_COUPONS = "SELECT id_coup,user_id,discount FROM eshop.coupons";
+    private static final String INSERT_COUPON = "INSERT INTO  eshop.coupons (user_id,discount) VALUES (?,?)";
     private static final String UPDATE_COUPON = "UPDATE eshop.coupons SET user_id=?, discount=? WHERE ? = id_coup";
     private static final String DELETE_COUPON = "DELETE FROM eshop.coupons WHERE ? = id_coup";
 

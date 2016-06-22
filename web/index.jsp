@@ -20,7 +20,7 @@
     <fmt:message bundle="${loc}" key="local.product.price" var="price"/>
     <fmt:message bundle="${loc}" key="local.details" var="details"/>
     <c:set scope="page" var="currentPage" value="${requestScope.currentPage}"/>
-    <c:set scope="page" var="curCategory" value="${param.get('cat')}"/>
+    <c:set scope="page" var="curCategory" value="${param.cat}"/>
     <jsp:include page="${pageContext.request.contextPath}/Controller">
         <jsp:param name="command" value="get-products"/>
     </jsp:include>
@@ -42,7 +42,6 @@
     <div class="row">
         <div class="col-sm-12">
             <h1 class="text-center strong text-info">${welcome}</h1>
-
         </div>
     </div>
     <br>
@@ -108,50 +107,45 @@
                 </div>
             </div>
             <c:set var="counter" value="${0}" scope="page"/>
-                <c:forEach var="product" items="${requestScope.products}">
-                    <c:if test="${(counter%4)==0}"><div class="row"></c:if>
-                    <div class="col-sm-3">
-                        <div class="panel panel-primary">
-                            <div class="panel-heading">${product.name}</div>
-                            <div class="panel-body"><img src="${product.imgPath}"
-                                                         class="img-responsive" style="width: 100%; height: 300px"
-                                                         alt="Image"></div>
-                            <div class="panel-footer">
-                                <div style="overflow: auto; text-align: center;">
-                                    <h3>${price}:${product.price}$</h3>
-                                    <form action="${pageContext.request.contextPath}/Controller" method="post">
-                                        <input type="hidden" name="command" value="add-to-cart">
-                                        <input type="hidden" name="id" value="${product.id}"/>
-                                        <input type="hidden" name="name" value="${product.name}"/>
-                                        <input type="hidden" name="catName" value="${product.catName}"/>
-                                        <input type="hidden" name="price" value="${product.price}"/>
-                                        <input type="hidden" name="producer" value="${product.shortDescription}"/>
-                                        <input type="hidden" name="imgPath" value="${product.imgPath}"/>
-                                        <input type="hidden" name="description" value="${product.description}"/>
-                                        <input type="submit" class="btn btn-primary full" value="${cart}"
-                                               style="min-width: 100px;">
-                                    </form>
-                                    <form action="${pageContext.request.contextPath}/Controller" method="post">
-                                        <input type="hidden" name="command" value="view-product">
-                                        <input type="hidden" name="id" value="${product.id}"/>
-                                        <input type="hidden" name="name" value="${product.name}"/>
-                                        <input type="hidden" name="catName" value="${product.catName}"/>
-                                        <input type="hidden" name="price" value="${product.price}"/>
-                                        <input type="hidden" name="producer" value="${product.shortDescription}"/>
-                                        <input type="hidden" name="imgPath" value="${product.imgPath}"/>
-                                        <input type="hidden" name="description" value="${product.description}"/>
-                                        <input type="submit" class="btn btn-primary full" value="${details}"
-                                               style="min-width: 100px;">
-                                    </form>
-                                </div>
+            <c:forEach var="product" items="${requestScope.products}">
+                <c:if test="${(counter%4)==0}"><div class="row"></c:if>
+                <div class="col-sm-3">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">${product.name}</div>
+                        <div class="panel-body"><img src="${product.imgPath}"
+                                                     class="img-responsive"
+                                                     style="margin: auto; max-height: 300px;"
+                                                     alt="Image"></div>
+                        <div class="panel-footer">
+                            <div style="overflow: auto; text-align: center;">
+                                <h3>${price}:${product.price}$</h3>
+                                <form action="${pageContext.request.contextPath}/Controller" method="post">
+                                    <input type="hidden" name="command" value="add-to-cart">
+                                    <input type="hidden" name="id" value="${product.id}"/>
+                                    <input type="hidden" name="name" value="${product.name}"/>
+                                    <input type="hidden" name="catName" value="${product.catName}"/>
+                                    <input type="hidden" name="price" value="${product.price}"/>
+                                    <input type="hidden" name="producer" value="${product.shortDescription}"/>
+                                    <input type="hidden" name="imgPath" value="${product.imgPath}"/>
+                                    <input type="hidden" name="description" value="${product.description}"/>
+                                    <input type="submit" class="btn btn-primary full" value="${cart}"
+                                           style="min-width: 100px;">
+                                </form>
+                                <form action="${pageContext.request.contextPath}/Controller" method="get">
+                                    <input type="hidden" name="command" value="view-product">
+                                    <input type="hidden" name="id" value="${product.id}"/>
+                                    <input type="submit" class="btn btn-primary full" value="${details}"
+                                           style="min-width: 100px;">
+                                </form>
                             </div>
                         </div>
                     </div>
-                    <c:set var="counter" value="${counter+1}" scope="page"/>
-                    <c:if test="${(counter%4)==0}"></div><br></c:if>
-                </c:forEach>
-            </div>
+                </div>
+                <c:set var="counter" value="${counter+1}" scope="page"/>
+                <c:if test="${(counter%4)==0}"></div><br></c:if>
+            </c:forEach>
         </div>
     </div>
+</div>
 </body>
 </html>

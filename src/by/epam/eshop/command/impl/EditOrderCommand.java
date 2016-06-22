@@ -23,7 +23,7 @@ public class EditOrderCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
         Order order = new Order();
-        order.setId(Integer.valueOf(request.getParameter(ID)));
+        order.setId(Integer.parseInt(request.getParameter(ID)));
         OrderService orderService = OrderServiceImpl.getInstance();
         try {
             orderService.updateOrder(order);

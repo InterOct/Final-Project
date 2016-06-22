@@ -35,7 +35,7 @@ public class EditUserCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
         User user = new User();
-        user.setId(Integer.valueOf(request.getParameter(ID)));
+        user.setId(Integer.parseInt(request.getParameter(ID)));
         user.setLogin(request.getParameter(LOGIN));
         user.setPassword(request.getParameter(PASSWORD));
         user.setFirstName(request.getParameter(FIRST_NAME));

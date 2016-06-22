@@ -25,7 +25,7 @@ public class RemoveFromCartCommand implements Command {
 
         HttpSession session = request.getSession();
         Map<Product, Integer> productMap = (Map<Product, Integer>) session.getAttribute(CART);
-        int delProductId = Integer.valueOf(request.getParameter(ID));
+        int delProductId = Integer.parseInt(request.getParameter(ID));
         if (productMap != null) {
             for (Product product : productMap.keySet()) {
                 if (product.getId() == delProductId) {

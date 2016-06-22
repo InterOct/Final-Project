@@ -29,7 +29,7 @@ public class GetProducts implements Command {
         if (parameter == null) {
             page = 0;
         } else {
-            page = Integer.valueOf(parameter) - 1;
+            page = Integer.parseInt(parameter) - 1;
         }
 
         ProductService productService = ProductServiceImpl.getInstance();

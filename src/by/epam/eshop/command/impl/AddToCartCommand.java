@@ -47,7 +47,7 @@ public class AddToCartCommand implements Command {
                 productMap = new HashMap<>();
             }
             Product product = new Product();
-            product.setId(Integer.valueOf(request.getParameter(ID)));
+            product.setId(Integer.parseInt(request.getParameter(ID)));
             product.setCatName(request.getParameter(CAT_NAME));
             product.setName(request.getParameter(NAME));
             product.setPrice(Double.valueOf(request.getParameter(PRICE)));
