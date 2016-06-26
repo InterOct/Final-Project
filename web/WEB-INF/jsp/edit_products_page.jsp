@@ -29,10 +29,11 @@
     <fmt:message bundle="${loc}" key="local.edit" var="edit"/>
     <fmt:message bundle="${loc}" key="local.add" var="add"/>
     <fmt:message bundle="${loc}" key="local.admin.edit.goods" var="edit_goods"/>
-    <c:set scope="session" var="url" value="/admin/edit_products"/>
     <jsp:include page="${pageContext.request.contextPath}/Controller">
         <jsp:param name="command" value="get-products"/>
     </jsp:include>
+    <c:set scope="session" var="url" value="/admin/edit_products"/>
+
     <title>${edit_goods}</title>
 </head>
 <body>
@@ -53,12 +54,18 @@
             </tr>
             </thead>
             <tbody>
-            <form action="${pageContext.request.contextPath}/Controller" method="post" enctype="multipart/form-data">
+            <form role="form" action="${pageContext.request.contextPath}/Controller" method="post"
+                  enctype="multipart/form-data">
                 <input type="hidden" name="command" value="add-product">
                 <tr>
                     <td><input type="file" name="file" accept="image/jpeg"></td>
                     <td><input type="text" name="name" value=""/></td>
-                    <td><input type="text" name="catName" value=""/></td>
+                    <td>
+                        <select name="catName" class="form-control" id="sel1">
+                            <c:forEach var="category" items="${requestScope.categories}">
+                                <option>${category.name}</option>
+                            </c:forEach>
+                        </select></td>
                     <td><input type="text" name="price" value=""/></td>
                     <td><input type="text" name="producer" value=""/></td>
                     <td><input type="text" name="description" value=""/></td>

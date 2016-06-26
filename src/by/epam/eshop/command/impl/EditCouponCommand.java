@@ -32,7 +32,7 @@ public class EditCouponCommand implements Command {
             couponService.updateCoupon(coupon);
             response.sendRedirect(PageName.EDIT_COUPON);
         } catch (ServiceException e) {
-            LOGGER.error("Error add coupon", e);
+            LOGGER.error("Error editing coupon", e);
         } catch (IOException e) {
             LOGGER.error("Can't reach page", e);
         }

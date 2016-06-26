@@ -18,8 +18,6 @@ public class RemoveCouponCommand implements Command {
     private static final Logger LOGGER = LogManager.getRootLogger();
 
     private static final String ID = "id";
-    private static final String USER_ID = "userId";
-    private static final String DISCOUNT = "discount";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
@@ -30,7 +28,7 @@ public class RemoveCouponCommand implements Command {
             couponService.removeCoupon(coupon);
             response.sendRedirect(PageName.EDIT_COUPON);
         } catch (ServiceException e) {
-            LOGGER.error("Error add coupon", e);
+            LOGGER.error("Error removing coupon", e);
         } catch (IOException e) {
             LOGGER.error("Can't reach page", e);
         }

@@ -9,6 +9,7 @@
 <fmt:message bundle="${loc}" key="local.admin.edit.users" var="edit_users"/>
 <fmt:message bundle="${loc}" key="local.admin.edit.goods" var="edit_goods"/>
 <fmt:message bundle="${loc}" key="local.admin.edit.orders" var="edit_orders"/>
+<fmt:message bundle="${loc}" key="local.admin.edit.coupons" var="edit_coupons"/>
 <fmt:message bundle="${loc}" key="local.locbutton.name.ru"
              var="ru_button"/>
 <fmt:message bundle="${loc}" key="local.locbutton.name.en"
@@ -70,6 +71,9 @@
                                     </li>
                                     <li>
                                         <a href="${pageContext.request.contextPath}/admin/edit_orders">${edit_orders}</a>
+                                    </li>
+                                    <li>
+                                        <a href="${pageContext.request.contextPath}/admin/edit_coupons">${edit_coupons}</a>
                                     </li>
                                 </ul>
                             </li>
@@ -144,7 +148,6 @@
                             </ul>
                         </c:otherwise>
                     </c:choose>
-
                 </li>
                 <li>
                     <form action="${pageContext.request.contextPath}/Controller" method="post" style="padding-top: 9px">

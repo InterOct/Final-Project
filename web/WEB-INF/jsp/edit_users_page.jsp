@@ -29,7 +29,7 @@
     <fmt:message bundle="${loc}" key="local.registration.email" var="email_label"/>
     <fmt:message bundle="${loc}" key="local.nav.admin" var="admin"/>
     <fmt:message bundle="${loc}" key="local.user.banned" var="banned"/>
-    <fmt:message bundle="${loc}" key="local.user.discount" var="discount"/>
+    <fmt:message bundle="${loc}" key="local.discount" var="discount"/>
     <fmt:message bundle="${loc}" key="local.edit" var="edit"/>
     <fmt:message bundle="${loc}" key="local.admin.edit.users" var="edit_users"/>
     <c:set scope="session" var="url" value="/admin/edit_users"/>

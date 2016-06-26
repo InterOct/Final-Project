@@ -26,10 +26,8 @@ public class AddToCartCommand implements Command {
     private static final String IMG_PATH = "imgPath";
     private static final String DESCRIPTION = "description";
     private static final String CART = "cart";
-    private static final String URL = "url";
     private static final String ID = "id";
     private static final String USER = "user";
-    private static final String MESSAGE = "message";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {

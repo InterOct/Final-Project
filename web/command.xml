@@ -92,4 +92,20 @@
         <command-name>view-order</command-name>
         <command-class>by.epam.eshop.command.impl.ViewOrderCommand</command-class>
     </command>
+    <command>
+        <command-name>get-coupons</command-name>
+        <command-class>by.epam.eshop.command.impl.navigation.GetCoupons</command-class>
+    </command>
+    <command>
+        <command-name>add-coupon</command-name>
+        <command-class>by.epam.eshop.command.impl.AddCouponCommand</command-class>
+    </command>
+    <command>
+        <command-name>remove-coupon</command-name>
+        <command-class>by.epam.eshop.command.impl.RemoveCouponCommand</command-class>
+    </command>
+    <command>
+        <command-name>edit-coupon</command-name>
+        <command-class>by.epam.eshop.command.impl.EditCouponCommand</command-class>
+    </command>
 </configuration>

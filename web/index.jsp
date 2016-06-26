@@ -24,7 +24,7 @@
     <jsp:include page="${pageContext.request.contextPath}/Controller">
         <jsp:param name="command" value="get-products"/>
     </jsp:include>
-    <c:set scope="session" var="url" value="index.jsp?cat=${curCategory}&page=${currentPage}"/>
+    <c:set scope="session" var="url" value="index.jsp?page=${currentPage}"/>
     <style type="text/css">
         form {
             display: inline-block;
@@ -35,7 +35,7 @@
 <%@include file="/WEB-INF/jsp/nav.jsp" %>
 <div class="container-fluid">
     <c:if test="${not empty requestScope.message}">
-        <div class="col-md-12">
+        <div class="col-sm-12">
             <span>${requestScope.message}</span>
         </div>
     </c:if>
@@ -114,11 +114,19 @@
                         <div class="panel-heading">${product.name}</div>
                         <div class="panel-body"><img src="${product.imgPath}"
                                                      class="img-responsive"
-                                                     style="margin: auto; max-height: 300px;"
+                                                     style="margin: auto; height: 300px;"
                                                      alt="Image"></div>
                         <div class="panel-footer">
                             <div style="overflow: auto; text-align: center;">
-                                <h3>${price}:${product.price}$</h3>
+                                <c:choose>
+                                    <c:when test="${product.discountPrice eq 0}">
+                                        <span class="h3">${price}:${product.price}$</span>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <span class="h4">${price}:<del>${product.price}$</del>${product.discountPrice}$</span>
+                                    </c:otherwise>
+                                </c:choose>
+                                <br>
                                 <form action="${pageContext.request.contextPath}/Controller" method="post">
                                     <input type="hidden" name="command" value="add-to-cart">
                                     <input type="hidden" name="id" value="${product.id}"/>
@@ -147,5 +155,7 @@
         </div>
     </div>
 </div>
+</div>
+<%@include file="/WEB-INF/jsp/footer.jsp" %>
 </body>
 </html>

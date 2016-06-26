@@ -30,7 +30,14 @@
                 <img class="img-responsive" src="${product.imgPath}" alt="${product.name}"
                      style="height: 230px;">
                 <br>
-                <span class="h3">${price}:${product.price}$</span>
+                <c:choose>
+                    <c:when test="${product.discountPrice eq 0}">
+                        <span class="h3">${price}:${product.price}$</span>
+                    </c:when>
+                    <c:otherwise>
+                        <span class="h4">${price}:<del>${product.price}$</del>${product.discountPrice}$</span>
+                    </c:otherwise>
+                </c:choose>
                 <br>
                 <form action="${pageContext.request.contextPath}/Controller" method="post">
                     <input type="hidden" name="command" value="add-to-cart">

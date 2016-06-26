@@ -29,7 +29,6 @@ public class AddProductCommand implements Command {
     private static final String NAME = "name";
     private static final String PRICE = "price";
     private static final String PRODUCER = "producer";
-    private static final String IMG_PATH = "imgPath";
     private static final String DESCRIPTION = "description";
     private static final String PICTURE_UPLOAD_PATH = "/img/";
     private static final String IMAGE_MIME_TYPE = "image/";

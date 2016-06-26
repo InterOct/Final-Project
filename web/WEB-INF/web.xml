@@ -77,6 +77,16 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>EditCoupons</servlet-name>
+        <jsp-file>/WEB-INF/jsp/edit_coupons_page.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>EditCoupons</servlet-name>
+        <url-pattern>/admin/edit_coupons</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>Cart</servlet-name>
         <jsp-file>/WEB-INF/jsp/cart.jsp</jsp-file>
     </servlet>

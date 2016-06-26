@@ -15,8 +15,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class CategoryDAOImpl implements CategoryDAO {
-    private static final String SELECT_CATEGORIES = "SELECT cat_name, description FROM category";
-    private static final String INSERT_CATEGORY = "INSERT INTO  category(cat_name, description) VALUES (?,?)";
+    private static final String SELECT_CATEGORIES = "SELECT cat_name, description FROM eshop.category";
+    private static final String INSERT_CATEGORY = "INSERT INTO  eshop.category(cat_name, description) VALUES (?,?)";
     private static final String UPDATE_CATEGORY = "UPDATE eshop.category SET cat_name=?, description=? WHERE ? = cat_name";
     private static final String DELETE_CATEGORY = "DELETE FROM eshop.category WHERE cat_name = ?";
 

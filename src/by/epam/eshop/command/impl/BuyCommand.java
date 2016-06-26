@@ -22,7 +22,6 @@ public class BuyCommand implements Command {
 
     private static final Logger LOGGER = LogManager.getRootLogger();
     private static final String CART = "cart";
-    private static final String URL = "url";
     private static final String USER = "user";
 
     @Override

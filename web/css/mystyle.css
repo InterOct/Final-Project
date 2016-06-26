@@ -79,7 +79,13 @@ th {
     margin: auto;
 }
 .panel-heading {
-    background-color: #313131;
+    background-color: #222;
+}
+
+footer {
+    background-color: #222;
+    color: #919d9d;
+    padding: 15px;
 }
 
 @media screen and (max-width: 767px) {
