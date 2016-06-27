@@ -16,6 +16,7 @@ import java.util.List;
 
 public class CouponDAOImpl implements CouponDAO {
     private static final String SELECT_COUPONS = "SELECT id_coup,user_id,discount FROM eshop.coupons";
+    private static final String SELECT_COUPONS_BY_USER_ID = "SELECT id_coup,user_id,discount FROM eshop.coupons WHERE ? = user_id";
     private static final String INSERT_COUPON = "INSERT INTO  eshop.coupons (user_id,discount) VALUES (?,?)";
     private static final String UPDATE_COUPON = "UPDATE eshop.coupons SET user_id=?, discount=? WHERE ? = id_coup";
     private static final String DELETE_COUPON = "DELETE FROM eshop.coupons WHERE ? = id_coup";
@@ -43,6 +44,34 @@ public class CouponDAOImpl implements CouponDAO {
             connection = connectionPool.takeConnection();
             String sql = SELECT_COUPONS;
             ps = connection.prepareStatement(sql);
+            rs = ps.executeQuery();
+            Coupon coupon;
+            while (rs.next()) {
+                coupon = new Coupon();
+                initCoupon(rs, coupon);
+                coupons.add(coupon);
+            }
+        } catch (ConnectionPoolException | SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            connectionPool.closeConnection(connection, ps, rs);
+        }
+
+        return coupons;
+    }
+
+    @Override
+    public List<Coupon> getCouponsByUserId(int id) throws DAOException {
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+        Connection connection = null;
+        List<Coupon> coupons = new LinkedList<>();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            connection = connectionPool.takeConnection();
+            String sql = SELECT_COUPONS_BY_USER_ID;
+            ps = connection.prepareStatement(sql);
+            ps.setInt(1, id);
             rs = ps.executeQuery();
             Coupon coupon;
             while (rs.next()) {

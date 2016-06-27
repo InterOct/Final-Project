@@ -10,6 +10,8 @@ public interface CouponService {
 
     List<Coupon> getAll() throws ServiceException;
 
+    List<Coupon> getCouponsByUserId(int id) throws ServiceException;
+
     boolean updateCoupon(Coupon coupon) throws ServiceException;
 
     boolean removeCoupon(Coupon coupon) throws ServiceException;

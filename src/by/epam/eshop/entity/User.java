@@ -1,8 +1,6 @@
 package by.epam.eshop.entity;
 
 
-import java.util.List;
-
 public class User implements Entity {
     private static final long serialVersionUID = 1L;
 
@@ -15,7 +13,6 @@ public class User implements Entity {
     private String tel;
     private boolean banned;
     private String email;
-    private List<Coupon> coupons;
     private Role role;
 
     public User() {
@@ -105,14 +102,6 @@ public class User implements Entity {
         }
     }
 
-    public List<Coupon> getCoupons() {
-        return coupons;
-    }
-
-    public void setCoupons(List<Coupon> coupons) {
-        this.coupons = coupons;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -151,9 +140,6 @@ public class User implements Entity {
         if (email != null ? !email.equals(user.email) : user.email != null) {
             return false;
         }
-        if (coupons != null ? !coupons.equals(user.coupons) : user.coupons != null) {
-            return false;
-        }
         return role == user.role;
     }
 
@@ -168,7 +154,6 @@ public class User implements Entity {
         result = 31 * result + (tel != null ? tel.hashCode() : 0);
         result = 31 * result + (banned ? 1 : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (coupons != null ? coupons.hashCode() : 0);
         result = 31 * result + (role != null ? role.hashCode() : 0);
         return result;
     }

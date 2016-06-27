@@ -22,7 +22,7 @@ public class EditProductCommand implements Command {
     private static final String CAT_NAME = "catName";
     private static final String NAME = "name";
     private static final String PRICE = "price";
-    private static final String PRODUCER = "producer";
+    private static final String SHORT_DESCRIPTION = "shortDescription";
     private static final String IMG_PATH = "imgPath";
     private static final String DESCRIPTION = "description";
 
@@ -34,7 +34,7 @@ public class EditProductCommand implements Command {
         product.setCatName(request.getParameter(CAT_NAME));
         product.setName(request.getParameter(NAME));
         product.setPrice(Double.valueOf(request.getParameter(PRICE)));
-        product.setShortDescription(request.getParameter(PRODUCER));
+        product.setShortDescription(request.getParameter(SHORT_DESCRIPTION));
         product.setImgPath(request.getParameter(IMG_PATH));
         product.setDescription(request.getParameter(DESCRIPTION));
         ProductService productService = ProductServiceImpl.getInstance();

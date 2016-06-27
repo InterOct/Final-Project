@@ -4,7 +4,6 @@ import by.epam.eshop.dao.UserDAO;
 import by.epam.eshop.dao.exception.ConnectionPoolException;
 import by.epam.eshop.dao.exception.DAOException;
 import by.epam.eshop.dao.helper.ConnectionPool;
-import by.epam.eshop.entity.Coupon;
 import by.epam.eshop.entity.Page;
 import by.epam.eshop.entity.User;
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
@@ -19,7 +18,7 @@ import java.util.List;
 public class UserDAOImpl implements UserDAO {
     private static final String SELECT_USERS = "SELECT users.login, users.password, users.first_name, users.last_name, users.email, users.role, users.address, users.tel, users.banned FROM eshop.users";
     private static final String INSERT_USER = "INSERT INTO  eshop.users(login, password, first_name, last_name, email, role, address, tel, banned) VALUES (?,?,?,?,?,?,?,?,?)";
-    private static final String SELECT_USER_BY_LOGIN_AND_PASSWORD = "SELECT users.login, users.password, users.first_name, users.last_name, users.email, users.role, users.address, tel, users.banned, users.id, coupons.id_coup,coupons.discount FROM eshop.users LEFT JOIN eshop.coupons ON eshop.users.id = eshop.coupons.user_id WHERE ? = users.login AND ? = users.password";
+    private static final String SELECT_USER_BY_LOGIN_AND_PASSWORD = "SELECT login, password, first_name, last_name, email, role, address, tel, banned, id FROM eshop.users WHERE ? = login AND ? = password";
     private static final String UPDATE_USER = "UPDATE eshop.users SET login=?, password=?, first_name=?, last_name=?, email=?, role=?, address=?, tel=?,banned=? WHERE ? = login";
 
     private UserDAOImpl() {
@@ -48,15 +47,6 @@ public class UserDAOImpl implements UserDAO {
             user = new User();
             initUser(rs, user);
             user.setId(rs.getInt(10));
-            List<Coupon> coupons = new LinkedList<>();
-            do {
-                Coupon coupon = new Coupon();
-                coupon.setId(rs.getInt(11));
-                coupon.setUserId(user.getId());
-                coupon.setDiscount(rs.getByte(12));
-                coupons.add(coupon);
-            } while (rs.next());
-            user.setCoupons(coupons);
         } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);
         } finally {

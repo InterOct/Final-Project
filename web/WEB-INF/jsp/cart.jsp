@@ -18,7 +18,7 @@
     <fmt:message bundle="${loc}" key="local.product.name" var="name"/>
     <fmt:message bundle="${loc}" key="local.category.name" var="categoty_name"/>
     <fmt:message bundle="${loc}" key="local.product.price" var="price"/>
-    <fmt:message bundle="${loc}" key="local.product.shortdesc" var="producer"/>
+    <fmt:message bundle="${loc}" key="local.product.shortdesc" var="shortDescription"/>
     <fmt:message bundle="${loc}" key="local.product.image" var="image_path"/>
     <fmt:message bundle="${loc}" key="local.description" var="description"/>
     <fmt:message bundle="${loc}" key="local.edit" var="edit"/>
@@ -27,8 +27,17 @@
     <fmt:message bundle="${loc}" key="local.cart.empty" var="empty_cart"/>
     <fmt:message bundle="${loc}" key="local.cart.shopping" var="go"/>
     <fmt:message bundle="${loc}" key="local.amount" var="amount"/>
+    <fmt:message bundle="${loc}" key="local.coupons" var="coupons"/>
+    <fmt:message bundle="${loc}" key="local.discount" var="discount"/>
+    <fmt:message bundle="${loc}" key="local.buy" var="buy"/>
+    <fmt:message bundle="${loc}" key="local.use" var="use"/>
+    <fmt:message bundle="${loc}" key="local.product.price" var="price"/>
     <c:set scope="session" var="url" value="/cart"/>
     <title>${cart}</title>
+    <jsp:include page="${pageContext.request.contextPath}/Controller">
+        <jsp:param name="command" value="get-coupons"/>
+        <jsp:param name="id" value="${sessionScope.user.id}"/>
+    </jsp:include>
 </head>
 <body>
 <%@include file="/WEB-INF/jsp/nav.jsp" %>
@@ -37,22 +46,33 @@
         <div class="window">
             <c:choose>
                 <c:when test="${not empty sessionScope.cart}">
-                    <table class="table table-condensed table-hover">
+                    <table>
                         <thead>
                         <tr>
                             <th></th>
                             <th>${name}</th>
                             <th>${price}</th>
                             <th>${amount}</th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
+                        <c:set var="productPrice" value="${0}" scope="page"/>
                         <c:forEach var="productMap" items="${sessionScope.cart}">
+                            <c:set var="productPrice" value="${productPrice + productMap.key.price*productMap.value}"
+                                   scope="page"/>
                             <tr>
                                 <td><img src="${pageContext.request.contextPath}${productMap.key.imgPath}" height="50px"
                                          alt="Image"/></td>
                                 <td><span>${productMap.key.name}</span></td>
-                                <td><span>${productMap.key.price}</span></td>
+                                <c:choose>
+                                    <c:when test="${productMap.key.discountPrice eq 0}">
+                                        <td><span>${productMap.key.price}</span></td>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <td><span>${productMap.key.discountPrice}</span></td>
+                                    </c:otherwise>
+                                </c:choose>
                                 <td><span>${productMap.value}</span></td>
                                 <td>
                                     <form action="${pageContext.request.contextPath}/Controller" method="post">
@@ -67,10 +87,36 @@
                         </c:forEach>
                         </tbody>
                     </table>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>${coupons}</th>
+                            <th colspan="3"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach var="coupon" items="${requestScope.coupons}">
+                            <tr>
+                                <td>${discount}</td>
+                                <td>-${coupon.discount}%</td>
+                                <td>
+                                    <form action="${pageContext.request.contextPath}/Controller" method="post">
+                                        <input type="hidden" name="command" value="buy">
+                                        <input type="hidden" name="id" value="${coupon.id}">
+                                        <input type="hidden" name="discount" value="${coupon.discount}"/>
+                                        <input type="submit" class="btn btn-primary" value="${use}">
+                                    </form>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                    ${price}:${productPrice}
                     <form action="${pageContext.request.contextPath}/Controller" method="post">
                         <input type="hidden" name="command" value="buy">
-                        <input type="submit" class="btn btn-primary" value="Buy">
+                        <input type="submit" class="btn btn-primary pull-right" value="${buy}">
                     </form>
+
                 </c:when>
                 <c:otherwise>
                     <h2 class="text-center strong text-info">${empty_cart}</h2>

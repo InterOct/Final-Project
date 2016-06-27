@@ -130,21 +130,13 @@
                                 <form action="${pageContext.request.contextPath}/Controller" method="post">
                                     <input type="hidden" name="command" value="add-to-cart">
                                     <input type="hidden" name="id" value="${product.id}"/>
-                                    <input type="hidden" name="name" value="${product.name}"/>
-                                    <input type="hidden" name="catName" value="${product.catName}"/>
-                                    <input type="hidden" name="price" value="${product.price}"/>
-                                    <input type="hidden" name="producer" value="${product.shortDescription}"/>
-                                    <input type="hidden" name="imgPath" value="${product.imgPath}"/>
-                                    <input type="hidden" name="description" value="${product.description}"/>
                                     <input type="submit" class="btn btn-primary full" value="${cart}"
                                            style="min-width: 100px;">
                                 </form>
-                                <form action="${pageContext.request.contextPath}/Controller" method="get">
-                                    <input type="hidden" name="command" value="view-product">
-                                    <input type="hidden" name="id" value="${product.id}"/>
-                                    <input type="submit" class="btn btn-primary full" value="${details}"
-                                           style="min-width: 100px;">
-                                </form>
+                                <a href="${pageContext.request.contextPath}/"
+                                   style="display:inline-block;min-width: 100px;">
+                                    <button type="button" class="btn btn-primary full">${details}</button>
+                                </a>
                             </div>
                         </div>
                     </div>

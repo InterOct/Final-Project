@@ -4,6 +4,9 @@ import by.epam.eshop.command.Command;
 import by.epam.eshop.controller.PageName;
 import by.epam.eshop.entity.Product;
 import by.epam.eshop.entity.User;
+import by.epam.eshop.service.ProductService;
+import by.epam.eshop.service.exception.ServiceException;
+import by.epam.eshop.service.impl.ProductServiceImpl;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -18,13 +21,6 @@ import java.util.Map;
 
 public class AddToCartCommand implements Command {
     private static final Logger LOGGER = LogManager.getRootLogger();
-
-    private static final String CAT_NAME = "catName";
-    private static final String NAME = "name";
-    private static final String PRICE = "price";
-    private static final String PRODUCER = "producer";
-    private static final String IMG_PATH = "imgPath";
-    private static final String DESCRIPTION = "description";
     private static final String CART = "cart";
     private static final String ID = "id";
     private static final String USER = "user";
@@ -40,28 +36,24 @@ public class AddToCartCommand implements Command {
                 LOGGER.error("Can't reach page", e);
             }
         } else {
-            Map<Product, Integer> productMap = (Map<Product, Integer>) session.getAttribute(CART);
-            if (productMap == null) {
-                productMap = new HashMap<>();
-            }
-            Product product = new Product();
-            product.setId(Integer.parseInt(request.getParameter(ID)));
-            product.setCatName(request.getParameter(CAT_NAME));
-            product.setName(request.getParameter(NAME));
-            product.setPrice(Double.valueOf(request.getParameter(PRICE)));
-            product.setShortDescription(request.getParameter(PRODUCER));
-            product.setImgPath(request.getParameter(IMG_PATH));
-            product.setDescription(request.getParameter(DESCRIPTION));
-            Integer cur = productMap.get(product);
-            if (cur == null) {
-                cur = 0;
-            }
-            productMap.put(product, cur + 1);
-            session.setAttribute(CART, productMap);
             try {
+                Map<Product, Integer> productMap = (Map<Product, Integer>) session.getAttribute(CART);
+                if (productMap == null) {
+                    productMap = new HashMap<>();
+                }
+                ProductService productService = ProductServiceImpl.getInstance();
+                Product product = productService.getProductById(Integer.parseInt(request.getParameter(ID)));
+                Integer cur = productMap.get(product);
+                if (cur == null) {
+                    cur = 0;
+                }
+                productMap.put(product, cur + 1);
+                session.setAttribute(CART, productMap);
                 response.sendRedirect(PageName.CART);
             } catch (IOException e) {
                 LOGGER.error("Can't reach page", e);
+            } catch (ServiceException e) {
+                LOGGER.error("Error getting product", e);
             }
         }
     }

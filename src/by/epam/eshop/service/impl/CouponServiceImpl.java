@@ -42,6 +42,16 @@ public class CouponServiceImpl implements CouponService {
     }
 
     @Override
+    public List<Coupon> getCouponsByUserId(int id) throws ServiceException {
+        CouponDAO couponDAO = CouponDAOImpl.getInstance();
+        try {
+            return couponDAO.getCouponsByUserId(id);
+        } catch (DAOException e) {
+            throw new ServiceException("Error access database,while getting coupon", e);
+        }
+    }
+
+    @Override
     public boolean updateCoupon(Coupon coupon) throws ServiceException {
         CouponDAO couponDAO = CouponDAOImpl.getInstance();
         try {

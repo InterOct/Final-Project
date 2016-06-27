@@ -17,16 +17,17 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class OrderDAOImpl implements OrderDAO {
 
     private static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-    private static final String SELECT_ORDERS = "SELECT orders.order_id, orders.users_id, orders.date, orders.status, product.g_id, product.cat_name, product.name, product.price, product.description, orderproduct.quantity FROM orders INNER JOIN orderproduct ON orders.order_id = orderproduct.order_id RIGHT JOIN product ON orderproduct.product_id = product.g_id ORDER BY orders.order_id";
-    private static final String SELECT_ORDERS_BY_USER_ID = "SELECT orders.order_id, orders.users_id, orders.date, orders.status, product.g_id, product.cat_name, product.name, product.price, product.description, orderproduct.quantity FROM eshop.orders INNER JOIN eshop.orderproduct ON orders.order_id = orderproduct.order_id RIGHT JOIN eshop.product ON orderproduct.product_id = product.g_id WHERE ? = orders.users_id ORDER BY orders.date DESC";
-    private static final String SELECT_ORDER = "SELECT orders.order_id, orders.users_id, orders.date, orders.status, product.g_id, product.cat_name, product.name, product.price, product.imgPath, Orderproduct.quantity FROM orders INNER JOIN orderproduct ON orders.order_id = orderproduct.order_id RIGHT JOIN product ON orderproduct.product_id = product.g_id WHERE ? = orders.order_id";
-    private static final String INSERT_ORDER = "INSERT INTO  orders(order_id,users_id,date,status) VALUES (?,?,?,?)";
-    private static final String INSERT_INTO_ORDER_PRODUCT = "INSERT INTO orderproduct(order_id, product_id, quantity) VALUES (?,?,?)";
+    private static final String SELECT_ORDERS = "SELECT orders.order_id, orders.users_id, orders.date, orders.status, product.g_id, product.cat_name, product.name, orderproduct.cur_price, product.description, orderproduct.quantity FROM eshop.orders INNER JOIN eshop.orderproduct ON orders.order_id = orderproduct.order_id RIGHT JOIN eshop.product ON eshop.orderproduct.product_id = product.g_id ORDER BY orders.order_id";
+    private static final String SELECT_ORDERS_BY_USER_ID = "SELECT orders.order_id, orders.users_id, orders.date, orders.status, product.g_id, product.cat_name, product.name, orderproduct.cur_price, product.description, orderproduct.quantity FROM eshop.orders INNER JOIN eshop.orderproduct ON orders.order_id = orderproduct.order_id RIGHT JOIN eshop.product ON orderproduct.product_id = product.g_id WHERE ? = orders.users_id ORDER BY orders.date DESC";
+    private static final String SELECT_ORDER = "SELECT orders.order_id, orders.users_id, orders.date, orders.status, product.g_id, product.cat_name, product.name, orderproduct.cur_price, product.imgPath, Orderproduct.quantity FROM orders INNER JOIN orderproduct ON orders.order_id = orderproduct.order_id RIGHT JOIN product ON orderproduct.product_id = product.g_id WHERE ? = orders.order_id";
+    private static final String INSERT_ORDER = "INSERT INTO  eshop.orders(order_id,users_id,date,status) VALUES (?,?,?,?)";
+    private static final String INSERT_INTO_ORDER_PRODUCT = "INSERT INTO eshop.orderproduct(order_id, product_id, quantity, cur_price) VALUES (?,?,?,?)";
     private static final String UPDATE_ORDER = "UPDATE eshop.orders SET status=? WHERE ? = order_id";
 
     private OrderDAOImpl() {
@@ -157,12 +158,13 @@ public class OrderDAOImpl implements OrderDAO {
             sql = INSERT_INTO_ORDER_PRODUCT;
             ps = connection.prepareStatement(sql);
             ps.setInt(1, order.getId());
-            for (Product product : order.getProducts().keySet()) {
-                ps.setInt(2, product.getId());
-                ps.setInt(3, order.getProducts().get(product));
+            Map<Product, Integer> productsMap = order.getProducts();
+            for (Map.Entry<Product, Integer> productEntry : productsMap.entrySet()) {
+                ps.setInt(2, productEntry.getKey().getId());
+                ps.setInt(3, productEntry.getValue());
+                ps.setDouble(4, productEntry.getKey().getPrice());
                 success &= ps.executeUpdate() == 1;
             }
-
             return success;
         } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);

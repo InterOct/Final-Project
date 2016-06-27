@@ -28,7 +28,7 @@ public class AddProductCommand implements Command {
     private static final String CAT_NAME = "catName";
     private static final String NAME = "name";
     private static final String PRICE = "price";
-    private static final String PRODUCER = "producer";
+    private static final String SHORT_DESCRIPTION = "shortDescription";
     private static final String DESCRIPTION = "description";
     private static final String PICTURE_UPLOAD_PATH = "/img/";
     private static final String IMAGE_MIME_TYPE = "image/";
@@ -42,7 +42,7 @@ public class AddProductCommand implements Command {
         product.setCatName(request.getParameter(CAT_NAME));
         product.setName(request.getParameter(NAME));
         product.setPrice(Double.valueOf(request.getParameter(PRICE)));
-        product.setShortDescription(request.getParameter(PRODUCER));
+        product.setShortDescription(request.getParameter(SHORT_DESCRIPTION));
         product.setDescription(request.getParameter(DESCRIPTION));
 
         try {

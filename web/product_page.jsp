@@ -45,7 +45,7 @@
                     <input type="hidden" name="name" value="${product.name}"/>
                     <input type="hidden" name="catName" value="${product.catName}"/>
                     <input type="hidden" name="price" value="${product.price}"/>
-                    <input type="hidden" name="producer" value="${product.shortDescription}"/>
+                    <input type="hidden" name="shortDescription" value="${product.shortDescription}"/>
                     <input type="hidden" name="imgPath" value="${product.imgPath}"/>
                     <input type="hidden" name="description" value="${product.description}"/>
                     <input type="submit" class="btn btn-primary full" value="${cart}">

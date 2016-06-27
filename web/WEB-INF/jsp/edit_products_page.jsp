@@ -67,7 +67,7 @@
                             </c:forEach>
                         </select></td>
                     <td><input type="text" name="price" value=""/></td>
-                    <td><input type="text" name="producer" value=""/></td>
+                    <td><input type="text" name="shortDescription" value=""/></td>
                     <td><input type="text" name="description" value=""/></td>
                     <td><input type="submit" value="${add}"/></td>
                 </tr>
@@ -99,7 +99,7 @@
                             <td><input type="text" name="name" value="${productMap.name}"/></td>
                             <td><input type="text" name="catName" value="${productMap.catName}"/></td>
                             <td><input type="text" name="price" value="${productMap.price}"/></td>
-                            <td><input type="text" name="producer" value="${productMap.shortDescription}"/></td>
+                            <td><input type="text" name="shortDescription" value="${productMap.shortDescription}"/></td>
                             <td><input type="text" name="imgPath" value="${productMap.imgPath}"/></td>
                             <td><input type="text" name="description" value="${productMap.description}"/></td>
                             <td><input type="submit" value="${edit}"/></td>
