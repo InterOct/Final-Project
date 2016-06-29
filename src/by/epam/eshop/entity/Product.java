@@ -69,6 +69,14 @@ public class Product implements Entity {
         this.discountPrice = discountPrice;
     }
 
+    public String getShortDescription() {
+        return shortDescription;
+    }
+
+    public void setShortDescription(String shortDescription) {
+        this.shortDescription = shortDescription;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -120,13 +128,5 @@ public class Product implements Entity {
         temp = Double.doubleToLongBits(discountPrice);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
-    }
-
-    public String getShortDescription() {
-        return shortDescription;
-    }
-
-    public void setShortDescription(String shortDescription) {
-        this.shortDescription = shortDescription;
     }
 }

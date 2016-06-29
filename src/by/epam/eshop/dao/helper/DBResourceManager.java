@@ -2,9 +2,6 @@ package by.epam.eshop.dao.helper;
 
 import java.util.ResourceBundle;
 
-/**
- * Created by Aspire on 08.04.2016.
- */
 public class DBResourceManager {
 
     private static final String PATH = "by.epam.eshop.db";

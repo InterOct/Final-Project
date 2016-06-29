@@ -34,7 +34,7 @@
     <fmt:message bundle="${loc}" key="local.product.price" var="price"/>
     <c:set scope="session" var="url" value="/cart"/>
     <title>${cart}</title>
-    <jsp:include page="${pageContext.request.contextPath}/Controller">
+    <jsp:include page="${pageContext.request.contextPath}/controller">
         <jsp:param name="command" value="get-coupons"/>
         <jsp:param name="id" value="${sessionScope.user.id}"/>
     </jsp:include>
@@ -75,7 +75,7 @@
                                 </c:choose>
                                 <td><span>${productMap.value}</span></td>
                                 <td>
-                                    <form action="${pageContext.request.contextPath}/Controller" method="post">
+                                    <form action="${pageContext.request.contextPath}/controller" method="post">
                                         <input type="hidden" name="command" value="remove-from-cart">
                                         <input type="hidden" name="id" value="${productMap.key.id}"/>
                                         <button type="submit" class="btn btn-xs btn-danger">
@@ -87,32 +87,33 @@
                         </c:forEach>
                         </tbody>
                     </table>
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>${coupons}</th>
-                            <th colspan="3"></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <c:forEach var="coupon" items="${requestScope.coupons}">
+                    <c:if test="${not empty requestScope.coupons}">
+                        <table>
+                            <thead>
                             <tr>
-                                <td>${discount}</td>
-                                <td>-${coupon.discount}%</td>
-                                <td>
-                                    <form action="${pageContext.request.contextPath}/Controller" method="post">
-                                        <input type="hidden" name="command" value="buy">
-                                        <input type="hidden" name="id" value="${coupon.id}">
-                                        <input type="hidden" name="discount" value="${coupon.discount}"/>
-                                        <input type="submit" class="btn btn-primary" value="${use}">
-                                    </form>
-                                </td>
+                                <th>${coupons}</th>
+                                <th colspan="3"></th>
                             </tr>
-                        </c:forEach>
-                        </tbody>
-                    </table>
-                    ${price}:${productPrice}
-                    <form action="${pageContext.request.contextPath}/Controller" method="post">
+                            </thead>
+                            <tbody>
+                            <c:forEach var="coupon" items="${requestScope.coupons}">
+                                <tr>
+                                    <td>${discount}</td>
+                                    <td>-${coupon.discount}%</td>
+                                    <td>
+                                        <form action="${pageContext.request.contextPath}/controller" method="post">
+                                            <input type="hidden" name="command" value="buy">
+                                            <input type="hidden" name="id" value="${coupon.id}">
+                                            <input type="hidden" name="discount" value="${coupon.discount}"/>
+                                            <input type="submit" class="btn btn-primary" value="${use}">
+                                        </form>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
+                    </c:if>
+                    <form action="${pageContext.request.contextPath}/controller" method="post">
                         <input type="hidden" name="command" value="buy">
                         <input type="submit" class="btn btn-primary pull-right" value="${buy}">
                     </form>

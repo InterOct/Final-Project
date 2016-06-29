@@ -40,7 +40,7 @@
     <div class="row">
         <div class="col-sm-offset-4 col-sm-4">
             <div class="window">
-                <form action="${pageContext.request.contextPath}/Controller" method="post">
+                <form action="${pageContext.request.contextPath}/controller" method="post">
                     <input type="hidden" name="command" value="login"/>
                     <div class="form-group">
                         <label for="login">${login_label}</label>

@@ -25,7 +25,7 @@
     <fmt:message bundle="${loc}" key="local.discount" var="discount"/>
     <fmt:message bundle="${loc}" key="local.admin.edit.coupons" var="edit_coupons"/>
     <c:set scope="session" var="url" value="/admin/edit_coupons"/>
-    <jsp:include page="${pageContext.request.contextPath}/Controller">
+    <jsp:include page="${pageContext.request.contextPath}/controller">
         <jsp:param name="command" value="get-coupons"/>
     </jsp:include>
     <title>${edit_coupons}</title>
@@ -40,7 +40,7 @@
                 <th>${discount}</th>
                 <th></th>
             </tr>
-            <form action="${pageContext.request.contextPath}/Controller" method="post">
+            <form action="${pageContext.request.contextPath}/controller" method="post">
                 <input type="hidden" name="command" value="add-coupon">
                 <tr>
                     <td><input type="text" name="userId" value=""/></td>
@@ -62,7 +62,7 @@
                 <tbody>
                 <c:forEach var="coupon" items="${requestScope.coupons}">
                     <tr>
-                        <form action="${pageContext.request.contextPath}/Controller" method="post">
+                        <form action="${pageContext.request.contextPath}/controller" method="post">
                             <input type="hidden" name="command" value="edit-coupon">
                             <input type="hidden" name="id" value="${id}"/>
                             <td>${coupon.id}</td>
@@ -70,7 +70,7 @@
                             <td><input type="text" name="discount" value="${coupon.discount}"/></td>
                             <td><input type="submit" value="${edit}"/></td>
                         </form>
-                        <form action="${pageContext.request.contextPath}/Controller" method="post">
+                        <form action="${pageContext.request.contextPath}/controller" method="post">
                             <input type="hidden" name="command" value="remove-coupon">
                             <input type="hidden" name="id" value="${coupon.id}">
                             <td>

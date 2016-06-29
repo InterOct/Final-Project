@@ -4,9 +4,12 @@ import by.epam.eshop.dao.exception.ConnectionPoolException;
 import by.epam.eshop.dao.helper.ConnectionPool;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import java.io.File;
 
 public class ApplicationListener implements ServletContextListener {
 
@@ -17,6 +20,15 @@ public class ApplicationListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
+        ServletContext context = sce.getServletContext();
+        String log4jConfigFile = context.getInitParameter("log4j-config-location");
+        if (log4jConfigFile == null) {
+            context.log("Parameter to initialize log4j does not exist");
+        } else {
+            String fullPath = context.getRealPath("") + File.separator + log4jConfigFile;
+            PropertyConfigurator.configure(fullPath);
+            LOGGER.info("Logger initialized successfully ");
+        }
         try {
             ConnectionPool.getInstance().initPoolData();
         } catch (ConnectionPoolException e) {

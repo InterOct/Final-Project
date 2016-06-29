@@ -13,10 +13,11 @@ public class ChangeLocal implements Command {
 
     private static final Logger LOGGER = LogManager.getRootLogger();
     private static final String URL = "url";
+    private static final String LOCAL = "local";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
-        request.getSession(true).setAttribute("local", request.getParameter("local"));
+        request.getSession(true).setAttribute(LOCAL, request.getParameter(LOCAL));
         try {
             response.sendRedirect(request.getSession().getAttribute(URL).toString());
         } catch (IOException e) {

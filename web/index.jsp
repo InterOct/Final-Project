@@ -21,10 +21,10 @@
     <fmt:message bundle="${loc}" key="local.details" var="details"/>
     <c:set scope="page" var="currentPage" value="${requestScope.currentPage}"/>
     <c:set scope="page" var="curCategory" value="${param.cat}"/>
-    <jsp:include page="${pageContext.request.contextPath}/Controller">
+    <jsp:include page="${pageContext.request.contextPath}/controller">
         <jsp:param name="command" value="get-products"/>
     </jsp:include>
-    <c:set scope="session" var="url" value="index.jsp?page=${currentPage}"/>
+    <c:set scope="session" var="url" value="index.jsp"/>
     <style type="text/css">
         form {
             display: inline-block;
@@ -127,13 +127,13 @@
                                     </c:otherwise>
                                 </c:choose>
                                 <br>
-                                <form action="${pageContext.request.contextPath}/Controller" method="post">
+                                <form action="${pageContext.request.contextPath}/controller" method="post">
                                     <input type="hidden" name="command" value="add-to-cart">
                                     <input type="hidden" name="id" value="${product.id}"/>
                                     <input type="submit" class="btn btn-primary full" value="${cart}"
                                            style="min-width: 100px;">
                                 </form>
-                                <a href="${pageContext.request.contextPath}/"
+                                <a href="${pageContext.request.contextPath}/product_page.jsp?id=${product.id}"
                                    style="display:inline-block;min-width: 100px;">
                                     <button type="button" class="btn btn-primary full">${details}</button>
                                 </a>

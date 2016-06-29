@@ -2,6 +2,7 @@
          pageEncoding="utf-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="cm" uri="/WEB-INF/tld/custom.tld" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
@@ -26,7 +27,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/mystyle.css" type="text/css">
     <c:set scope="session" var="url" value="/order_page"/>
     <title>${order}</title>
-    <jsp:include page="${pageContext.request.contextPath}/Controller">
+    <jsp:include page="${pageContext.request.contextPath}/controller">
         <jsp:param name="command" value="get-user-orders"/>
     </jsp:include>
 </head>
@@ -36,9 +37,9 @@
     <div class="row">
         <div class="col-xs-offset-2 col-xs-8">
             <h2 class="strong text-info">${order}</h2>
-            <div class="window" style="overflow-x: auto;">
+            <div class="window">
                 <h2 class="strong text-info">${date} : ${requestScope.order.date}</h2>
-                <h2 class="strong text-info">${status} : ${requestScope.order.status}</h2>
+                <h2 class="strong text-info">${status} : <cm:status value="${requestScope.order.status}"/></h2>
                 <table>
                     <tr>
                         <th></th>

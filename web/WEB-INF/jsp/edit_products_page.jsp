@@ -29,7 +29,7 @@
     <fmt:message bundle="${loc}" key="local.edit" var="edit"/>
     <fmt:message bundle="${loc}" key="local.add" var="add"/>
     <fmt:message bundle="${loc}" key="local.admin.edit.goods" var="edit_goods"/>
-    <jsp:include page="${pageContext.request.contextPath}/Controller">
+    <jsp:include page="${pageContext.request.contextPath}/controller">
         <jsp:param name="command" value="get-products"/>
     </jsp:include>
     <c:set scope="session" var="url" value="/admin/edit_products"/>
@@ -54,7 +54,7 @@
             </tr>
             </thead>
             <tbody>
-            <form role="form" action="${pageContext.request.contextPath}/Controller" method="post"
+            <form role="form" action="${pageContext.request.contextPath}/controller" method="post"
                   enctype="multipart/form-data">
                 <input type="hidden" name="command" value="add-product">
                 <tr>
@@ -91,7 +91,7 @@
                 <tbody>
                 <c:forEach var="productMap" items="${requestScope.products}">
                     <tr>
-                        <form action="${pageContext.request.contextPath}/Controller" method="post">
+                        <form action="${pageContext.request.contextPath}/controller" method="post">
                             <input type="hidden" name="command" value="edit-product">
                             <td><img src="${pageContext.request.contextPath}${productMap.imgPath}" height="50px"
                                      alt="Image"/></td>
@@ -104,7 +104,7 @@
                             <td><input type="text" name="description" value="${productMap.description}"/></td>
                             <td><input type="submit" value="${edit}"/></td>
                         </form>
-                        <form action="${pageContext.request.contextPath}/Controller" method="post">
+                        <form action="${pageContext.request.contextPath}/controller" method="post">
                             <input type="hidden" name="command" value="remove-product">
                             <input type="hidden" name="id" value="${productMap.id}"/>
                             <td>

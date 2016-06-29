@@ -2,6 +2,7 @@
          pageEncoding="utf-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="cm" uri="/WEB-INF/tld/custom.tld" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
@@ -18,6 +19,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/mystyle.css" type="text/css">
+
     <fmt:message bundle="${loc}" key="local.edit" var="title"/>
     <fmt:message bundle="${loc}" key="local.label.login" var="login_label"/>
     <fmt:message bundle="${loc}" key="local.label.password" var="password_label"/>
@@ -38,7 +40,7 @@
     <fmt:message bundle="${loc}" key="local.account" var="account"/>
     <title>${account}</title>
     <c:set scope="session" var="url" value="/user_page"/>
-    <jsp:include page="${pageContext.request.contextPath}/Controller">
+    <jsp:include page="${pageContext.request.contextPath}/controller">
         <jsp:param name="command" value="get-user-orders"/>
     </jsp:include>
 </head>
@@ -49,7 +51,7 @@
         <div class="col-xs-offset-2 col-xs-8">
             <h2 class="strong text-info">${info}</h2>
             <div class="window">
-                <form action="${pageContext.request.contextPath}/Controller" method="post">
+                <form action="${pageContext.request.contextPath}/controller" method="post">
                     <input type="hidden" name="command" value="edit-user"/>
                     <input type="hidden" name="id" value="${sessionScope.user.id}"/>
                     <input type="hidden" name="login" value="${sessionScope.user.login}">
@@ -110,7 +112,7 @@
                             <c:forEach var="order" items="${requestScope.orders}">
                                 <tr>
                                     <td>${order.date}</td>
-                                    <td>${order.status}</td>
+                                    <td><cm:status value="${order.status}"/></td>
                                     <td>
                                         <c:set var="totalPrice" value="${0}" scope="page"/>
                                         <c:forEach var="productMap" items="${order.products}">
@@ -120,7 +122,7 @@
                                             ${totalPrice}
                                     </td>
                                     <td>
-                                        <form action="${pageContext.request.contextPath}/Controller" method="post">
+                                        <form action="${pageContext.request.contextPath}/controller" method="get">
                                             <input type="hidden" name="command" value="view-order">
                                             <input type="hidden" name="id" value="${order.id}">
                                             <input type="submit" value="${details}" class="btn btn-primary full"

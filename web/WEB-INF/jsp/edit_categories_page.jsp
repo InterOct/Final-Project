@@ -42,7 +42,7 @@
             </tr>
             </thead>
             <tbody>
-            <form action="${pageContext.request.contextPath}/Controller" method="post">
+            <form action="${pageContext.request.contextPath}/controller" method="post">
                 <input type="hidden" name="command" value="add-category">
                 <tr>
                     <td><input type="text" name="name" value=""/></td>
@@ -64,13 +64,13 @@
                 <tbody>
                 <c:forEach var="category" items="${requestScope.categories}">
                     <tr>
-                        <form action="${pageContext.request.contextPath}/Controller" method="post">
+                        <form action="${pageContext.request.contextPath}/controller" method="post">
                             <input type="hidden" name="command" value="edit-category">
                             <td><input type="text" name="name" value="${category.name}"/></td>
                             <td><input type="text" name="description" value="${category.description}"/></td>
                             <td><input type="submit" value="${edit}"/></td>
                         </form>
-                        <form action="${pageContext.request.contextPath}/Controller" method="post">
+                        <form action="${pageContext.request.contextPath}/controller" method="post">
                             <input type="hidden" name="command" value="remove-category">
                             <input type="hidden" name="name" value="${category.name}"/>
                             <input type="hidden" name="description" value="${category.description}"/>

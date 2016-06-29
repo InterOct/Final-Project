@@ -9,10 +9,8 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 
 public class ViewProductCommand implements Command {
@@ -31,9 +29,6 @@ public class ViewProductCommand implements Command {
             if (requestDispatcher == null) {
                 throw new RuntimeException("Impossible to reach page");
             }
-            requestDispatcher.forward(request, response);
-        } catch (IOException | ServletException e) {
-            LOGGER.error("Can't reach page", e);
         } catch (ServiceException e) {
             LOGGER.error("Error getting product");
         }

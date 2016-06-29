@@ -38,7 +38,7 @@
 </head>
 <body>
 <%@include file="/WEB-INF/jsp/nav.jsp" %>
-<jsp:include page="${pageContext.request.contextPath}/Controller">
+<jsp:include page="${pageContext.request.contextPath}/controller">
     <jsp:param name="command" value="get-users"/>
 </jsp:include>
 <div class="container-fluid">
@@ -61,7 +61,7 @@
                     </thead>
                     <tbody>
                     <c:forEach var="user" items="${requestScope.users}">
-                        <form action="${pageContext.request.contextPath}/Controller" method="post">
+                        <form action="${pageContext.request.contextPath}/controller" method="post">
                             <input type="hidden" name="command" value="edit-user">
                             <input type="hidden" name="password" value="${user.password}">
                             <tr>

@@ -24,7 +24,7 @@
              var="singup"/>
 <fmt:message bundle="${loc}" key="local.cart" var="cart"/>
 <fmt:message bundle="${loc}" key="local.account" var="account"/>
-<jsp:include page="${pageContext.request.contextPath}/Controller">
+<jsp:include page="${pageContext.request.contextPath}/controller">
     <jsp:param name="command" value="get-categories"/>
 </jsp:include>
 <nav class="navbar navbar-inverse">
@@ -94,7 +94,7 @@
                                     <div class="container-fluid">
                                         <div class="row">
                                             <div class="col-xs-12">
-                                                <form action="${pageContext.request.contextPath}/Controller"
+                                                <form action="${pageContext.request.contextPath}/controller"
                                                       method="post">
                                                     <input type="hidden" name="command" value="login"/>
                                                     <div class="form-group">
@@ -135,7 +135,7 @@
                                     <div class="container-fluid">
                                         <div class="row">
                                             <div class="col-sm-12">
-                                                <form action="${pageContext.request.contextPath}/Controller"
+                                                <form action="${pageContext.request.contextPath}/controller"
                                                       method="post" style="display: block;">
                                                     <input type="hidden" name="command" value="logout"/>
                                                     <input type="submit" class="btn btn-primary full"
@@ -150,14 +150,14 @@
                     </c:choose>
                 </li>
                 <li>
-                    <form action="${pageContext.request.contextPath}/Controller" method="post" style="padding-top: 9px">
+                    <form action="${pageContext.request.contextPath}/controller" method="post" style="padding-top: 9px">
                         <input type="hidden" name="command" value="change-local"/>
                         <input type="hidden" name="local" value="en"/>
                         <input type="submit" value="${en_button}" class="btn btn-link"/><br/>
                     </form>
                 </li>
                 <li>
-                    <form action="${pageContext.request.contextPath}/Controller" method="post"
+                    <form action="${pageContext.request.contextPath}/controller" method="post"
                           style="padding-top: 9px ">
                         <input type="hidden" name="command" value="change-local"/>
                         <input type="hidden" name="local" value="ru"/>

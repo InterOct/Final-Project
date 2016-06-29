@@ -18,7 +18,11 @@
     <fmt:setLocale value="${sessionScope.local}"/>
     <fmt:setBundle basename="localization.local" var="loc"/>
     <fmt:message bundle="${loc}" key="local.product.price" var="price"/>
-    <c:set scope="session" var="url" value="/product_page.jsp"/>
+    <jsp:include page="${pageContext.request.contextPath}/controller">
+        <jsp:param name="command" value="view-product"/>
+        <jsp:param name="id" value="${param.id}"/>
+    </jsp:include>
+    <c:set scope="session" var="url" value="/product_page.jsp?id=${param.id}"/>
 </head>
 <body>
 <%@include file="/WEB-INF/jsp/nav.jsp" %>
@@ -39,7 +43,7 @@
                     </c:otherwise>
                 </c:choose>
                 <br>
-                <form action="${pageContext.request.contextPath}/Controller" method="post">
+                <form action="${pageContext.request.contextPath}/controller" method="post">
                     <input type="hidden" name="command" value="add-to-cart">
                     <input type="hidden" name="id" value="${product.id}"/>
                     <input type="hidden" name="name" value="${product.name}"/>
@@ -51,7 +55,6 @@
                     <input type="submit" class="btn btn-primary full" value="${cart}">
                 </form>
             </div>
-
         </div>
 
         <div class="col-sm-offset-1 col-sm-4">
@@ -68,8 +71,6 @@
             </div>
         </div>
     </div>
-
 </div>
-
 </body>
 </html>
