@@ -26,7 +26,7 @@ public class RemoveProductCommand implements Command {
         product.setId(Integer.parseInt(request.getParameter(ID)));
         ProductService productService = ProductServiceImpl.getInstance();
         try {
-            productService.removeProduct(product);
+            productService.removeProduct(Integer.valueOf(request.getParameter(ID)));
             response.sendRedirect(PageName.EDIT_PRODUCTS);
         } catch (ServiceException e) {
             LOGGER.error("Error edit product", e);

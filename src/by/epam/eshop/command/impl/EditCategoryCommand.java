@@ -18,12 +18,14 @@ public class EditCategoryCommand implements Command {
 
     private static final Logger LOGGER = LogManager.getRootLogger();
 
+    private static final String ID = "id";
     private static final String NAME = "name";
     private static final String DESCRIPTION = "description";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
         Category category = new Category();
+        category.setId(Integer.parseInt(request.getParameter(ID)));
         category.setName(request.getParameter(NAME));
         category.setDescription(request.getParameter(DESCRIPTION));
         CategoryService categoryService = CategoryServiceImpl.getInstance();

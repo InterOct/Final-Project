@@ -14,5 +14,5 @@ public interface CouponService {
 
     boolean updateCoupon(Coupon coupon) throws ServiceException;
 
-    boolean removeCoupon(Coupon coupon) throws ServiceException;
+    boolean removeCoupon(Integer id) throws ServiceException;
 }

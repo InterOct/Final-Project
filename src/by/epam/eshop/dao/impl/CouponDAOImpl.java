@@ -126,7 +126,7 @@ public class CouponDAOImpl implements CouponDAO {
     }
 
     @Override
-    public boolean remove(Coupon coupon) throws DAOException {
+    public boolean remove(Integer id) throws DAOException {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
         Connection connection = null;
         PreparedStatement ps = null;
@@ -134,7 +134,7 @@ public class CouponDAOImpl implements CouponDAO {
             connection = connectionPool.takeConnection();
             String sql = DELETE_COUPON;
             ps = connection.prepareStatement(sql);
-            ps.setInt(1, coupon.getId());
+            ps.setInt(1, id);
             return ps.executeUpdate() == 1;
         } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);

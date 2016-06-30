@@ -21,7 +21,6 @@ public class LoginCommand implements Command {
     private static final String LOGIN = "login";
     private static final String PASSWORD = "password";
     private static final String USER = "user";
-    private static final String URL = "url";
     private static final String MESSAGE = "message";
 
     @Override
@@ -30,11 +29,7 @@ public class LoginCommand implements Command {
             User user = UserServiceImpl.getInstance().singIn(request.getParameter(LOGIN), request.getParameter(PASSWORD));
             if (user != null) {
                 request.getSession(true).setAttribute(USER, user);
-                String url = request.getSession().getAttribute(URL).toString();
-                if (url.equals(PageName.USER_LOGIN)) {
-                    url = PageName.INDEX_PAGE;
-                }
-                response.sendRedirect(url);
+                response.sendRedirect(PageName.INDEX_PAGE);
             } else {
                 request.setAttribute(MESSAGE, Boolean.TRUE);
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher(PageName.USER_LOGIN);

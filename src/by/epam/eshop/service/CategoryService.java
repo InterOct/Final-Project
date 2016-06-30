@@ -15,5 +15,5 @@ public interface CategoryService {
 
     boolean updateCategory(Category category) throws ServiceException;
 
-    boolean removeCategory(Category category) throws ServiceException;
+    boolean removeCategory(Integer id) throws ServiceException;
 }

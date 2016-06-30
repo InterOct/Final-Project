@@ -128,7 +128,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public boolean remove(User entity) {
+    public boolean remove(Integer id) {
         return false;
     }
 

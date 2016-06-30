@@ -5,9 +5,6 @@ import by.epam.eshop.service.exception.ServiceException;
 
 import java.util.List;
 
-/**
- * Created by Aspire on 29.05.2016.
- */
 public interface OrderService {
     boolean addOrder(Order order) throws ServiceException;
 

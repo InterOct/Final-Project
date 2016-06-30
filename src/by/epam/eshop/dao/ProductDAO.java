@@ -6,7 +6,7 @@ import by.epam.eshop.entity.Product;
 
 import java.util.List;
 
-public interface ProductDAO extends GenericDAO<Product> {
+public interface ProductDAO extends GenericDAO<Product, Integer> {
 
     Page getPageByCategory(int offset, int numberOfRows, String categoryName) throws DAOException;
 

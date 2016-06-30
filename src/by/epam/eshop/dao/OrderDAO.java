@@ -5,10 +5,7 @@ import by.epam.eshop.entity.Order;
 
 import java.util.List;
 
-/**
- * Created by Aspire on 28.05.2016.
- */
-public interface OrderDAO extends GenericDAO<Order> {
+public interface OrderDAO extends GenericDAO<Order, Integer> {
     List<Order> findOrdersByUserId(int userId) throws DAOException;
 
     Order getOrder(int id) throws DAOException;

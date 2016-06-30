@@ -5,9 +5,6 @@ import by.epam.eshop.service.exception.ServiceException;
 
 import java.util.List;
 
-/**
- * Created by Aspire on 04.05.2016.
- */
 public interface UserService {
     User singIn(String login, String password) throws ServiceException;
 

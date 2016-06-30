@@ -20,15 +20,12 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public boolean addOrder(Order order) throws ServiceException {
-
-            OrderDAO orderDAO = OrderDAOImpl.getInstance();
-            try {
-                return orderDAO.add(order);
-            } catch (DAOException e) {
-                throw new ServiceException("Error access database, while adding order", e);
-            }
-
-
+        OrderDAO orderDAO = OrderDAOImpl.getInstance();
+        try {
+            return orderDAO.add(order);
+        } catch (DAOException e) {
+            throw new ServiceException("Error access database, while adding order", e);
+        }
     }
 
     @Override
@@ -74,4 +71,4 @@ public class OrderServiceImpl implements OrderService {
     private static class Holder {
         private static final OrderService HOLDER_INSTANCE = new OrderServiceImpl();
     }
-    }
+}

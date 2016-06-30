@@ -30,7 +30,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-offset-2 col-sm-3">
-            <div class="window" style="height: 360px; text-align: center;">
+            <div class="window" style="height: 370px; text-align: center;">
                 <img class="img-responsive" src="${product.imgPath}" alt="${product.name}"
                      style="height: 230px;">
                 <br>
@@ -58,7 +58,7 @@
         </div>
 
         <div class="col-sm-offset-1 col-sm-4">
-            <div class="window" style="height: 360px">
+            <div class="window" style="height: 370px">
                 <h2>${product.name}</h2>
                 <span class="description">${product.shortDescription}</span>
             </div>

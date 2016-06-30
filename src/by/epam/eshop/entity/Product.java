@@ -110,7 +110,6 @@ public class Product implements Entity {
             return false;
         }
         return discountPrice == product.discountPrice;
-
     }
 
     @Override
@@ -129,4 +128,5 @@ public class Product implements Entity {
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
     }
+
 }

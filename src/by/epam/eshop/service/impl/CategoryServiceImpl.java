@@ -52,10 +52,10 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public boolean removeCategory(Category category) throws ServiceException {
+    public boolean removeCategory(Integer id) throws ServiceException {
         CategoryDAO categoryDAO = CategoryDAOImpl.getInstance();
         try {
-            return categoryDAO.remove(category);
+            return categoryDAO.remove(id);
         } catch (DAOException e) {
             throw new ServiceException("Error removing category", e);
         }

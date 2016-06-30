@@ -2,7 +2,6 @@ package by.epam.eshop.command.impl;
 
 import by.epam.eshop.command.Command;
 import by.epam.eshop.controller.PageName;
-import by.epam.eshop.entity.Coupon;
 import by.epam.eshop.service.CouponService;
 import by.epam.eshop.service.exception.ServiceException;
 import by.epam.eshop.service.impl.CouponServiceImpl;
@@ -21,11 +20,9 @@ public class RemoveCouponCommand implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
-        Coupon coupon = new Coupon();
-        coupon.setId(Integer.parseInt(request.getParameter(ID)));
         CouponService couponService = CouponServiceImpl.getInstance();
         try {
-            couponService.removeCoupon(coupon);
+            couponService.removeCoupon(Integer.valueOf(request.getParameter(ID)));
             response.sendRedirect(PageName.EDIT_COUPON);
         } catch (ServiceException e) {
             LOGGER.error("Error removing coupon", e);

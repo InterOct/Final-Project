@@ -62,10 +62,10 @@ public class CouponServiceImpl implements CouponService {
     }
 
     @Override
-    public boolean removeCoupon(Coupon coupon) throws ServiceException {
+    public boolean removeCoupon(Integer id) throws ServiceException {
         CouponDAO couponDAO = CouponDAOImpl.getInstance();
         try {
-            return couponDAO.remove(coupon);
+            return couponDAO.remove(id);
         } catch (DAOException e) {
             throw new ServiceException("Error removing coupon", e);
         }

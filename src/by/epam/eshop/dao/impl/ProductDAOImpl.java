@@ -15,15 +15,16 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class ProductDAOImpl implements ProductDAO {
+    private static final String SELECT_CATEGORY_ID = "SELECT id FROM eshop.category WHERE ? = cat_name";
     private static final String SELECT_NUM_OF_ITEMS = "SELECT COUNT(g_id) FROM eshop.product";
-    private static final String SELECT_NUM_OF_ITEMS_BY_CATEGORY = "SELECT COUNT(g_id) FROM eshop.product WHERE ?=cat_name";
-    private static final String SELECT_PRODUCTS = "SELECT g_id, cat_name, name, price, short_description, imgPath, description, disc_price FROM eshop.product";
-    private static final String SELECT_PRODUCT = "SELECT g_id, cat_name, name, price, short_description, imgPath, description, disc_price FROM eshop.product WHERE ?=g_id";
-    private static final String SELECT_PRODUCTS_BY_CATEGORY = "SELECT g_id, cat_name, name, price, short_description, imgPath, description, disc_price FROM eshop.product WHERE ?=cat_name";
-    private static final String SELECT_PRODUCTS_WITH_LIMIT = "SELECT g_id, cat_name, name, price, short_description, imgPath, description,disc_price FROM eshop.product LIMIT ?,?";
-    private static final String SELECT_PRODUCTS_BY_CATEGORY_WITH_LIMIT = "SELECT g_id, cat_name, name, price, short_description, imgPath, description, disc_price FROM eshop.product WHERE ?=cat_name LIMIT ?,?";
-    private static final String INSERT_PRODUCT = "INSERT INTO  eshop.product(cat_name, name, price, short_description, imgPath, description, disc_price) VALUES (?,?,?,?,?,?,?)";
-    private static final String UPDATE_PRODUCT = "UPDATE eshop.product SET cat_name=?, name=?,price=?,short_description=?,imgPath=?,description=?,disc_price=? WHERE ? = g_id";
+    private static final String SELECT_NUM_OF_ITEMS_BY_CATEGORY = "SELECT COUNT(g_id) FROM eshop.product INNER JOIN eshop.category ON product.cat_id = category.id WHERE ?=cat_name";
+    private static final String SELECT_PRODUCTS = "SELECT g_id, cat_name, name, price, short_description, imgPath, product.description, disc_price FROM eshop.product LEFT JOIN eshop.category ON product.cat_id = category.id ORDER BY g_id";
+    private static final String SELECT_PRODUCT = "SELECT g_id, cat_name, name, price, short_description, imgPath, product.description, disc_price FROM eshop.product LEFT JOIN eshop.category ON product.cat_id = category.id WHERE ?=g_id";
+    private static final String SELECT_PRODUCTS_BY_CATEGORY = "SELECT g_id, cat_name, name, price, short_description, imgPath, product.description, disc_price FROM eshop.product LEFT JOIN eshop.category ON product.cat_id = category.id WHERE ?=cat_name ORDER BY g_id";
+    private static final String SELECT_PRODUCTS_WITH_LIMIT = "SELECT g_id, cat_name, name, price, short_description, imgPath, product.description,disc_price FROM eshop.product LEFT JOIN eshop.category ON product.cat_id = category.id ORDER BY g_id LIMIT ?,?";
+    private static final String SELECT_PRODUCTS_BY_CATEGORY_WITH_LIMIT = "SELECT g_id, cat_name, name, price, short_description, imgPath, product.description, disc_price FROM eshop.product LEFT JOIN eshop.category ON product.cat_id = category.id WHERE ?=cat_name ORDER BY g_id LIMIT ?,?";
+    private static final String INSERT_PRODUCT = "INSERT INTO  eshop.product(name, price, short_description, imgPath, product.description, disc_price, cat_id) VALUES (?,?,?,?,?,?,?)";
+    private static final String UPDATE_PRODUCT = "UPDATE eshop.product SET name=?,price=?,short_description=?,imgPath=?,description=?,disc_price=?,cat_id=? WHERE ? = g_id";
     private static final String DELETE_PRODUCT = "DELETE FROM eshop.product WHERE g_id = ?";
 
     private ProductDAOImpl() {
@@ -197,9 +198,21 @@ public class ProductDAOImpl implements ProductDAO {
         PreparedStatement ps = null;
         try {
             connection = connectionPool.takeConnection();
-            String sql = INSERT_PRODUCT;
+            String sql = SELECT_CATEGORY_ID;
+            ps = connection.prepareStatement(sql);
+            ps.setString(1, product.getCatName());
+            ResultSet rs = ps.executeQuery();
+            int catId;
+            if (!rs.next()) {
+                return false;
+            }
+            catId = rs.getInt(1);
+            ps.close();
+            rs.close();
+            sql = INSERT_PRODUCT;
             ps = connection.prepareStatement(sql);
             setProductQuery(product, ps);
+            ps.setInt(7, catId);
             return ps.executeUpdate() == 1;
         } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);
@@ -215,10 +228,22 @@ public class ProductDAOImpl implements ProductDAO {
         PreparedStatement ps = null;
         try {
             connection = connectionPool.takeConnection();
-            String sql = UPDATE_PRODUCT;
+            String sql = SELECT_CATEGORY_ID;
+            ps = connection.prepareStatement(sql);
+            ps.setString(1, product.getCatName());
+            ResultSet rs = ps.executeQuery();
+            int catId;
+            if (!rs.next()) {
+                return false;
+            }
+            catId = rs.getInt(1);
+            ps.close();
+            rs.close();
+            sql = UPDATE_PRODUCT;
             ps = connection.prepareStatement(sql);
             setProductQuery(product, ps);
-            ps.setInt(7, product.getId());
+            ps.setInt(7, catId);
+            ps.setInt(8, product.getId());
             return ps.executeUpdate() == 1;
         } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);
@@ -228,7 +253,7 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     @Override
-    public boolean remove(Product product) throws DAOException {
+    public boolean remove(Integer id) throws DAOException {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
         Connection connection = null;
         PreparedStatement ps = null;
@@ -236,7 +261,7 @@ public class ProductDAOImpl implements ProductDAO {
             connection = connectionPool.takeConnection();
             String sql = DELETE_PRODUCT;
             ps = connection.prepareStatement(sql);
-            ps.setInt(1, product.getId());
+            ps.setInt(1, id);
             return ps.executeUpdate() == 1;
         } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);
@@ -246,13 +271,12 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     private void setProductQuery(Product product, PreparedStatement ps) throws SQLException {
-        ps.setString(1, product.getCatName());
-        ps.setString(2, product.getName());
-        ps.setDouble(3, product.getPrice());
-        ps.setString(4, product.getShortDescription());
-        ps.setString(5, product.getImgPath());
-        ps.setString(6, product.getDescription());
-        ps.setDouble(7, product.getDiscountPrice());
+        ps.setString(1, product.getName());
+        ps.setDouble(2, product.getPrice());
+        ps.setString(3, product.getShortDescription());
+        ps.setString(4, product.getImgPath());
+        ps.setString(5, product.getDescription());
+        ps.setDouble(6, product.getDiscountPrice());
     }
 
     private void initProduct(ResultSet rs, Product product) throws SQLException {

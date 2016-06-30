@@ -43,6 +43,7 @@ label {
 }
 
 table {
+    background-color: #fff;
     border-collapse: collapse;
     width: 100%;
 }

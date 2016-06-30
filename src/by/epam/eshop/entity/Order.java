@@ -42,7 +42,7 @@ public class Order implements Entity {
         if (status == null) {
             this.status = Status.CONSIDERATION;
         } else {
-            this.status = Status.valueOf(status.toUpperCase());
+            this.status = Status.getValueStatus(status.toUpperCase());
         }
     }
 
@@ -91,8 +91,25 @@ public class Order implements Entity {
     }
 
     private enum Status {
-        CONSIDERATION, PROCESSING, COMPLETED, CANCELLED
+        CONSIDERATION, PROCESSING, COMPLETED, CANCELLED;
+
+        public static Status getValueStatus(String status) {
+            switch (status) {
+                case "CONSIDERATION":
+                case "ОБРАБОТКА":
+                    return CONSIDERATION;
+                case "PROCESSING":
+                case "ВЫПОЛНЯЕТСЯ":
+                    return PROCESSING;
+                case "COMPLETED":
+                case "ЗАВЕРШЕН":
+                    return COMPLETED;
+                case "CANCELLED":
+                case "ОТМЕНЕН":
+                    return CANCELLED;
+                default:
+                    throw new EnumConstantNotPresentException(Status.class, status);
+            }
+        }
     }
-
-
 }

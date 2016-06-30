@@ -23,9 +23,9 @@ public class OrderDAOImpl implements OrderDAO {
 
     private static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-    private static final String SELECT_ORDERS = "SELECT orders.order_id, orders.users_id, orders.date, orders.status, product.g_id, product.cat_name, product.name, orderproduct.cur_price, product.description, orderproduct.quantity FROM eshop.orders INNER JOIN eshop.orderproduct ON orders.order_id = orderproduct.order_id RIGHT JOIN eshop.product ON eshop.orderproduct.product_id = product.g_id ORDER BY orders.order_id";
-    private static final String SELECT_ORDERS_BY_USER_ID = "SELECT orders.order_id, orders.users_id, orders.date, orders.status, product.g_id, product.cat_name, product.name, orderproduct.cur_price, product.description, orderproduct.quantity FROM eshop.orders INNER JOIN eshop.orderproduct ON orders.order_id = orderproduct.order_id RIGHT JOIN eshop.product ON orderproduct.product_id = product.g_id WHERE ? = orders.users_id ORDER BY orders.date DESC";
-    private static final String SELECT_ORDER = "SELECT orders.order_id, orders.users_id, orders.date, orders.status, product.g_id, product.cat_name, product.name, orderproduct.cur_price, product.imgPath, Orderproduct.quantity FROM orders INNER JOIN orderproduct ON orders.order_id = orderproduct.order_id RIGHT JOIN product ON orderproduct.product_id = product.g_id WHERE ? = orders.order_id";
+    private static final String SELECT_ORDERS = "SELECT orders.order_id, orders.users_id, orders.date, orders.status, product.g_id,  product.name, product.imgPath, orderproduct.cur_price, orderproduct.quantity FROM eshop.orders INNER JOIN eshop.orderproduct ON orders.order_id = orderproduct.order_id LEFT JOIN  eshop.product ON eshop.orderproduct.product_id = product.g_id ORDER BY orders.order_id";
+    private static final String SELECT_ORDERS_BY_USER_ID = "SELECT orders.order_id, orders.users_id, orders.date, orders.status, product.g_id,  product.name, product.imgPath, orderproduct.cur_price, orderproduct.quantity FROM eshop.orders LEFT JOIN eshop.orderproduct ON orders.order_id = orderproduct.order_id LEFT JOIN eshop.product ON orderproduct.product_id = product.g_id WHERE ? = orders.users_id ORDER BY orders.date DESC";
+    private static final String SELECT_ORDER = "SELECT orders.order_id, orders.users_id, orders.date, orders.status, product.g_id,  product.name, product.imgPath, orderproduct.cur_price, orderproduct.quantity FROM eshop.orders LEFT JOIN eshop.orderproduct ON orders.order_id = orderproduct.order_id LEFT JOIN eshop.product ON orderproduct.product_id = product.g_id WHERE ? = orders.order_id";
     private static final String INSERT_ORDER = "INSERT INTO  eshop.orders(order_id,users_id,date,status) VALUES (?,?,?,?)";
     private static final String INSERT_INTO_ORDER_PRODUCT = "INSERT INTO eshop.orderproduct(order_id, product_id, quantity, cur_price) VALUES (?,?,?,?)";
     private static final String UPDATE_ORDER = "UPDATE eshop.orders SET status=? WHERE ? = order_id";
@@ -193,7 +193,7 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     @Override
-    public boolean remove(Order entity) {
+    public boolean remove(Integer id) {
         return false;
     }
 
@@ -217,11 +217,10 @@ public class OrderDAOImpl implements OrderDAO {
         while (order.getId() == rs.getInt(1)) {
             Product product = new Product();
             product.setId(rs.getInt(5));
-            product.setCatName(rs.getString(6));
-            product.setName(rs.getString(7));
+            product.setName(rs.getString(6));
+            product.setImgPath(rs.getString(7));
             product.setPrice(rs.getDouble(8));
-            product.setImgPath(rs.getString(9));
-            products.put(product, rs.getInt(10));
+            products.put(product, rs.getInt(9));
             if (!rs.next()) {
                 order.setProducts(products);
                 return false;

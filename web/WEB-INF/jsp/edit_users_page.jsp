@@ -6,18 +6,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-    <style>
-        input {
-            border: none;
-        }
-    </style>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/mystyle.css" type="text/css">
     <fmt:setLocale value="${sessionScope.local}"/>
     <fmt:setBundle basename="localization.local" var="loc"/>
     <fmt:message bundle="${loc}" key="local.label.login" var="login_label"/>
@@ -34,7 +29,6 @@
     <fmt:message bundle="${loc}" key="local.admin.edit.users" var="edit_users"/>
     <c:set scope="session" var="url" value="/admin/edit_users"/>
     <title>${edit_users}</title>
-
 </head>
 <body>
 <%@include file="/WEB-INF/jsp/nav.jsp" %>
@@ -42,65 +36,67 @@
     <jsp:param name="command" value="get-users"/>
 </jsp:include>
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-xs-12">
-            <c:if test="${not empty requestScope.users}">
-                <table class="table table-condensed table-hover">
-                    <thead>
+    <c:if test="${not empty requestScope.users}">
+        <table>
+            <thead>
+            <tr>
+                <td>ID</td>
+                <th>${login_label}</th>
+                <th>${name_label}</th>
+                <th>${email_label}</th>
+                <th>${address}</th>
+                <th>${tel}</th>
+                <th>${admin}</th>
+                <th>${banned}</th>
+                <th>${edit}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <c:forEach var="user" items="${requestScope.users}">
+                <form action="${pageContext.request.contextPath}/controller" method="post">
+                    <input type="hidden" name="command" value="edit-user">
+                    <input type="hidden" name="id" value="${user.id}">
+                    <input type="hidden" name="password" value="${user.password}">
+                    <input type="hidden" name="firstName" value="${user.firstName}"/>
+                    <input type="hidden" name="lastName" value="${user.lastName}"/>
+                    <input type="hidden" name="login" value="${user.login}"/>
+                    <input type="hidden" name="email" value="${user.email}"/>
+                    <input type="hidden" name="address" value="${user.address}"/>
+                    <input type="hidden" name="tel" value="${user.tel}"/>
                     <tr>
-                        <th>${login_label}</th>
-                        <th>${name_label}</th>
-                        <th>${surname_label}</th>
-                        <th>${email_label}</th>
-                        <th>${address}</th>
-                        <th>${tel}</th>
-                        <th>${admin}</th>
-                        <th>${banned}</th>
-                        <th>${edit}</th>
+                        <td>${user.id}</td>
+                        <td>${user.login}</td>
+                        <td>${user.firstName}</td>
+                        <td>${user.email}</td>
+                        <td>${user.address}</td>
+                        <td>${user.tel}</td>
+                        <td>
+                            <c:choose>
+                                <c:when test="${user.role eq 'ADMIN'}">
+                                    <input type="checkbox" name="role" value="ADMIN" checked/>
+                                </c:when>
+                                <c:otherwise>
+                                    <input type="checkbox" name="role" value="ADMIN"/>
+                                </c:otherwise>
+                            </c:choose>
+                        </td>
+                        <td>
+                            <c:choose>
+                                <c:when test="${user.banned}">
+                                    <input type="checkbox" name="banned" value="true" checked/>
+                                </c:when>
+                                <c:otherwise>
+                                    <input type="checkbox" name="banned" value="true"/>
+                                </c:otherwise>
+                            </c:choose>
+                        </td>
+                        <td><input type="submit" value="${edit}"/></td>
                     </tr>
-                    </thead>
-                    <tbody>
-                    <c:forEach var="user" items="${requestScope.users}">
-                        <form action="${pageContext.request.contextPath}/controller" method="post">
-                            <input type="hidden" name="command" value="edit-user">
-                            <input type="hidden" name="password" value="${user.password}">
-                            <tr>
-                                <td><input type="text" name="login" value="${user.login}"/></td>
-                                <td><input type="text" name="firstName" value="${user.firstName}"/></td>
-                                <td><input type="text" name="lastName" value="${user.lastName}"/></td>
-                                <td><input type="text" name="email" value="${user.email}"/></td>
-                                <td><input type="text" name="address" value="${user.address}"/></td>
-                                <td><input type="text" name="tel" value="${user.tel}"/></td>
-                                <td>
-                                    <c:choose>
-                                        <c:when test="${user.role eq 'ADMIN'}">
-                                            <input type="checkbox" name="role" value="ADMIN" checked/>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <input type="checkbox" name="role" value="ADMIN"/>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </td>
-                                <td>
-                                    <c:choose>
-                                        <c:when test="${user.banned}">
-                                            <input type="checkbox" name="banned" value="true" checked/>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <input type="checkbox" name="banned" value="true"/>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </td>
-                                <td><input type="submit" value="${edit}"/></td>
-                            </tr>
-                        </form>
-                    </c:forEach>
-                    </tbody>
-                </table>
-            </c:if>
-        </div>
-    </div>
+                </form>
+            </c:forEach>
+            </tbody>
+        </table>
+    </c:if>
 </div>
-
 </body>
 </html>

@@ -2,7 +2,6 @@ package by.epam.eshop.command.impl;
 
 import by.epam.eshop.command.Command;
 import by.epam.eshop.controller.PageName;
-import by.epam.eshop.entity.Category;
 import by.epam.eshop.service.CategoryService;
 import by.epam.eshop.service.exception.ServiceException;
 import by.epam.eshop.service.impl.CategoryServiceImpl;
@@ -18,17 +17,13 @@ public class RemoveCategoryCommand implements Command {
 
     private static final Logger LOGGER = LogManager.getRootLogger();
 
-    private static final String NAME = "name";
-    private static final String DESCRIPTION = "description";
+    private static final String ID = "id";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
-        Category category = new Category();
-        category.setName(request.getParameter(NAME));
-        category.setDescription(request.getParameter(DESCRIPTION));
         CategoryService categoryService = CategoryServiceImpl.getInstance();
         try {
-            categoryService.removeCategory(category);
+            categoryService.removeCategory(Integer.valueOf(request.getParameter(ID)));
             response.sendRedirect(PageName.EDIT_CATEGORY);
         } catch (ServiceException e) {
             LOGGER.error("Error remove category", e);

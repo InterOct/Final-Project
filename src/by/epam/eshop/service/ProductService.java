@@ -21,5 +21,5 @@ public interface ProductService {
 
     boolean updateProduct(Product product) throws ServiceException;
 
-    boolean removeProduct(Product product) throws ServiceException;
+    boolean removeProduct(Integer id) throws ServiceException;
 }

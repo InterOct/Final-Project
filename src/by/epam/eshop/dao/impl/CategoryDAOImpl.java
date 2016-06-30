@@ -15,10 +15,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class CategoryDAOImpl implements CategoryDAO {
-    private static final String SELECT_CATEGORIES = "SELECT cat_name, description FROM eshop.category";
+    private static final String SELECT_CATEGORIES = "SELECT id, cat_name, description FROM eshop.category";
     private static final String INSERT_CATEGORY = "INSERT INTO  eshop.category(cat_name, description) VALUES (?,?)";
-    private static final String UPDATE_CATEGORY = "UPDATE eshop.category SET cat_name=?, description=? WHERE ? = cat_name";
-    private static final String DELETE_CATEGORY = "DELETE FROM eshop.category WHERE cat_name = ?";
+    private static final String UPDATE_CATEGORY = "UPDATE eshop.category SET cat_name=?, description=? WHERE ? = id";
+    private static final String DELETE_CATEGORY = "DELETE FROM eshop.category WHERE id = ?";
 
     private CategoryDAOImpl() {
     }
@@ -88,7 +88,7 @@ public class CategoryDAOImpl implements CategoryDAO {
             String sql = UPDATE_CATEGORY;
             ps = connection.prepareStatement(sql);
             setCategoryQuery(category, ps);
-            ps.setString(3, category.getName());
+            ps.setInt(3, category.getId());
             return ps.executeUpdate() == 1;
         } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);
@@ -98,7 +98,7 @@ public class CategoryDAOImpl implements CategoryDAO {
     }
 
     @Override
-    public boolean remove(Category category) throws DAOException {
+    public boolean remove(Integer id) throws DAOException {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
         Connection connection = null;
         PreparedStatement ps = null;
@@ -106,7 +106,7 @@ public class CategoryDAOImpl implements CategoryDAO {
             connection = connectionPool.takeConnection();
             String sql = DELETE_CATEGORY;
             ps = connection.prepareStatement(sql);
-            ps.setString(1, category.getName());
+            ps.setInt(1, id);
             return ps.executeUpdate() == 1;
         } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);
@@ -121,8 +121,9 @@ public class CategoryDAOImpl implements CategoryDAO {
     }
 
     private void initCategory(ResultSet rs, Category category) throws SQLException {
-        category.setName(rs.getString(1));
-        category.setDescription(rs.getString(2));
+        category.setId(rs.getInt(1));
+        category.setName(rs.getString(2));
+        category.setDescription(rs.getString(3));
     }
 
     private static class Holder {

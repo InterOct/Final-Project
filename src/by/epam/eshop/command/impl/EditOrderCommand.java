@@ -17,13 +17,14 @@ public class EditOrderCommand implements Command {
 
     private static final String ID = "id";
     private static final Logger LOGGER = LogManager.getRootLogger();
-    private static final String CART = "cart";
     private static final String URL = "url";
+    private static final String STATUS = "status";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
         Order order = new Order();
         order.setId(Integer.parseInt(request.getParameter(ID)));
+        order.setStatus(request.getParameter(STATUS));
         OrderService orderService = OrderServiceImpl.getInstance();
         try {
             orderService.updateOrder(order);

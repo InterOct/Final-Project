@@ -2,7 +2,6 @@ package by.epam.eshop.command.impl;
 
 import by.epam.eshop.command.Command;
 import by.epam.eshop.controller.PageName;
-import by.epam.eshop.entity.Coupon;
 import by.epam.eshop.entity.Order;
 import by.epam.eshop.entity.Product;
 import by.epam.eshop.entity.User;
@@ -48,8 +47,6 @@ public class BuyCommand implements Command {
             discount = Double.parseDouble(discountStr) / 100;
             couponId = Integer.parseInt(couponIdStr);
         }
-        Coupon coupon = new Coupon();
-        coupon.setId(couponId);
         HashMap<Product, Integer> productsMap = (HashMap<Product, Integer>) request.getSession().getAttribute(CART);
         request.getSession().removeAttribute(CART);
         for (Map.Entry<Product, Integer> productEntry : productsMap.entrySet()) {
@@ -64,7 +61,7 @@ public class BuyCommand implements Command {
         CouponService couponService = CouponServiceImpl.getInstance();
         try {
             orderService.addOrder(order);
-            couponService.removeCoupon(coupon);
+            couponService.removeCoupon(couponId);
             response.sendRedirect(PageName.USER_PAGE);
         } catch (ServiceException e) {
             LOGGER.error("Error add order", e);

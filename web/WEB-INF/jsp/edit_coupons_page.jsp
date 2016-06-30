@@ -6,17 +6,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-    <style>
-        input {
-            border: none;
-        }
-    </style>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/mystyle.css" type="text/css">
     <fmt:setLocale value="${sessionScope.local}"/>
     <fmt:setBundle basename="localization.local" var="loc"/>
     <fmt:message bundle="${loc}" key="local.description" var="description"/>
@@ -32,39 +28,33 @@
 </head>
 <body>
 <%@include file="/WEB-INF/jsp/nav.jsp" %>
-<div class="col-md-12">
-    <div class="row">
-        <table class="table table-condensed">
-            <tr>
-                <th>id user</th>
-                <th>${discount}</th>
-                <th></th>
-            </tr>
-            <form action="${pageContext.request.contextPath}/controller" method="post">
-                <input type="hidden" name="command" value="add-coupon">
-                <tr>
-                    <td><input type="text" name="userId" value=""/></td>
-                    <td><input type="text" name="discount" value=""/></td>
-                    <td><input type="submit" value="${add}"/></td>
-                </tr>
-            </form>
-        </table>
+<div class="container-fluid">
         <c:if test="${not empty requestScope.coupons}">
-            <table class="table table-condensed">
+            <table>
                 <thead>
                 <tr>
-                    <th>id</th>
-                    <th>id user</th>
+                    <th>ID</th>
+                    <th>ID_USER</th>
                     <th>${discount}</th>
                     <th>${edit}</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
+                <form action="${pageContext.request.contextPath}/controller" method="post">
+                    <input type="hidden" name="command" value="add-coupon">
+                    <tr>
+                        <td></td>
+                        <td><input type="text" name="userId" value=""/></td>
+                        <td><input type="text" name="discount" value=""/></td>
+                        <td><input type="submit" value="${add}"/></td>
+                    </tr>
+                </form>
                 <c:forEach var="coupon" items="${requestScope.coupons}">
                     <tr>
                         <form action="${pageContext.request.contextPath}/controller" method="post">
                             <input type="hidden" name="command" value="edit-coupon">
-                            <input type="hidden" name="id" value="${id}"/>
+                            <input type="hidden" name="id" value="${coupon.id}"/>
                             <td>${coupon.id}</td>
                             <td><input type="text" name="userId" value="${coupon.userId}"/></td>
                             <td><input type="text" name="discount" value="${coupon.discount}"/></td>
@@ -85,6 +75,5 @@
             </table>
         </c:if>
     </div>
-</div>
 </body>
 </html>

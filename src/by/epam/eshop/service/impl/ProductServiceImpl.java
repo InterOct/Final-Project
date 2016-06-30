@@ -94,10 +94,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public boolean removeProduct(Product product) throws ServiceException {
+    public boolean removeProduct(Integer id) throws ServiceException {
         ProductDAO productDAO = ProductDAOImpl.getInstance();
         try {
-            return productDAO.remove(product);
+            return productDAO.remove(id);
         } catch (DAOException e) {
             throw new ServiceException("Error removing product", e);
         }
