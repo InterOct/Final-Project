@@ -3,6 +3,7 @@ package by.epam.eshop.command.impl;
 import by.epam.eshop.command.Command;
 import by.epam.eshop.controller.PageName;
 import by.epam.eshop.entity.User;
+import by.epam.eshop.resource.MessageManager;
 import by.epam.eshop.service.exception.ServiceException;
 import by.epam.eshop.service.impl.UserServiceImpl;
 import org.apache.log4j.LogManager;
@@ -21,25 +22,38 @@ public class LoginCommand implements Command {
     private static final String LOGIN = "login";
     private static final String PASSWORD = "password";
     private static final String USER = "user";
-    private static final String MESSAGE = "message";
+
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
         try {
-            User user = UserServiceImpl.getInstance().singIn(request.getParameter(LOGIN), request.getParameter(PASSWORD));
-            if (user != null) {
-                request.getSession(true).setAttribute(USER, user);
-                response.sendRedirect(PageName.INDEX_PAGE);
-            } else {
-                request.setAttribute(MESSAGE, Boolean.TRUE);
-                RequestDispatcher requestDispatcher = request.getRequestDispatcher(PageName.USER_LOGIN);
-                if (requestDispatcher == null) {
-                    throw new RuntimeException("Impossible to reach page");
+            try {
+                User user = UserServiceImpl.getInstance().singIn(request.getParameter(LOGIN), request.getParameter(PASSWORD));
+                if (user != null) {
+                    request.getSession(true).setAttribute(USER, user);
+                    if (user.isBanned()) {
+                        request.setAttribute(MessageManager.MESSAGE, MessageManager.USER_BANNED);
+                        RequestDispatcher requestDispatcher = request.getRequestDispatcher(PageName.USER_LOGIN);
+                        if (requestDispatcher == null) {
+                            throw new RuntimeException("Impossible to reach page");
+                        }
+                        requestDispatcher.forward(request, response);
+                        return;
+                    }
+                    response.sendRedirect(PageName.INDEX_PAGE);
+                } else {
+                    RequestDispatcher requestDispatcher = request.getRequestDispatcher(PageName.USER_LOGIN);
+                    if (requestDispatcher == null) {
+                        throw new RuntimeException("Impossible to reach page");
+                    }
+                    request.setAttribute(MessageManager.MESSAGE, MessageManager.INVALID_LOGIN_PASSWORD);
+                    requestDispatcher.forward(request, response);
                 }
-                requestDispatcher.forward(request, response);
+            } catch (ServiceException e) {
+                LOGGER.error("Error login user", e);
+                request.setAttribute(MessageManager.MESSAGE, MessageManager.DATABASE_ERROR);
+                request.getRequestDispatcher(PageName.USER_LOGIN).forward(request, response);
             }
-        } catch (ServiceException e) {
-            LOGGER.error("Error login user", e);
         } catch (IOException | ServletException e) {
             LOGGER.error("Can't reach page", e);
         }

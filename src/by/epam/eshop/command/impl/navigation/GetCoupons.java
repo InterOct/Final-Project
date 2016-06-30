@@ -1,6 +1,8 @@
 package by.epam.eshop.command.impl.navigation;
 
 import by.epam.eshop.command.Command;
+import by.epam.eshop.entity.Coupon;
+import by.epam.eshop.resource.MessageManager;
 import by.epam.eshop.service.CouponService;
 import by.epam.eshop.service.exception.ServiceException;
 import by.epam.eshop.service.impl.CouponServiceImpl;
@@ -9,6 +11,7 @@ import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 
 public class GetCoupons implements Command {
@@ -23,9 +26,19 @@ public class GetCoupons implements Command {
             CouponService couponService = CouponServiceImpl.getInstance();
             String idStr = request.getParameter(ID);
             if (idStr == null) {
-                request.setAttribute(COUPONS, couponService.getAll());
+                List<Coupon> coupons = couponService.getAll();
+                if (coupons == null) {
+                    request.setAttribute(MessageManager.MESSAGE, MessageManager.GETTING_ERROR);
+                    return;
+                }
+                request.setAttribute(COUPONS, coupons);
             } else {
-                request.setAttribute(COUPONS, couponService.getCouponsByUserId(Integer.parseInt(idStr)));
+                List<Coupon> couponsByUserId = couponService.getCouponsByUserId(Integer.parseInt(idStr));
+                if (couponsByUserId == null) {
+                    request.setAttribute(MessageManager.MESSAGE, MessageManager.GETTING_ERROR);
+                    return;
+                }
+                request.setAttribute(COUPONS, couponsByUserId);
             }
         } catch (ServiceException e) {
             LOGGER.error("Error getting coupons", e);

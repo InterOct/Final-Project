@@ -34,84 +34,88 @@
 <body>
 <%@include file="/WEB-INF/jsp/nav.jsp" %>
 <div class="container-fluid">
-    <c:if test="${not empty requestScope.products}">
-        <table style="width: 200px">
-            <thead>
+    <c:if test="${not empty requestScope.message}">
+        <div class="alert alert-danger">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong><fmt:message bundle="${loc}" key="${requestScope.message}"/></strong>
+        </div>
+    </c:if>
+    <table style="width: 200px">
+        <thead>
+        <tr>
+            <th></th>
+            <th>${image_path}</th>
+            <th>ID</th>
+            <th>${name}</th>
+            <th>${categoty_name}</th>
+            <th>${price}</th>
+            <th>
+                ${discount}
+            <th>
+            <th>${short_desc}</th>
+            <th>${description}</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <form role="form" action="${pageContext.request.contextPath}/controller" method="post"
+              enctype="multipart/form-data">
+            <input type="hidden" name="command" value="add-product">
             <tr>
-                <th></th>
-                <th>${image_path}</th>
-                <th>ID</th>
-                <th>${name}</th>
-                <th>${categoty_name}</th>
-                <th>${price}</th>
-                <th>
-                    ${discount}
-                <th>
-                <th>${short_desc}</th>
-                <th>${description}</th>
-                <th></th>
-                <th></th>
+                <td colspan="3"><input type="file" name="file" accept="image/jpeg"></td>
+                <td><input type="text" name="name" value=""/></td>
+                <td>
+                    <select name="catName" id="sel1">
+                        <c:forEach var="category" items="${requestScope.categories}">
+                            <option>${category.name}</option>
+                        </c:forEach>
+                    </select>
+                </td>
+                <td><input type="text" name="price" value=""/></td>
+                <td><input type="text" name="discountPrice" value=""/></td>
+                <td><input type="text" name="shortDescription" value=""/></td>
+                <td><input type="text" name="description" value=""/></td>
+                <td><input type="submit" value="${add}"/></td>
             </tr>
-            </thead>
-            <tbody>
-            <form role="form" action="${pageContext.request.contextPath}/controller" method="post"
-                  enctype="multipart/form-data">
-                <input type="hidden" name="command" value="add-product">
-                <tr>
-                    <td colspan="3"><input type="file" name="file" accept="image/jpeg"></td>
-                    <td><input type="text" name="name" value=""/></td>
+        </form>
+        <c:forEach var="product" items="${requestScope.products}">
+            <tr>
+                <form action="${pageContext.request.contextPath}/controller" method="post">
+                    <input type="hidden" name="command" value="edit-product">
+                    <input type="hidden" name="id" value="${product.id}">
+                    <td><img src="${pageContext.request.contextPath}${product.imgPath}" height="50px"
+                             alt="Image"/></td>
+                    <td><input type="text" name="imgPath" value="${product.imgPath}"/></td>
+                    <td>${product.id}</td>
+                    <td><input type="text" name="name" value="${product.name}"/></td>
                     <td>
-                        <select name="catName" id="sel1">
+                        <select name="catName" id="sel2">
+                            <option>${product.catName}</option>
                             <c:forEach var="category" items="${requestScope.categories}">
                                 <option>${category.name}</option>
                             </c:forEach>
                         </select>
                     </td>
-                    <td><input type="text" name="price" value=""/></td>
-                    <td><input type="text" name="discountPrice" value=""/></td>
-                    <td><input type="text" name="shortDescription" value=""/></td>
-                    <td><input type="text" name="description" value=""/></td>
-                    <td><input type="submit" value="${add}"/></td>
-                </tr>
-            </form>
-            <c:forEach var="product" items="${requestScope.products}">
-                <tr>
+                    <td><input type="text" name="price" value="${product.price}"/></td>
+                    <td><input type="text" name="discountPrice" value="${product.discountPrice}"/></td>
+                    <td><input type="text" name="shortDescription" value="${product.shortDescription}"/></td>
+                    <td><input type="text" name="description" value="${product.description}"/></td>
+                    <td><input type="submit" value="${edit}"/></td>
+                </form>
+                <td>
                     <form action="${pageContext.request.contextPath}/controller" method="post">
-                        <input type="hidden" name="command" value="edit-product">
-                        <input type="hidden" name="id" value="${product.id}">
-                        <td><img src="${pageContext.request.contextPath}${product.imgPath}" height="50px"
-                                 alt="Image"/></td>
-                        <td><input type="text" name="imgPath" value="${product.imgPath}"/></td>
-                        <td>${product.id}</td>
-                        <td><input type="text" name="name" value="${product.name}"/></td>
-                        <td>
-                            <select name="catName" id="sel2">
-                                <option>${product.catName}</option>
-                                <c:forEach var="category" items="${requestScope.categories}">
-                                    <option>${category.name}</option>
-                                </c:forEach>
-                            </select>
-                        </td>
-                        <td><input type="text" name="price" value="${product.price}"/></td>
-                        <td><input type="text" name="discountPrice" value="${product.discountPrice}"/></td>
-                        <td><input type="text" name="shortDescription" value="${product.shortDescription}"/></td>
-                        <td><input type="text" name="description" value="${product.description}"/></td>
-                        <td><input type="submit" value="${edit}"/></td>
+                        <input type="hidden" name="command" value="remove-product">
+                        <input type="hidden" name="id" value="${product.id}"/>
+                        <button type="submit" class="btn btn-xs btn-danger">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </button>
                     </form>
-                    <td>
-                        <form action="${pageContext.request.contextPath}/controller" method="post">
-                            <input type="hidden" name="command" value="remove-product">
-                            <input type="hidden" name="id" value="${product.id}"/>
-                            <button type="submit" class="btn btn-xs btn-danger">
-                                <span class="glyphicon glyphicon-remove"></span>
-                            </button>
-                        </form>
-                    </td>
-                </tr>
-            </c:forEach>
-            </tbody>
-        </table>
-    </c:if>
+                </td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
 </div>
 </body>
 </html>

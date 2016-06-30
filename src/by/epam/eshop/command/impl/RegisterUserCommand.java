@@ -3,6 +3,7 @@ package by.epam.eshop.command.impl;
 import by.epam.eshop.command.Command;
 import by.epam.eshop.controller.PageName;
 import by.epam.eshop.entity.User;
+import by.epam.eshop.resource.MessageManager;
 import by.epam.eshop.service.exception.ServiceException;
 import by.epam.eshop.service.impl.UserServiceImpl;
 import org.apache.log4j.LogManager;
@@ -40,21 +41,26 @@ public class RegisterUserCommand implements Command {
         user.setRole(null);
         user.setBanned(false);
         try {
-            String page;
-            if(UserServiceImpl.getInstance().registerUser(user)) {
-                request.setAttribute(IS_REGISTERED, Boolean.TRUE);
-                page = PageName.USER_LOGIN;
-            } else {
-                request.setAttribute(IS_REGISTERED, Boolean.FALSE);
-                page = PageName.USER_REGISTRATION_PAGE;
+            try {
+                String page;
+                if (UserServiceImpl.getInstance().registerUser(user)) {
+                    request.setAttribute(IS_REGISTERED, Boolean.TRUE);
+                    page = PageName.USER_LOGIN;
+                } else {
+                    request.setAttribute(IS_REGISTERED, Boolean.FALSE);
+                    page = PageName.USER_REGISTRATION_PAGE;
+                }
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher(page);
+                if (requestDispatcher == null) {
+                    throw new RuntimeException("Impossible to reach page");
+                }
+                requestDispatcher.forward(request, response);
+
+            } catch (ServiceException e) {
+                LOGGER.error("Error register user", e);
+                request.setAttribute(MessageManager.MESSAGE, MessageManager.DATABASE_ERROR);
+                request.getRequestDispatcher(PageName.USER_REGISTRATION_PAGE).forward(request, response);
             }
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher(page);
-            if (requestDispatcher == null) {
-                throw new RuntimeException("Impossible to reach page");
-            }
-            requestDispatcher.forward(request, response);
-        } catch (ServiceException e) {
-            LOGGER.error("Error register user", e);
         } catch (ServletException | IOException e) {
             LOGGER.error("Can't reach page", e);
         }

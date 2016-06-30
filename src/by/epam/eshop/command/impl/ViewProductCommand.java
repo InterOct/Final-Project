@@ -2,6 +2,8 @@ package by.epam.eshop.command.impl;
 
 import by.epam.eshop.command.Command;
 import by.epam.eshop.controller.PageName;
+import by.epam.eshop.entity.Product;
+import by.epam.eshop.resource.MessageManager;
 import by.epam.eshop.service.ProductService;
 import by.epam.eshop.service.exception.ServiceException;
 import by.epam.eshop.service.impl.ProductServiceImpl;
@@ -21,11 +23,22 @@ public class ViewProductCommand implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
-        int id = Integer.parseInt(request.getParameter(ID));
         RequestDispatcher requestDispatcher = request.getRequestDispatcher(PageName.PRODUCT_PAGE);
         ProductService productService = ProductServiceImpl.getInstance();
+        int id;
         try {
-            request.setAttribute(PRODUCT, productService.getProductById(id));
+            id = Integer.parseInt(request.getParameter(ID));
+        } catch (NumberFormatException e) {
+            request.setAttribute(MessageManager.MESSAGE, MessageManager.NUMBER_ERROR);
+            return;
+        }
+        try {
+            Product product = productService.getProductById(id);
+            request.setAttribute(PRODUCT, product);
+            if (product == null) {
+                request.setAttribute(MessageManager.MESSAGE, MessageManager.GETTING_ERROR);
+                return;
+            }
             if (requestDispatcher == null) {
                 throw new RuntimeException("Impossible to reach page");
             }

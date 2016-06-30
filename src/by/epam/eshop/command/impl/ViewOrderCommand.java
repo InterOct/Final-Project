@@ -2,6 +2,8 @@ package by.epam.eshop.command.impl;
 
 import by.epam.eshop.command.Command;
 import by.epam.eshop.controller.PageName;
+import by.epam.eshop.entity.Order;
+import by.epam.eshop.resource.MessageManager;
 import by.epam.eshop.service.OrderService;
 import by.epam.eshop.service.exception.ServiceException;
 import by.epam.eshop.service.impl.OrderServiceImpl;
@@ -21,9 +23,22 @@ public class ViewOrderCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
         OrderService orderService = OrderServiceImpl.getInstance();
-        int id = Integer.parseInt(request.getParameter(ID));
         try {
-            request.setAttribute(ORDER, orderService.getOrder(id));
+            int id;
+            try {
+                id = Integer.parseInt(request.getParameter(ID));
+            } catch (NumberFormatException e) {
+                request.setAttribute(MessageManager.MESSAGE, MessageManager.GETTING_ERROR);
+                request.getRequestDispatcher(PageName.ORDER_PAGE).forward(request, response);
+                return;
+            }
+            Order order = orderService.getOrder(id);
+            request.setAttribute(ORDER, order);
+            if (order == null) {
+                request.setAttribute(MessageManager.MESSAGE, MessageManager.GETTING_ERROR);
+                request.getRequestDispatcher(PageName.ORDER_PAGE).forward(request, response);
+                return;
+            }
             request.getRequestDispatcher(PageName.ORDER_PAGE).forward(request, response);
         } catch (ServiceException e) {
             LOGGER.error("Error getting order", e);

@@ -41,6 +41,12 @@
 </head>
 <body>
 <%@include file="/WEB-INF/jsp/nav.jsp" %>
+<c:if test="${not empty requestScope.message}">
+    <div class="alert alert-danger">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong><fmt:message bundle="${loc}" key="${requestScope.message}"/></strong>
+    </div>
+</c:if>
 <div class="row">
     <div class="col-md-offset-3 col-md-6">
         <div class="window">

@@ -29,6 +29,12 @@
 <body>
 <%@include file="/WEB-INF/jsp/nav.jsp" %>
 <div class="container-fluid">
+    <c:if test="${not empty requestScope.message}">
+        <div class="alert alert-danger">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong><fmt:message bundle="${loc}" key="${requestScope.message}"/></strong>
+        </div>
+    </c:if>
         <c:if test="${not empty requestScope.coupons}">
             <table>
                 <thead>

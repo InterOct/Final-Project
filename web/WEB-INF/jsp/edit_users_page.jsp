@@ -36,6 +36,12 @@
     <jsp:param name="command" value="get-users"/>
 </jsp:include>
 <div class="container-fluid">
+    <c:if test="${not empty requestScope.message}">
+        <div class="alert alert-danger">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong><fmt:message bundle="${loc}" key="${requestScope.message}"/></strong>
+        </div>
+    </c:if>
     <c:if test="${not empty requestScope.users}">
         <table>
             <thead>

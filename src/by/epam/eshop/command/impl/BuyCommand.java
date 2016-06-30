@@ -5,6 +5,7 @@ import by.epam.eshop.controller.PageName;
 import by.epam.eshop.entity.Order;
 import by.epam.eshop.entity.Product;
 import by.epam.eshop.entity.User;
+import by.epam.eshop.resource.MessageManager;
 import by.epam.eshop.service.CouponService;
 import by.epam.eshop.service.OrderService;
 import by.epam.eshop.service.exception.ServiceException;
@@ -13,6 +14,7 @@ import by.epam.eshop.service.impl.OrderServiceImpl;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -40,32 +42,46 @@ public class BuyCommand implements Command {
         String couponIdStr = request.getParameter(ID);
         double discount;
         int couponId;
-        if (discountStr == null || couponIdStr == null) {
-            discount = 0;
-            couponId = 0;
-        } else {
-            discount = Double.parseDouble(discountStr) / 100;
-            couponId = Integer.parseInt(couponIdStr);
-        }
-        HashMap<Product, Integer> productsMap = (HashMap<Product, Integer>) request.getSession().getAttribute(CART);
-        request.getSession().removeAttribute(CART);
-        for (Map.Entry<Product, Integer> productEntry : productsMap.entrySet()) {
-            Product product = productEntry.getKey();
-            if (product.getDiscountPrice() != 0) {
-                product.setPrice(product.getDiscountPrice());
-            }
-            product.setPrice(product.getPrice() - discount * product.getPrice());
-        }
-        order.setProducts(productsMap);
-        OrderService orderService = OrderServiceImpl.getInstance();
-        CouponService couponService = CouponServiceImpl.getInstance();
         try {
-            orderService.addOrder(order);
-            couponService.removeCoupon(couponId);
-            response.sendRedirect(PageName.USER_PAGE);
-        } catch (ServiceException e) {
-            LOGGER.error("Error add order", e);
-        } catch (IOException e) {
+            try {
+                if (discountStr == null || couponIdStr == null) {
+                    discount = 0;
+                    couponId = 0;
+                } else {
+                    discount = Double.parseDouble(discountStr) / 100;
+                    couponId = Integer.parseInt(couponIdStr);
+                }
+
+            } catch (NumberFormatException e) {
+                request.setAttribute(MessageManager.MESSAGE, MessageManager.NUMBER_ERROR);
+                request.getRequestDispatcher(PageName.INDEX_PAGE).forward(request, response);
+                return;
+            }
+            HashMap<Product, Integer> productsMap = (HashMap<Product, Integer>) request.getSession().getAttribute(CART);
+            request.getSession().removeAttribute(CART);
+            for (Map.Entry<Product, Integer> productEntry : productsMap.entrySet()) {
+                Product product = productEntry.getKey();
+                if (product.getDiscountPrice() != 0) {
+                    product.setPrice(product.getDiscountPrice());
+                }
+                product.setPrice(product.getPrice() - discount * product.getPrice());
+            }
+            order.setProducts(productsMap);
+            OrderService orderService = OrderServiceImpl.getInstance();
+            CouponService couponService = CouponServiceImpl.getInstance();
+            try {
+                boolean success = orderService.addOrder(order);
+                if (!success) {
+                    request.setAttribute(MessageManager.MESSAGE, MessageManager.ADDING_ERROR);
+                    request.getRequestDispatcher(PageName.EDIT_PRODUCTS).forward(request, response);
+                    return;
+                }
+                couponService.removeCoupon(couponId);
+                response.sendRedirect(PageName.USER_PAGE);
+            } catch (ServiceException e) {
+                LOGGER.error("Error add order", e);
+            }
+        } catch (IOException | ServletException e) {
             LOGGER.error("Can't reach page", e);
         }
     }

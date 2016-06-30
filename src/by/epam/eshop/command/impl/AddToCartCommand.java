@@ -4,6 +4,7 @@ import by.epam.eshop.command.Command;
 import by.epam.eshop.controller.PageName;
 import by.epam.eshop.entity.Product;
 import by.epam.eshop.entity.User;
+import by.epam.eshop.resource.MessageManager;
 import by.epam.eshop.service.ProductService;
 import by.epam.eshop.service.exception.ServiceException;
 import by.epam.eshop.service.impl.ProductServiceImpl;
@@ -29,32 +30,37 @@ public class AddToCartCommand implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute(USER);
-        if (user == null) {
-            try {
+        try {
+            if (user == null) {
                 request.getRequestDispatcher(PageName.USER_LOGIN).forward(request, response);
-            } catch (ServletException | IOException e) {
-                LOGGER.error("Can't reach page", e);
-            }
-        } else {
-            try {
-                Map<Product, Integer> productMap = (Map<Product, Integer>) session.getAttribute(CART);
-                if (productMap == null) {
-                    productMap = new HashMap<>();
+            } else {
+                try {
+                    Map<Product, Integer> productMap = (Map<Product, Integer>) session.getAttribute(CART);
+                    if (productMap == null) {
+                        productMap = new HashMap<>();
+                    }
+                    ProductService productService = ProductServiceImpl.getInstance();
+                    Product product;
+                    try {
+                        product = productService.getProductById(Integer.parseInt(request.getParameter(ID)));
+                    } catch (NumberFormatException e) {
+                        request.setAttribute(MessageManager.MESSAGE, MessageManager.NUMBER_ERROR);
+                        request.getRequestDispatcher(PageName.INDEX_PAGE).forward(request, response);
+                        return;
+                    }
+                    Integer cur = productMap.get(product);
+                    if (cur == null) {
+                        cur = 0;
+                    }
+                    productMap.put(product, cur + 1);
+                    session.setAttribute(CART, productMap);
+                    response.sendRedirect(PageName.CART);
+                } catch (ServiceException e) {
+                    LOGGER.error("Error getting product", e);
                 }
-                ProductService productService = ProductServiceImpl.getInstance();
-                Product product = productService.getProductById(Integer.parseInt(request.getParameter(ID)));
-                Integer cur = productMap.get(product);
-                if (cur == null) {
-                    cur = 0;
-                }
-                productMap.put(product, cur + 1);
-                session.setAttribute(CART, productMap);
-                response.sendRedirect(PageName.CART);
-            } catch (IOException e) {
-                LOGGER.error("Can't reach page", e);
-            } catch (ServiceException e) {
-                LOGGER.error("Error getting product", e);
             }
+        } catch (ServletException | IOException e) {
+            LOGGER.error("Can't reach page", e);
         }
     }
 }

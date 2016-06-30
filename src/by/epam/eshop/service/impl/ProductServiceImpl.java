@@ -85,12 +85,15 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public boolean updateProduct(Product product) throws ServiceException {
-        ProductDAO productDAO = ProductDAOImpl.getInstance();
-        try {
-            return productDAO.update(product);
-        } catch (DAOException e) {
-            throw new ServiceException("Error updating product", e);
+        if (Validator.productValidate(product)) {
+            ProductDAO productDAO = ProductDAOImpl.getInstance();
+            try {
+                return productDAO.update(product);
+            } catch (DAOException e) {
+                throw new ServiceException("Error updating product", e);
+            }
         }
+        return false;
     }
 
     @Override
@@ -109,19 +112,22 @@ public class ProductServiceImpl implements ProductService {
 
     private static class Validator {
         public static boolean productValidate(Product product) {
-            if (product.getCatName().isEmpty()) {
+            if (product.getCatName().isEmpty() || product.getCatName().length() > 50) {
                 return false;
             }
-            if (product.getName().isEmpty()) {
+            if (product.getName().isEmpty() || product.getName().length() > 100) {
                 return false;
             }
-            if (product.getShortDescription().isEmpty()) {
+            if (product.getShortDescription().isEmpty() || product.getShortDescription().length() > 400) {
                 return false;
             }
-            if (product.getImgPath().isEmpty()) {
+            if (product.getImgPath().isEmpty() || product.getImgPath().length() > 100) {
                 return false;
             }
-            return !product.getDescription().isEmpty();
+            if (product.getDescription().isEmpty() || product.getDescription().length() > 600) {
+                return false;
+            }
+            return product.getPrice() >= product.getDiscountPrice();
         }
     }
 }

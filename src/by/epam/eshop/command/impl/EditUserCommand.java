@@ -2,12 +2,14 @@ package by.epam.eshop.command.impl;
 
 import by.epam.eshop.command.Command;
 import by.epam.eshop.entity.User;
+import by.epam.eshop.resource.MessageManager;
 import by.epam.eshop.service.UserService;
 import by.epam.eshop.service.exception.ServiceException;
 import by.epam.eshop.service.impl.UserServiceImpl;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -27,7 +29,6 @@ public class EditUserCommand implements Command {
     private static final String ADDRESS = "address";
     private static final String TEL = "tel";
     private static final String BANNED = "banned";
-    private static final String DISCOUNT = "discount";
     private static final String URL = "url";
     private static final String USER = "user";
     private static final String ID = "id";
@@ -48,21 +49,29 @@ public class EditUserCommand implements Command {
         user.setTel(request.getParameter(TEL));
         user.setRole(request.getParameter(ROLE));
         user.setBanned(Boolean.valueOf(request.getParameter(BANNED)));
-        user.setRole(request.getParameter(ROLE));
         UserService userService = UserServiceImpl.getInstance();
+        HttpSession session = request.getSession();
+        String page = session.getAttribute(URL).toString();
         try {
-            HttpSession session = request.getSession();
-            if (userService.updateUser(user)) {
-                User loggedUser = (User) session.getAttribute(USER);
-                if (loggedUser.getLogin().equals(user.getLogin())) {
-                    session.removeAttribute(USER);
-                    session.setAttribute(USER, user);
+            try {
+                if (userService.updateUser(user)) {
+                    User loggedUser = (User) session.getAttribute(USER);
+                    if (loggedUser.getLogin().equals(user.getLogin())) {
+                        session.removeAttribute(USER);
+                        session.setAttribute(USER, user);
+                    }
+                } else {
+                    request.setAttribute(MessageManager.MESSAGE, MessageManager.EDITING_ERROR);
+                    request.getRequestDispatcher(page).forward(request, response);
+                    return;
                 }
+                response.sendRedirect(page);
+            } catch (ServiceException e) {
+                LOGGER.error("Error edit user", e);
+                request.setAttribute(MessageManager.MESSAGE, MessageManager.DATABASE_ERROR);
+                request.getRequestDispatcher(page).forward(request, response);
             }
-            response.sendRedirect(session.getAttribute(URL).toString());
-        } catch (ServiceException e) {
-            LOGGER.error("Error edit user", e);
-        } catch (IOException e) {
+        } catch (IOException | ServletException e) {
             LOGGER.error("Can't reach page", e);
         }
     }

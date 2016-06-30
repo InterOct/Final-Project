@@ -16,7 +16,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class UserDAOImpl implements UserDAO {
-    private static final String SELECT_USERS = "SELECT users.login, users.password, users.first_name, users.last_name, users.email, users.role, users.address, users.tel, users.banned FROM eshop.users";
+    private static final String SELECT_USERS = "SELECT users.login, users.password, users.first_name, users.last_name, users.email, users.role, users.address, users.tel, users.banned, users.id FROM eshop.users";
     private static final String INSERT_USER = "INSERT INTO  eshop.users(login, password, first_name, last_name, email, role, address, tel, banned) VALUES (?,?,?,?,?,?,?,?,?)";
     private static final String SELECT_USER_BY_LOGIN_AND_PASSWORD = "SELECT login, password, first_name, last_name, email, role, address, tel, banned, id FROM eshop.users WHERE ? = login AND ? = password";
     private static final String UPDATE_USER = "UPDATE eshop.users SET login=?, password=?, first_name=?, last_name=?, email=?, role=?, address=?, tel=?,banned=? WHERE ? = login";
@@ -154,6 +154,7 @@ public class UserDAOImpl implements UserDAO {
         user.setAddress(rs.getString(7));
         user.setTel(rs.getString(8));
         user.setBanned(rs.getBoolean(9));
+        user.setId(rs.getInt(10));
     }
 
     private static class Holder {

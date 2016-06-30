@@ -28,6 +28,12 @@
 <%@include file="/WEB-INF/jsp/nav.jsp" %>
 <jsp:useBean id="product" class="by.epam.eshop.entity.Product" scope="request"/>
 <div class="container-fluid">
+    <c:if test="${not empty requestScope.message}">
+        <div class="alert alert-danger">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong><fmt:message bundle="${loc}" key="${requestScope.message}"/></strong>
+        </div>
+    </c:if>
     <div class="row">
         <div class="col-sm-offset-2 col-sm-3">
             <div class="window" style="height: 370px; text-align: center;">
