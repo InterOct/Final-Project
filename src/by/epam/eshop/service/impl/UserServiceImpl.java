@@ -80,10 +80,18 @@ public class UserServiceImpl implements UserService {
         }
 
         public static boolean userValidate(User user) {
-            if (user.getLogin().isEmpty()) return false;
-            if (user.getPassword().isEmpty()) return false;
-            if (user.getFirstName().isEmpty()) return false;
-            if (user.getLastName().isEmpty()) return false;
+            if (user.getLogin().isEmpty()) {
+                return false;
+            }
+            if (user.getPassword().isEmpty()) {
+                return false;
+            }
+            if (user.getFirstName().isEmpty()) {
+                return false;
+            }
+            if (user.getLastName().isEmpty()) {
+                return false;
+            }
             return !user.getEmail().isEmpty();
         }
     }

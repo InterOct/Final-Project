@@ -67,8 +67,10 @@ public class CategoryServiceImpl implements CategoryService {
 
     private static class Validator {
         public static boolean categoryValidate(Category category) {
-            if (category.getName().isEmpty()) return false;
-            return !category.getDescription().isEmpty();
+            if (category.getName().isEmpty() || category.getName().length() > 50) {
+                return false;
+            }
+            return !(category.getDescription().isEmpty() || category.getDescription().length() > 200);
         }
     }
 }

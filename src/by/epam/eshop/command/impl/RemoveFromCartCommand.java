@@ -31,7 +31,7 @@ public class RemoveFromCartCommand implements Command {
                 delProductId = Integer.parseInt(request.getParameter(ID));
             } catch (NumberFormatException e) {
                 request.setAttribute(MessageManager.MESSAGE, MessageManager.NUMBER_ERROR);
-                request.getRequestDispatcher(PageName.EDIT_COUPONS).forward(request, response);
+                request.getRequestDispatcher(PageName.CART).forward(request, response);
                 return;
             }
             if (productMap != null) {

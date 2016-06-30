@@ -53,12 +53,15 @@ public class CouponServiceImpl implements CouponService {
 
     @Override
     public boolean updateCoupon(Coupon coupon) throws ServiceException {
-        CouponDAO couponDAO = CouponDAOImpl.getInstance();
-        try {
-            return couponDAO.update(coupon);
-        } catch (DAOException e) {
-            throw new ServiceException("Error updating coupon", e);
+        if (Validator.couponValidate(coupon)) {
+            CouponDAO couponDAO = CouponDAOImpl.getInstance();
+            try {
+                return couponDAO.update(coupon);
+            } catch (DAOException e) {
+                throw new ServiceException("Error updating coupon", e);
+            }
         }
+        return false;
     }
 
     @Override
@@ -77,7 +80,7 @@ public class CouponServiceImpl implements CouponService {
 
     private static class Validator {
         public static boolean couponValidate(Coupon coupon) {
-            return true;
+            return !(coupon.getDiscount() > 100 || coupon.getDiscount() < 0);
         }
     }
 }

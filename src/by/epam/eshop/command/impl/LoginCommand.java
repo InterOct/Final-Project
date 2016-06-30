@@ -30,7 +30,6 @@ public class LoginCommand implements Command {
             try {
                 User user = UserServiceImpl.getInstance().singIn(request.getParameter(LOGIN), request.getParameter(PASSWORD));
                 if (user != null) {
-                    request.getSession(true).setAttribute(USER, user);
                     if (user.isBanned()) {
                         request.setAttribute(MessageManager.MESSAGE, MessageManager.USER_BANNED);
                         RequestDispatcher requestDispatcher = request.getRequestDispatcher(PageName.USER_LOGIN);
@@ -40,6 +39,7 @@ public class LoginCommand implements Command {
                         requestDispatcher.forward(request, response);
                         return;
                     }
+                    request.getSession(true).setAttribute(USER, user);
                     response.sendRedirect(PageName.INDEX_PAGE);
                 } else {
                     RequestDispatcher requestDispatcher = request.getRequestDispatcher(PageName.USER_LOGIN);

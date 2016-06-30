@@ -41,7 +41,7 @@ public class EditCouponCommand implements Command {
                 boolean success = couponService.updateCoupon(coupon);
                 if (!success) {
                     request.setAttribute(MessageManager.MESSAGE, MessageManager.EDITING_ERROR);
-                    request.getRequestDispatcher(PageName.EDIT_CATEGORY).forward(request, response);
+                    request.getRequestDispatcher(PageName.EDIT_COUPONS).forward(request, response);
                     return;
                 }
                 response.sendRedirect(PageName.EDIT_COUPONS);

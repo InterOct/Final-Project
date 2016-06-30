@@ -25,10 +25,16 @@ public class AddCouponCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
         Coupon coupon = new Coupon();
-        coupon.setUserId(Integer.parseInt(request.getParameter(USER_ID)));
-        coupon.setDiscount(Byte.parseByte(request.getParameter(DISCOUNT)));
-        CouponService couponService = CouponServiceImpl.getInstance();
         try {
+            try {
+                coupon.setUserId(Integer.parseInt(request.getParameter(USER_ID)));
+                coupon.setDiscount(Byte.parseByte(request.getParameter(DISCOUNT)));
+            } catch (NumberFormatException e) {
+                request.setAttribute(MessageManager.MESSAGE, MessageManager.NUMBER_ERROR);
+                request.getRequestDispatcher(PageName.EDIT_COUPONS).forward(request, response);
+                return;
+            }
+            CouponService couponService = CouponServiceImpl.getInstance();
             try {
                 boolean success = couponService.addCoupon(coupon);
                 if (!success) {
@@ -40,7 +46,7 @@ public class AddCouponCommand implements Command {
             } catch (ServiceException e) {
                 LOGGER.error("Error add coupon", e);
                 request.setAttribute(MessageManager.MESSAGE, MessageManager.DATABASE_ERROR);
-                request.getRequestDispatcher(PageName.EDIT_CATEGORY).forward(request, response);
+                request.getRequestDispatcher(PageName.EDIT_COUPONS).forward(request, response);
             }
         } catch (IOException | ServletException e) {
             LOGGER.error("Can't reach page", e);

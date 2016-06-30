@@ -34,7 +34,7 @@ public class AddCategoryCommand implements Command {
                 boolean success = categoryService.addCategory(category);
                 if (!success) {
                     request.setAttribute(MessageManager.MESSAGE, MessageManager.ADDING_ERROR);
-                    request.getRequestDispatcher(PageName.EDIT_PRODUCTS).forward(request, response);
+                    request.getRequestDispatcher(PageName.EDIT_CATEGORY).forward(request, response);
                     return;
                 }
                 response.sendRedirect(PageName.EDIT_CATEGORY);

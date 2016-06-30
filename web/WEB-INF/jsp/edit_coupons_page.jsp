@@ -35,8 +35,8 @@
             <strong><fmt:message bundle="${loc}" key="${requestScope.message}"/></strong>
         </div>
     </c:if>
-        <c:if test="${not empty requestScope.coupons}">
-            <table>
+
+    <table>
                 <thead>
                 <tr>
                     <th>ID</th>
@@ -79,7 +79,6 @@
                 </c:forEach>
                 </tbody>
             </table>
-        </c:if>
     </div>
 </body>
 </html>

@@ -42,7 +42,6 @@
             <strong><fmt:message bundle="${loc}" key="${requestScope.message}"/></strong>
         </div>
     </c:if>
-    <c:if test="${not empty requestScope.users}">
         <table>
             <thead>
             <tr>
@@ -102,7 +101,6 @@
             </c:forEach>
             </tbody>
         </table>
-    </c:if>
 </div>
 </body>
 </html>

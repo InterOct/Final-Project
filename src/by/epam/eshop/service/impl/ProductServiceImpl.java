@@ -127,6 +127,12 @@ public class ProductServiceImpl implements ProductService {
             if (product.getDescription().isEmpty() || product.getDescription().length() > 600) {
                 return false;
             }
+            if (product.getPrice() <= 0) {
+                return false;
+            }
+            if (product.getDiscountPrice() <= 0) {
+                return false;
+            }
             return product.getPrice() >= product.getDiscountPrice();
         }
     }
