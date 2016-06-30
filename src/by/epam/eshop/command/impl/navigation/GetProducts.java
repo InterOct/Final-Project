@@ -20,7 +20,7 @@ public class GetProducts implements Command {
     private static final String PRODUCTS = "products";
     private static final String CATEGORY_NAME = "cat";
     private static final String PAGE = "page";
-    private static final int ITEMS_PER_PAGE = 12;
+    private static final int ITEMS_PER_PAGE = 8;
     private static final String NUM_OF_PAGES = "numOfPages";
 
 

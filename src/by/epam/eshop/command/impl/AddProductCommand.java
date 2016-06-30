@@ -73,6 +73,10 @@ public class AddProductCommand implements Command {
                     } else {
                         request.setAttribute(MessageManager.MESSAGE, MessageManager.NOT_JPG_IMAGE);
                     }
+                } else {
+                    request.setAttribute(MessageManager.MESSAGE, MessageManager.ADDING_ERROR);
+                    request.getRequestDispatcher(PageName.EDIT_PRODUCTS).forward(request, response);
+                    return;
                 }
                 response.sendRedirect(PageName.EDIT_PRODUCTS);
             } catch (ServiceException e) {
