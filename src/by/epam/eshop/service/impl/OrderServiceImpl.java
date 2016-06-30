@@ -29,6 +29,16 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public boolean addOrder(Order order, int couponId) throws ServiceException {
+        OrderDAO orderDAO = OrderDAOImpl.getInstance();
+        try {
+            return orderDAO.add(order, couponId);
+        } catch (DAOException e) {
+            throw new ServiceException("Error access database, while adding order", e);
+        }
+    }
+
+    @Override
     public List<Order> getAll() throws ServiceException {
         OrderDAO orderDAO = OrderDAOImpl.getInstance();
         try {

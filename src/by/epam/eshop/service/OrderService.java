@@ -8,6 +8,8 @@ import java.util.List;
 public interface OrderService {
     boolean addOrder(Order order) throws ServiceException;
 
+    boolean addOrder(Order order, int couponId) throws ServiceException;
+
     List<Order> getAll() throws ServiceException;
 
     List<Order> getOrdersByUserId(int userId) throws ServiceException;

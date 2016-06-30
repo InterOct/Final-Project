@@ -9,4 +9,6 @@ public interface OrderDAO extends GenericDAO<Order, Integer> {
     List<Order> findOrdersByUserId(int userId) throws DAOException;
 
     Order getOrder(int id) throws DAOException;
+
+    boolean add(Order order, int couponId) throws DAOException;
 }

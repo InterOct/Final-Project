@@ -23,6 +23,7 @@ public class OrderDAOImpl implements OrderDAO {
 
     private static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
+    private static final String DELETE_COUPON = "DELETE FROM eshop.coupons WHERE ? = id_coup";
     private static final String SELECT_ORDERS = "SELECT orders.order_id, orders.users_id, orders.date, orders.status, product.g_id,  product.name, product.imgPath, orderproduct.cur_price, orderproduct.quantity FROM eshop.orders INNER JOIN eshop.orderproduct ON orders.order_id = orderproduct.order_id LEFT JOIN  eshop.product ON eshop.orderproduct.product_id = product.g_id ORDER BY orders.order_id";
     private static final String SELECT_ORDERS_BY_USER_ID = "SELECT orders.order_id, orders.users_id, orders.date, orders.status, product.g_id,  product.name, product.imgPath, orderproduct.cur_price, orderproduct.quantity FROM eshop.orders LEFT JOIN eshop.orderproduct ON orders.order_id = orderproduct.order_id LEFT JOIN eshop.product ON orderproduct.product_id = product.g_id WHERE ? = orders.users_id ORDER BY orders.date DESC";
     private static final String SELECT_ORDER = "SELECT orders.order_id, orders.users_id, orders.date, orders.status, product.g_id,  product.name, product.imgPath, orderproduct.cur_price, orderproduct.quantity FROM eshop.orders LEFT JOIN eshop.orderproduct ON orders.order_id = orderproduct.order_id LEFT JOIN eshop.product ON orderproduct.product_id = product.g_id WHERE ? = orders.order_id";
@@ -136,13 +137,14 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     @Override
-    public boolean add(Order order) throws DAOException {
+    public boolean add(Order order, int couponId) throws DAOException {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
         Connection connection = null;
         PreparedStatement ps = null;
         try {
             boolean success;
             connection = connectionPool.takeConnection();
+            connection.setAutoCommit(false);
             String sql = INSERT_ORDER;
             ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             setOrderQuery(order, ps);
@@ -165,10 +167,78 @@ public class OrderDAOImpl implements OrderDAO {
                 ps.setDouble(4, productEntry.getKey().getPrice());
                 success &= ps.executeUpdate() == 1;
             }
+            ps.close();
+            sql = DELETE_COUPON;
+            ps = connection.prepareStatement(sql);
+            ps.setInt(1, couponId);
+            success &= ps.executeUpdate() == 1;
+            if (!success) {
+                connection.rollback();
+            } else {
+                connection.commit();
+            }
             return success;
         } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);
         } finally {
+            try {
+                if (connection != null) {
+                    connection.setAutoCommit(true);
+                }
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            }
+            connectionPool.closeConnection(connection, ps);
+        }
+    }
+
+    @Override
+    public boolean add(Order order) throws DAOException {
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+        Connection connection = null;
+        PreparedStatement ps = null;
+        try {
+            boolean success;
+            connection = connectionPool.takeConnection();
+            connection.setAutoCommit(false);
+            String sql = INSERT_ORDER;
+            ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            setOrderQuery(order, ps);
+            success = ps.executeUpdate() == 1;
+            try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    order.setId(generatedKeys.getInt(1));
+                } else {
+                    throw new SQLException("Creating order failed, no ID obtained.");
+                }
+            }
+            ps.close();
+            sql = INSERT_INTO_ORDER_PRODUCT;
+            ps = connection.prepareStatement(sql);
+            ps.setInt(1, order.getId());
+            Map<Product, Integer> productsMap = order.getProducts();
+            for (Map.Entry<Product, Integer> productEntry : productsMap.entrySet()) {
+                ps.setInt(2, productEntry.getKey().getId());
+                ps.setInt(3, productEntry.getValue());
+                ps.setDouble(4, productEntry.getKey().getPrice());
+                success &= ps.executeUpdate() == 1;
+            }
+            if (!success) {
+                connection.rollback();
+            } else {
+                connection.commit();
+            }
+            return success;
+        } catch (ConnectionPoolException | SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.setAutoCommit(true);
+                }
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            }
             connectionPool.closeConnection(connection, ps);
         }
     }

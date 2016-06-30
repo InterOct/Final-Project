@@ -51,7 +51,6 @@ public class BuyCommand implements Command {
                     discount = Double.parseDouble(discountStr) / 100;
                     couponId = Integer.parseInt(couponIdStr);
                 }
-
             } catch (NumberFormatException e) {
                 request.setAttribute(MessageManager.MESSAGE, MessageManager.NUMBER_ERROR);
                 request.getRequestDispatcher(PageName.INDEX_PAGE).forward(request, response);
@@ -70,7 +69,12 @@ public class BuyCommand implements Command {
             OrderService orderService = OrderServiceImpl.getInstance();
             CouponService couponService = CouponServiceImpl.getInstance();
             try {
-                boolean success = orderService.addOrder(order);
+                boolean success;
+                if (couponId != 0) {
+                    success = orderService.addOrder(order, couponId);
+                } else {
+                    success = orderService.addOrder(order);
+                }
                 if (!success) {
                     request.setAttribute(MessageManager.MESSAGE, MessageManager.ADDING_ERROR);
                     request.getRequestDispatcher(PageName.EDIT_PRODUCTS).forward(request, response);
