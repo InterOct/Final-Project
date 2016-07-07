@@ -57,7 +57,7 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public Page getPage(int offset, int numberOfRows) {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -129,7 +129,7 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public boolean remove(Integer id) {
-        return false;
+        throw new UnsupportedOperationException();
     }
 
     private void setUserQuery(User user, PreparedStatement ps) throws SQLException {
@@ -160,6 +160,4 @@ public class UserDAOImpl implements UserDAO {
     private static class Holder {
         private static final UserDAOImpl HOLDER_INSTANCE = new UserDAOImpl();
     }
-
-
 }
