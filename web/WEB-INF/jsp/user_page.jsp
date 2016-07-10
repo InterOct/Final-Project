@@ -37,11 +37,15 @@
     <fmt:message bundle="${loc}" key="local.total" var="total"/>
     <fmt:message bundle="${loc}" key="local.details" var="details"/>
     <fmt:message bundle="${loc}" key="local.empty" var="empty_c"/>
+    <fmt:message bundle="${loc}" key="local.discount" var="discount"/>
     <fmt:message bundle="${loc}" key="local.account" var="account"/>
     <title>${account}</title>
     <c:set scope="session" var="url" value="/user_page"/>
     <jsp:include page="${pageContext.request.contextPath}/controller">
         <jsp:param name="command" value="get-user-orders"/>
+    </jsp:include>
+    <jsp:include page="${pageContext.request.contextPath}/controller">
+        <jsp:param name="command" value="get-coupons"/>
     </jsp:include>
 </head>
 <body>
@@ -152,12 +156,24 @@
             <div class="window" style="overflow-x: auto;">
                 <c:choose>
                     <c:when test="${not empty requestScope.coupons}">
-                        <table>
-                            <tr>
-                            </tr>
-                            <c:forEach var="order" items="${requestScope.orders}">
-                            </c:forEach>
-                        </table>
+                        <c:if test="${not empty requestScope.coupons}">
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th>${coupons}</th>
+                                    <th colspan="2"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <c:forEach var="coupon" items="${requestScope.coupons}">
+                                    <tr>
+                                        <td>${discount}</td>
+                                        <td>-${coupon.discount}%</td>
+                                    </tr>
+                                </c:forEach>
+                                </tbody>
+                            </table>
+                        </c:if>
                     </c:when>
                     <c:otherwise>
                         <h2 class="text-center strong text-info">${empty_c}</h2>

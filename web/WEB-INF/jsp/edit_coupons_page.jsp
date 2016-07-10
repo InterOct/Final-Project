@@ -37,48 +37,48 @@
     </c:if>
 
     <table>
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>ID_USER</th>
-                    <th>${discount}</th>
-                    <th>${edit}</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>ID_USER</th>
+            <th>${discount}</th>
+            <th>${edit}</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <form action="${pageContext.request.contextPath}/controller" method="post">
+            <input type="hidden" name="command" value="add-coupon">
+            <tr>
+                <td></td>
+                <td><input type="text" name="userId" value=""/></td>
+                <td><input type="text" name="discount" value=""/></td>
+                <td><input type="submit" value="${add}"/></td>
+            </tr>
+        </form>
+        <c:forEach var="coupon" items="${requestScope.coupons}">
+            <tr>
                 <form action="${pageContext.request.contextPath}/controller" method="post">
-                    <input type="hidden" name="command" value="add-coupon">
-                    <tr>
-                        <td></td>
-                        <td><input type="text" name="userId" value=""/></td>
-                        <td><input type="text" name="discount" value=""/></td>
-                        <td><input type="submit" value="${add}"/></td>
-                    </tr>
+                    <input type="hidden" name="command" value="edit-coupon">
+                    <input type="hidden" name="id" value="${coupon.id}"/>
+                    <td>${coupon.id}</td>
+                    <td><input type="text" name="userId" value="${coupon.userId}"/></td>
+                    <td><input type="text" name="discount" value="${coupon.discount}"/></td>
+                    <td><input type="submit" value="${edit}"/></td>
                 </form>
-                <c:forEach var="coupon" items="${requestScope.coupons}">
-                    <tr>
-                        <form action="${pageContext.request.contextPath}/controller" method="post">
-                            <input type="hidden" name="command" value="edit-coupon">
-                            <input type="hidden" name="id" value="${coupon.id}"/>
-                            <td>${coupon.id}</td>
-                            <td><input type="text" name="userId" value="${coupon.userId}"/></td>
-                            <td><input type="text" name="discount" value="${coupon.discount}"/></td>
-                            <td><input type="submit" value="${edit}"/></td>
-                        </form>
-                        <form action="${pageContext.request.contextPath}/controller" method="post">
-                            <input type="hidden" name="command" value="remove-coupon">
-                            <input type="hidden" name="id" value="${coupon.id}">
-                            <td>
-                                <button type="submit" class="btn btn-xs btn-danger">
-                                    <span class="glyphicon glyphicon-remove"></span>
-                                </button>
-                            </td>
-                        </form>
-                    </tr>
-                </c:forEach>
-                </tbody>
-            </table>
-    </div>
+                <form action="${pageContext.request.contextPath}/controller" method="post">
+                    <input type="hidden" name="command" value="remove-coupon">
+                    <input type="hidden" name="id" value="${coupon.id}">
+                    <td>
+                        <button type="submit" class="btn btn-xs btn-danger">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </button>
+                    </td>
+                </form>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>
